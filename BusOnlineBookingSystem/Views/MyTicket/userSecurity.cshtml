@@ -1,0 +1,117 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/userSecurity.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //密码修改
+            $("#ling_4_login_pwd").click(function () {
+                window.location.href = "/userSecurity/loginPwd";
+            });
+            //安全邮箱
+            $("#ling_4_email").click(function () {
+                window.location.href = "/userSecurity/safeEmail";
+            });
+            //手机核验
+            $("#ling_4_tel").click(function () {
+                window.location.href = "/My12306/bindTel";
+            });
+            // //兑奖密码修改
+            // $("#ling_4_integration_pwd").click(function () {;
+            //     window.location.href = "/userSecurity/integrationPwd";
+            // });
+        });
+
+    </script>
+</head>
+<!--账号安全-->
+<body class="dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        @*<div class="crumbs">
+                您现在的位置：<a href="/otn/index/init" shape="rect">客运首页</a>
+                &nbsp;&gt;&nbsp;<a href="/otn/index/initMy12306" shape="rect">我的12306</a>
+                &nbsp;&gt;&nbsp;<a href="/otn/modifyUser/initQueryUserInfo" shape="rect">个人信息</a>
+                &nbsp;&gt;&nbsp;<strong>账号安全</strong>
+            </div>*@
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--系统信息 开始-->
+            <div class="layout order">
+                <div class="lay-hd">账号安全</div>
+                <div class="lay-bd">
+                    <div class="safe-item">
+                        <div class="left">
+                            <span class="icon-safe login-pass login-pass-ok"></span>
+                            <div>登录密码</div>
+                        </div>
+                        <div class="right">
+                            <a href="javascript:" id="ling_4_login_pwd" class="btn92" shape="rect">修改</a>
+                            <p>建议您定期更改密码以保护账户安全。</p>
+                        </div>
+                    </div>
+                    <div class="safe-item">
+                        <div class="left">
+                            <span class="icon-safe email"></span>
+                            <div>安全邮箱</div>
+                        </div>
+                        <div class="right">
+                            <a href="javascript:" id="ling_4_email" class="btn92" shape="rect">修改</a>
+                            <p>使用邮箱接收公路客户服务信息</p>
+                        </div>
+                    </div>
+                    <div class="safe-item">
+                        <div class="left">
+                            <span class="icon-safe tel tel-ok"></span>
+                            <div>手机核验</div>
+                        </div>
+                        <div class="right">
+                            <a href="javascript:" id="ling_4_tel" class="btn92" shape="rect">修改</a>
+                            <p>使用手机接收公路客户服务信息</p>
+                        </div>
+                    </div>
+                    <div class="safe-item">
+                        <div class="left">
+                            <span class="icon-safe dj-pass dj-pass-ok"></span>
+                            <div>兑奖密码</div>
+                        </div>
+                        @*<div class="right">
+                            <a href="javascript:" id="ling_4_integration_pwd" class="btn92" shape="rect">修改</a>
+                             <p>积分购票时，需要验证使用的密码</p>
+                              </div>*@
+                    </div>
+                </div>
+            </div>
+            <!--系统信息 结束-->
+
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+
+
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+
+
+

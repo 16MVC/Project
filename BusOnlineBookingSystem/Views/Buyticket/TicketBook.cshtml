@@ -1,0 +1,908 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>车票预订 | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/JQuery/slide-tab.js"></script>
+    <link href="~/css/TicketBook.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <link href="~/Content/jquery-easyui-1.3.3/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        //设置时间格式
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+        //检索日期格式
+        function myparser(s) {
+            if (!s) return new Date();
+            var ss = (s.split('-'));
+            var y = parseInt(ss[0], 10);
+            var m = parseInt(ss[1], 10);
+            var d = parseInt(ss[2], 10);
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                return new Date(y, m - 1, d);
+            } else {
+                return new Date();
+            }
+        }
+        $(document).ready(function () {
+            $("#wf").on("click",
+             function () {
+                 $(".no-change").css("color", "#333");
+                 //$("#back_train_date").css("");
+             })
+
+            $("#dc").on("click",
+             function () {
+                 $(".no-change").css("color", "#999");
+             })
+
+            $("#fromStationText").on("focus",
+            function () {
+                if ($(this).val() == "简拼/全拼/汉字") {
+                    $(this).val("");
+                    $(this).css("color", "#333")
+                }
+            }).on("blur",
+            function () {
+                if ($(this).val() == "") {
+                    $(this).val("简拼/全拼/汉字");
+                    $(this).css("color", "#999")
+                }
+            });
+
+            $("#toStationText").on("focus",
+            function () {
+                if ($(this).val() == "简拼/全拼/汉字") {
+                    $(this).val("");
+                    $(this).css("color", "#333")
+                }
+            }).on("blur",
+            function () {
+                if ($(this).val() == "") {
+                    $(this).val("简拼/全拼/汉字");
+                    $(this).css("color", "#999")
+                }
+            });
+
+            //查询
+            $("#query_ticket").on("click", function () {
+                $.ajax({
+                    url: "/Travelguide/getTicketBook",
+                    type: "get",
+                    dataType: "json",
+                    success: function (result) {
+                        var s = 0;
+                        //设置奇偶行样式
+                        $.each(result, function (key, data) {
+                            var sex = (key + 1) % 2 ? "偶" : "奇";
+                            switch (sex) {
+                                case "偶":
+                                    $("#queryLeftTable").append("<tr><td>" + (key + 1) + "</td><td class='tl'>" + data.name + "</td><td class='tl'>" + data.address + "</td><td>" + data.businessHours + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td></tr>");
+                                    break;
+                                case "奇":
+                                    $("#queryLeftTable").append("<tr class='bgc'><td>" + (key + 1) + "</td><td class='tl'>" + data.name + "</td><td class='tl'>" + data.address + "</td><td>" + data.businessHours + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td></tr>");
+                                    break;
+                            }
+                            s = key + 1;
+                        })
+                        if (result > 0) {
+                            var c = "";
+                            c = '搜索结果：<strong>' + $("#fromStationText").val() + '</strong>-&gt; <strong>' + $("#toStationText").val() + '</strong>共有' + s + '个车次';
+                            $("#sear-result p").append($(c)).show();
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
+            });
+            //更多选项
+            var i = 0;
+            $("#show_more").on("click", function () {
+                if (i == 0) {
+                    $("#sear-sel-bd").css("padding-bottom", "180px");
+                    $("#show_more").css("background-position", "0 0");
+                    $(".quick-gif").css("top", "208px");
+                    i = 1;
+                } else {
+                    $("#sear-sel-bd").css("padding-bottom", "30px");
+                    $("#show_more").css("background-position", "0 -22px");
+                    $(".quick-gif").css("top", "59px");
+                    i = 0;
+                }
+            });
+
+            //生成日期
+            var date = new Date();
+            var month = date.getMonth.length == 1 ? "0" + date.getMonth() : date.getMonth();
+            var day = date.getDate().length == 1 ? "0" + date.getDate() : date.getDate();
+            var week = date.getDay();
+            switch (week) {
+                case 0:
+                    week = "周日"
+                    break;
+                case 1:
+                    week = "周一"
+                    break;
+                case 2:
+                    week = "周二"
+                    break;
+                case 3:
+                    week = "周三"
+                    break;
+                case 4:
+                    week = "周四"
+                    break;
+                case 5:
+                    week = "周五"
+                    break;
+                case 6:
+                    week = "周六"
+                    break;
+            }
+            var c = "<ul>";
+            c += "<li class='sel' alt='show'><span style='cursor: pointer;' class='first hide'>" + month + "-" + day + "</span><span class='first'>" + month + "-" + day + "&nbsp" + week + "</span></li>";
+            for (var i = 0; i < 18; i++) {
+                c += "<li class=''>";
+                c += "<span class=''>" + month + "-" + (day + i) + "</span>";
+                c += "<span class='hide'>" + month + "-" + (day + i) + "&nbsp" + week + "</span>";
+                c += "</li>";
+            }
+            c += "<li class='end'><span style='cursor: pointer;' class=''>" + month + "-" + day + "</span><span class='hide'>" + month + "-" + day + "&nbsp" + week + "</span></li>";
+            for (var i = 0; i < 40; i++) {
+                c += "<li style='display: none;'>";
+                c += "<span>" + 123 + "</span>";
+                c += "<span class='hide'>" + 123 + "</span>";
+                c += "</li>";
+            }
+            c += "</ul>";
+            $("#date_range").html(c)
+
+            //选择日期
+            $("#date_range li").click(function () {
+                $(this).addClass("sel");
+                $(this).find("span").eq(0).addClass("hide");
+                $(this).find("span").eq(1).removeClass("hide");
+                $(this).siblings().removeClass("sel");
+
+            });
+            //优先车次
+            $("#add-train").on("click", function () {
+                alert("优先车次");
+            });
+            //试听提示音乐
+            $("#tryPlayer").on("click", function () {
+                alert("试听提示音乐");
+                $(".header").after().append("<audio autoplay='autoplay'><source src='../music/纯音乐 - 梦中的婚礼(铃声).mp3' type='audio/mp3'></audio>");
+
+            });
+            //清空所有选项
+            $("#clearAll").on("click", function () {
+                alert("清空所有选项");
+            });
+
+
+            $("#inp-train").on("focus",
+            function () {
+                if ($(this).val().trim() == "请输入") {
+                    $(this).val("");
+                    $(this).css("color", "#333")
+                }
+            }).on("blur",
+            function () {
+                if ($(this).val() == "") {
+                    $(this).val("请输入");
+                    $(this).css("color", "#999")
+                }
+            });
+
+            //弹出出发地
+            $("#fromStation_icon_image").click(function () {
+                if (i == 0) {
+                    $("#form_cities2").css("display", "block");
+                    $("#choice_div").css("top", "100px");
+                    $("#choice_div").css("left", "258.304px");
+                    i = 1;
+                } else {
+                    $("#form_cities2").css("display", "none");
+                    i = 0;
+                }
+            });
+            //弹出目的地
+            $("#toStation_icon_image").click(function () {
+                if (i == 0) {
+                    $("#form_cities2").css("display", "block");
+                    $("#choice_div").css("top", "100px");
+                    $("#choice_div").css("left", "460px");
+                    i = 1;
+                } else {
+                    $("#form_cities2").css("display", "none");
+                    i = 0;
+                }
+            });
+            //选择出发日
+            var j = 0;
+            //选择首字母
+            $.stationForTicket = {
+                js: function (N) {
+                    var M;
+                    for (M = 1; M <= 7; M++) {
+                        if (M == N) {
+                            $("#ul_list" + M).css("display", "block");
+                            $("#nav_list" + M).addClass("action");
+                        }
+                        else {
+                            $("#ul_list" + M).css("display", "none");
+                            $("#nav_list" + M).removeClass("action")
+                        }
+                    }
+                },
+                closeShowCity: function () {
+                    $("#form_cities2").css("display", "none");
+                    i = 0;
+                },
+                pageDesigh: function () {
+                    alert("下一页");
+                },
+            }
+
+            var k = 0;
+            //选择全部 (缺陷：只能全选一次)
+            $("#train_type_btn_all").click(function () {
+                if (k == 0) {
+                    $("input[name='cc_type']").attr("checked", true);
+                    k = 1;
+                } else {
+                    $("input[name='cc_type']").attr("checked", false);
+                    k = 0;
+                }
+            });
+
+
+        });
+
+        $.extend({
+            //乘车人
+            showSelectBuyer: function () {
+                alert("乘车人");
+            },
+            //优先席别：
+            showSelectSeat: function () {
+                alert("优先席别");
+            },
+            //备选日期
+            showSelectDate: function () {
+                alert("备选日期");
+            },
+        })
+
+
+    </script>
+</head>
+<!--车票预订-->
+<body>
+    <!--播放音乐-->
+
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">中国公路客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list" style="display: none;">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
+                        您好，请
+                    </span>
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
+                    | <a id="regist_out" href="/Main/register">注册</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main" class="">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook" class="current">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect" class="">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:" class="">出行向导</a>
+                        <div class="nav-list" style="display: none;">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/queryStationBus">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor" class="">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--页面主体  开始-->
+    <div class="content" style="min-height: 429px;">
+        <div style="display: none">
+            <div class="audiojs " classname="audiojs" id="audiojs_wrapper0">
+                <audio preload="auto" loop="true" src=""></audio>
+                <div class="play-pause">
+                    <p class="play"></p>
+                    <p class="pause"></p>
+                    <p class="loading"></p>
+                    <p class="error"></p>
+                </div>
+                <div class="scrubber">
+                    <div class="progress" style="width: 0px;"></div>
+                    <div class="loaded" style="width: 0px;"></div>
+                </div>
+                <div class="time">
+                    <em class="played">00:00</em>/<strong class="duration">00:01</strong>
+                </div>
+                <div class="error-message"></div>
+            </div>
+        </div>
+        <div id="jplayerId" style="display: none"></div>
+        <!--车票搜索框 开始-->
+        <div class="sear-box quick-sear-box">
+            <form id="queryLeftForm" method="get" enctype="application/x-www-form-urlencoded">
+                <div class="dfc" id="dfc">
+                    <ul>
+                        <li>
+                            <input name="singleRoundType" type="radio" id="dc" class="radio" checked="checked" value="dc">
+                            <label for="dc" id="dc_label" class="cursor">单程</label>
+                        </li>
+                        <li>
+                            <input name="singleRoundType" type="radio" id="wf" class="radio" value="wc">
+                            <label for="wf" id="wf_label" class="cursor">往返</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="s-info" id="place_area">
+                    <ul>
+                        <li>
+                            <span class="label">
+                                <label id="fromStationText_label">出发地</label>
+                            </span>
+                            <div class="inp-w">
+                                <input id="fromStation" type="hidden" value="" name="leftTicketDTO.from_station">
+                                <input type="text" id="fromStationText" class="inp-txt inpt_unselected" value="简拼/全拼/汉字" name="leftTicketDTO.from_station_name">
+                                <span class="i-city" id="fromStation_icon_image" style="cursor: pointer;"></span>
+                            </div>
+                        </li>
+                        <li class="i-change i-change2" id="change_station" style="cursor: pointer; background-position: -67px -96px;"></li>
+                        <li>
+                            <span class="label">
+                                <label id="toStationText_label"> 目的地</label>
+                            </span>
+                            <div class="inp-w">
+                                <input id="toStation" type="hidden" value="" name="leftTicketDTO.to_station">
+                                <input type="text" id="toStationText" class="inp-txt" value="简拼/全拼/汉字" name="leftTicketDTO.to_station_name">
+                                <span class="i-city" id="toStation_icon_image" style="cursor: pointer;"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="label"> 出发日</span>
+                            <div class="inp-w" style="z-index:1200">
+                                @*<input type="text" class="inp_selected" name="leftTicketDTO.train_date" id="train_date" value="2013-06-07 周五" readonly="readonly" style="width: 113px;padding: 2px 0 5px 5px;">
+                                    <span id="date_icon_1" class="i-date"></span>*@
+                                <input id="train_date" class="easyui-datebox" type="text" name="leftTicketDTO.train_date" style="width:112px;height:28px;" data-options="formatter:myformatter,parser:myparser" />
+                            </div>
+                            <!--<div class="inp-w">
+                                                        <input th:value="${train_date}" type="text" class="inp-txt" name="leftTicketDTO.train_date" id="train_date"
+                                                            value="2013-06-07 周五" readonly="readonly"></input> <span id="date_icon_1" class="i-date"></span>
+                                                    </div>-->
+                        </li>
+                        <li class="no-change">
+                            <span class="label"> 返程日</span>
+                            <div class="inp-w" id="back_div" style="z-index:1100">
+                                <!--	<div id="back_train_date_" style="position: absolute; height: 250px;z-index:1100;left:0; top:30px;"></div>-->
+                                @*<input type="text" class="inp-txt" name="back_train_date" id="back_train_date" value="" readonly="readonly" disabled="disabled">
+                                    <span id="date_icon_2" class="i-date"></span>*@
+                                <input id="back_train_date" class="easyui-datebox" type="text" name="back_train_date" readonly="readonly" disabled="disabled" style="width:112px;height:28px;" data-options="formatter:myformatter,parser:myparser" />
+                            </div>
+                            <!--<div class="inp-w" id="back_div">
+                                                        <input th:value="${back_train_date}" type="text" class="inp-txt" name="back_train_date" id="back_train_date"
+                                                            value="2013-06-16 周日" readonly="readonly"></input> <span id="date_icon_2" class="i-date"></span>
+                                                    </div>-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="quick-s">
+                    <ul>
+                        <li>
+                            <input type="radio" id="sf1" class="radio" name="sf" checked="checked">
+                            <label id="sf1_label" for="sf1" class="cursor">普通</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="sf2" class="radio" name="sf">
+                            <label id="sf2_label" for="sf2" class="cursor">学生</label>
+                        </li>
+                    </ul>
+                    <div class="btn-area">
+                        <a href="javascript:" id="query_ticket" class="btn92s" shape="rect">查询</a>
+                        <div>
+                            <input id="auto_query" type="checkbox" class="check" style="margin-right:0px;">
+                            <label id="autoQueryTxt" for="auto_query" style="cursor: pointer;">开启自动查询</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--车票搜索框 结束-->
+        <div class="sear-sel" id="sear-sel">
+            <div id="date_range" class="sear-sel-hd clearfix">
+                @*日期*@
+
+                <div class="clear"></div>
+            </div>
+            <div class="sear-sel-bd quick-buy-sel quick-buy-open" id="sear-sel-bd" style="height: 17px">
+                <!--展开式高度设置为204px，合拢时为72px-->
+                <div class="pos-top" style="margin-right:20px;">
+                    发车时间：
+                    <select class="select-small" id="cc_start_time">
+                        <option value="00002400">00:00--24:00</option>
+                        <option value="00000600">00:00--06:00</option>
+                        <option value="06001200">06:00--12:00</option>
+                        <option value="12001800">12:00--18:00</option>
+                        <option value="18002400">18:00--24:00</option>
+                    </select>
+                </div>
+                <div class="section clearfix">
+                    <div class="section-hd">车次类型：</div>
+                    <div class="section-bd" id="cc_train_type_btn_all">
+                        <span class="btn-all" id="train_type_btn_all" style="cursor: pointer;">全部</span>
+                        <ul id="_ul_station_train_code"><li><input name="cc_type" value="G" type="checkbox" class="check" id="checkbox_1OH8sggqoC"><label for="checkbox_1OH8sggqoC" style="cursor: pointer;">GC-汽车/城际</label></li><li><input name="cc_type" value="D" type="checkbox" class="check" id="checkbox_NAiQUo3gbw"><label for="checkbox_NAiQUo3gbw" style="cursor: pointer;">D-普通</label></li><li><input name="cc_type" value="Z" type="checkbox" class="check" id="checkbox_G7y6jGsTli"><label for="checkbox_G7y6jGsTli" style="cursor: pointer;">Z-直达</label></li><li><input name="cc_type" value="T" type="checkbox" class="check" id="checkbox_gRuYSI87SP"><label for="checkbox_gRuYSI87SP" style="cursor: pointer;">T-空调车</label></li><li><input name="cc_type" value="K" type="checkbox" class="check" id="checkbox_u8JnWTTfX2"><label for="checkbox_u8JnWTTfX2" style="cursor: pointer;">K-小型</label></li><li><input name="cc_type" value="QT" type="checkbox" class="check" id="checkbox_lVhFYHeBVe"><label for="checkbox_lVhFYHeBVe" style="cursor: pointer;">其他</label></li></ul>
+                    </div>
+                </div>
+                <div class="section clearfix">
+                    <div class="section-hd">出发车站：</div>
+                    <div class="section-bd" id="cc_from_station_name_all">
+                        <span class="btn-all" id="from_station_name_all" style="cursor: pointer;">全部</span>
+                        <ul id="from_station_ul">
+                            <!-- 默认初始化页面时，该过滤条件下无复选框 -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section clearfix">
+                    <div class="section-hd">到达车站：</div>
+                    <div class="section-bd" id="cc_to_station_name_all">
+                        <span class="btn-all" id="to_station_name_all" style="cursor: pointer;">全部</span>
+                        <ul id="to_station_ul">
+                            <!-- 默认初始化页面时，该过滤条件下无复选框 -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section pt2 clearfix">
+                    <div class="section-hd" id="memb">乘车人：</div>
+                    <div class="section-bd pt2" id="setion_postion" style="width:688px;">
+                        <span class="wrap-left">
+                            <a href="javascript:" class="btn-small" onclick="$.showSelectBuyer()" shape="rect">请选择</a>
+                        </span>
+                    </div>
+                    <span style="color:red;width:auto;">您可点击“成人乘车人”添加儿童票。</span>
+                </div>
+                <div class="section clearfix">
+                    <div class="section-hd" id="train_first">优先车次：</div>
+                    <div class="section-bd pt2" id="prior_train">
+                        <!-- <span class="wrap-left"><input type="text" class="inp-small w50 fl" id="inp-train" value="请输入" /><a href="javascript:" class="btn-add" id="add-train">添加</a></span>-->
+                        <span class="wrap-left add-cc">
+                            <input type="text" maxlength="5" class="inp-small" id="inp-train" style="text-transform:uppercase" value="请输入" onkeypress="$.checkTrain(event,this)">
+                            <a href="javascript:" class="btn-add" id="add-train" shape="rect"></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="section clearfix">
+                    <div class="section-hd" id="seat_first">优先席别：</div>
+                    <div class="section-bd pt2" id="prior_seat">
+                        <span class="wrap-left">
+                            <a href="javascript:" class="btn-small" onclick="$.showSelectSeat()" shape="rect">请选择</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="section pt2 clearfix">
+                    <div class="section-hd" id="select_date">备选日期：</div>
+                    <div class="section-bd pt2" id="prior_date">
+                        <span class="wrap-left">
+                            <a href="javascript:" class="btn-small" id="train_date" onclick="$.showSelectDate()" shape="rect">请选择</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="section pt2 clearfix">
+                    <div class="section-hd" id="ad_setting">高级设置：</div>
+                    <div class="section-bd pt2">
+                        <span class="mr17">
+                            <select id="_prior" class="select-small" style="width:75px;margin-right:10px">
+                                <option value="1">席别优先</option>
+                                <option value="2">车次优先</option>
+                            </select>
+                        </span>
+                        <span class="mr17">
+                            <input type="checkbox" class="check" id="autoSubmit">
+                            <label for="autoSubmit" id="autoSubmitTxt" style="cursor: pointer; color: rgb(51, 51, 51);">自动提交</label>
+                        </span>
+                        <span class="mr17">
+                            <input type="checkbox" class="check" id="partSubmit">
+                            <label for="partSubmit" id="partSubmitTxt" style="cursor: pointer; color: rgb(51, 51, 51);">余票不足时部分提交</label>
+                        </span>
+                        <a href="javascript:" class="btn-small mr5" id="tryPlayer" shape="rect">试听提示音乐</a>
+                        <a href="javascript:" id="clearAll" class="btn-small" shape="rect">清空所有选项</a>
+                    </div>
+                </div>
+                <div class="section cc-pos" style="display:none">
+                    <div class="section-hd">车次：</div>
+                    <div class="section-bd" id="train_combo_box_div">
+                        <span class="inptxt w90" id="train_combo_box" style="float: left;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-gif" style="top:59px">
+                <a href="javascript:" id="show_more" class="down" shape="rect" style="cursor: pointer;">更多选项</a>
+            </div>
+            <!--箭头方向修改<a href="#nogo" class="up"></a>-->
+        </div>
+        <div class="sear-result" id="sear-result">
+            <span class="fr">
+                <input type="checkbox" class="check" id="avail_ticket">
+                <label for="avail_ticket" style="cursor: pointer;">
+                    显示全部可预订车次
+                </label>
+            </span>
+            <p>
+                <!-- 显示查询统计结果 -->
+            </p>
+        </div>
+        <div class="t-list" id="t-list">
+            <table>
+                <thead>
+                    <tr class="th" id="float">
+                        <th width="90" colspan="1" rowspan="1">车次</th>
+                        <th width="100" colspan="1" rowspan="1">
+                            出发站<br clear="none">
+                            到达站
+                        </th>
+                        <th width="82" colspan="1" rowspan="1" id="startendtime"><span class="b1" id="s_time" style="cursor: pointer;">出发时间</span><br><span class="b2" id="r_time" style="cursor: pointer;">到达时间</span></th>
+                        <th width="82" colspan="1" rowspan="1">
+                            <span class="b3" id="l_s" style="cursor: pointer;">历时</span>
+                        </th>
+                        <th width="49" colspan="1" rowspan="1">种类一</th>
+                        <th width="49" colspan="1" rowspan="1">种类二</th>
+                        <th width="49" colspan="1" rowspan="1">种类三</th>
+                        <th width="49" colspan="1" rowspan="1">种类四</th>
+                        <th width="49" colspan="1" rowspan="1">
+                            种类五<br clear="none">
+                            空调
+                        </th>
+                        <th width="49" colspan="1" rowspan="1">种类六</th>
+                        <th width="49" colspan="1" rowspan="1">种类七</th>
+                        <th width="49" colspan="1" rowspan="1">种类八</th>
+                        <th width="49" colspan="1" rowspan="1">种类九</th>
+                        <th width="49" colspan="1" rowspan="1">种类十</th>
+                        <th width="49" colspan="1" rowspan="1">其他</th>
+                        <th class="last" colspan="1" rowspan="1">备注</th>
+                    </tr>
+                </thead>
+                <tbody id="queryLeftTable"></tbody>
+            </table>
+            <div class="t-list-bd" id="t-list-bd">
+                <div class="no-ticket" id="no_filter_ticket" style="display: none">
+                    <span class="i-no"></span>
+                    <p>
+                        <!-- 没有符合筛选条件的车次，请修改筛选条件！<br />您可以<a href="#" id="show_all_query_result">显示全部</a>或<a href="/otsweb/zzzcx/init">使用中转查询功能</a>查询换乘车次。-->
+                        没有符合筛选条件的车次，请修改筛选条件<br clear="none">
+                        或<a href="#" id="show_all_query_result" shape="rect">显示全部车次</a>
+                        ！
+                    </p>
+                </div>
+                <div class="no-ticket" id="no_filter_ticket_3" style="display: none">
+                    <span class="i-no"></span>
+                    <p>
+                        没有查询到符合条件的车次，5秒后继续查询，请稍后！
+                    </p>
+                </div>
+                <div class="no-ticket" id="no_filter_ticket_4" style="display: none">
+                    <span class="i-no"></span>
+                    <p>
+                        没有符合筛选条件的车次，5秒后开始查询备选日期，请稍后！
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面主体  结束-->
+    <!--选择车站下拉框-->
+    <div id="choice_div" style="z-index: 2000; position: absolute; top: 173.869px; left: 258.304px;">
+        <div id="form_cities2" style="display: none; left: 0px; top: 30.0952px;">
+            <div id="panel_cities2">
+                <div class="com_hotresults" id="thetable" style="width:370px">
+                    <div style="width:100%;">
+                        <div class="ac_title"><span>拼音支持首字母输入</span><a class="ac_close" style="cursor:pointer" title="关闭" onclick="$.stationForBus.closeShowCity()"></a></div>
+                        <ul class="AbcSearch clx" id="abc">
+                            <li index="1" method="liHotTab" onclick="$.stationForBus.js(1)" id="nav_list1" class="action">热门</li>
+                            <li index="2" method="liHotTab" onclick="$.stationForBus.js(2)" id="nav_list2" class="">A－E</li>
+                            <li index="3" method="liHotTab" onclick="$.stationForBus.js(3)" id="nav_list3" class="">F－J</li>
+                            <li index="4" method="liHotTab" onclick="$.stationForBus.js(4)" id="nav_list4" class="">K－O</li>
+                            <li index="5" method="liHotTab" onclick="$.stationForBus.js(5)" id="nav_list5" class="">P－T</li>
+                            <li index="6" method="liHotTab" onclick="$.stationForBus.js(6)" id="nav_list6" class="">U－Z</li>
+                        </ul>
+                        <ul class="popcitylist" style="overflow: auto; max-height: 280px; height: 191px; display: block;" method="hotData" id="ul_list1">
+                            <li class="ac_even openLi ac_odd" title="北京" data="BJP">北京</li>
+                            <li class="ac_even openLi ac_odd" title="上海" data="SHH">上海</li>
+                            <li class="ac_even openLi ac_odd" title="天津" data="TJP">天津</li>
+                            <li class="ac_even openLi ac_odd" title="重庆" data="CQW">重庆</li>
+                            <li class="ac_even openLi ac_odd" title="长沙" data="CSQ">长沙</li>
+                            <li class="ac_even openLi ac_odd" title="长春" data="CCT">长春</li>
+                            <li class="ac_even openLi ac_odd" title="成都" data="CDW">成都</li>
+                            <li class="ac_even openLi ac_odd" title="福州" data="FZS">福州</li>
+                            <li class="ac_even openLi ac_odd" title="广州" data="GZQ">广州</li>
+                            <li class="ac_even openLi ac_odd" title="贵阳" data="GIW">贵阳</li>
+                            <li class="ac_even openLi ac_odd" title="呼和浩特" data="HHC">呼和浩特</li>
+                            <li class="ac_even openLi ac_odd" title="哈尔滨" data="HBB">哈尔滨</li>
+                            <li class="ac_even openLi ac_odd" title="合肥" data="HFH">合肥</li>
+                            <li class="ac_even openLi ac_odd" title="杭州" data="HZH">杭州</li>
+                            <li class="ac_even openLi ac_odd" title="海口" data="VUQ">海口</li>
+                            <li class="ac_even openLi ac_odd" title="济南" data="JNK">济南</li>
+                            <li class="ac_even openLi ac_odd" title="昆明" data="KMM">昆明</li>
+                            <li class="ac_even openLi ac_odd" title="拉萨" data="LSO">拉萨</li>
+                            <li class="ac_even openLi ac_odd" title="兰州" data="LZJ">兰州</li>
+                            <li class="ac_even openLi ac_odd" title="南宁" data="NNZ">南宁</li>
+                            <li class="ac_even openLi ac_odd" title="南京" data="NJH">南京</li>
+                            <li class="ac_even openLi ac_odd" title="南昌" data="NCG">南昌</li>
+                            <li class="ac_even openLi ac_odd" title="沈阳" data="SYT">沈阳</li>
+                            <li class="ac_even openLi ac_odd" title="石家庄" data="SJP">石家庄</li>
+                            <li class="ac_even openLi ac_odd" title="太原" data="TYV">太原</li>
+                            <li class="ac_even openLi ac_odd" title="乌鲁木齐南" data="WMR">乌鲁木齐南</li>
+                            <li class="ac_even openLi ac_odd" title="武汉" data="WHN">武汉</li>
+                            <li class="ac_even openLi ac_odd" title="西宁" data="XNO">西宁</li>
+                            <li class="ac_even openLi ac_odd" title="西安" data="XAY">西安</li>
+                            <li class="ac_even openLi ac_odd" title="银川" data="YIJ">银川</li>
+                            <li class="ac_even openLi ac_odd" title="郑州" data="ZZF">郑州</li>
+                            <li class="ac_even openLi ac_odd" title="深圳" data="SZQ">深圳</li>
+                            <li class="ac_even openLi ac_odd" title="厦门" data="XMS">厦门</li>
+                        </ul>
+                        <ul class="popcitylist" style="overflow: auto; max-height: 260px; height: 170px; display: none;" id="ul_list2">
+                            <li class="ac_even openLi" title="北京北" data="VAP">北京北</li>
+                            <li class="ac_even openLi" title="北京东" data="BOP">北京东</li>
+                            <li class="ac_even openLi" title="北京" data="BJP">北京</li>
+                            <li class="ac_even openLi" title="北京南" data="VNP">北京南</li>
+                            <li class="ac_even openLi" title="北京西" data="BXP">北京西</li>
+                            <li class="ac_even openLi" title="重庆北" data="CUW">重庆北</li>
+                            <li class="ac_even openLi" title="重庆" data="CQW">重庆</li>
+                            <li class="ac_even openLi" title="重庆南" data="CRW">重庆南</li>
+                            <li class="ac_even openLi" title="长春" data="CCT">长春</li>
+                            <li class="ac_even openLi" title="长春南" data="CET">长春南</li>
+                            <li class="ac_even openLi" title="长春西" data="CRT">长春西</li>
+                            <li class="ac_even openLi" title="成都东" data="ICW">成都东</li>
+                            <li class="ac_even openLi" title="成都南" data="CNW">成都南</li>
+                            <li class="ac_even openLi" title="成都" data="CDW">成都</li>
+                            <li class="ac_even openLi" title="长沙" data="CSQ">长沙</li>
+                            <li class="ac_even openLi" title="长沙南" data="CWQ">长沙南</li>
+                            <li class="ac_even openLi" title="阿尔山" data="ART">阿尔山</li>
+                            <li class="ac_even openLi" title="安康" data="AKY">安康</li>
+                            <li class="ac_even openLi" title="阿克苏" data="ASR">阿克苏</li>
+                            <li class="ac_even openLi" title="阿里河" data="AHX">阿里河</li>
+                            <li class="ac_even openLi" title="阿拉山口" data="AKR">阿拉山口</li>
+                            <li class="ac_even openLi" title="安平" data="APT">安平</li>
+                            <li class="ac_even openLi" title="安庆" data="AQH">安庆</li>
+                            <li class="ac_even openLi" title="安顺" data="ASW">安顺</li>
+                            <li class="ac_even openLi" title="鞍山" data="AST">鞍山</li>
+                            <li class="ac_even openLi" title="安阳" data="AYF">安阳</li>
+                            <li class="ac_even openLi" title="北安" data="BAB">北安</li>
+                            <li class="ac_even openLi" title="蚌埠" data="BBH">蚌埠</li>
+                            <li class="ac_even openLi" title="白城" data="BCT">白城</li>
+                            <li class="ac_even openLi" title="北海" data="BHZ">北海</li>
+                        </ul>
+                        <ul class="popcitylist" style="overflow: auto; max-height: 260px; height: 170px; display: none;" id="ul_list3">
+                            <li class="ac_even openLi ac_odd" title="广州南" data="IZQ">广州南</li>
+                            <li class="ac_even openLi ac_odd" title="广州东" data="GGQ">广州东</li>
+                            <li class="ac_even openLi ac_odd" title="福州" data="FZS">福州</li>
+                            <li class="ac_even openLi ac_odd" title="福州南" data="FYS">福州南</li>
+                            <li class="ac_even openLi ac_odd" title="贵阳" data="GIW">贵阳</li>
+                            <li class="ac_even openLi ac_odd" title="广州" data="GZQ">广州</li>
+                            <li class="ac_even openLi ac_odd" title="广州西" data="GXQ">广州西</li>
+                            <li class="ac_even openLi ac_odd" title="哈尔滨" data="HBB">哈尔滨</li>
+                            <li class="ac_even openLi ac_odd" title="哈尔滨东" data="VBB">哈尔滨东</li>
+                            <li class="ac_even openLi ac_odd" title="哈尔滨西" data="VAB">哈尔滨西</li>
+                            <li class="ac_even openLi ac_odd" title="合肥" data="HFH">合肥</li>
+                            <li class="ac_even openLi ac_odd" title="合肥西" data="HTH">合肥西</li>
+                            <li class="ac_even openLi ac_odd" title="呼和浩特东" data="NDC">呼和浩特东</li>
+                            <li class="ac_even openLi ac_odd" title="呼和浩特" data="HHC">呼和浩特</li>
+                            <li class="ac_even openLi ac_odd" title="海  口东" data="KEQ">海  口东</li>
+                            <li class="ac_even openLi ac_odd" title="海口东" data="HMQ">海口东</li>
+                            <li class="ac_even openLi ac_odd" title="海口" data="VUQ">海口</li>
+                            <li class="ac_even openLi ac_odd" title="杭州东" data="HGH">杭州东</li>
+                            <li class="ac_even openLi ac_odd" title="杭州" data="HZH">杭州</li>
+                            <li class="ac_even openLi ac_odd" title="杭州南" data="XHH">杭州南</li>
+                            <li class="ac_even openLi ac_odd" title="济南" data="JNK">济南</li>
+                            <li class="ac_even openLi ac_odd" title="济南东" data="JAK">济南东</li>
+                            <li class="ac_even openLi ac_odd" title="济南西" data="JGK">济南西</li>
+                            <li class="ac_even openLi ac_odd" title="福鼎" data="FES">福鼎</li>
+                            <li class="ac_even openLi ac_odd" title="凤凰机场" data="FJQ">凤凰机场</li>
+                            <li class="ac_even openLi ac_odd" title="风陵渡" data="FLV">风陵渡</li>
+                            <li class="ac_even openLi ac_odd" title="涪陵" data="FLW">涪陵</li>
+                            <li class="ac_even openLi ac_odd" title="富拉尔基" data="FRX">富拉尔基</li>
+                            <li class="ac_even openLi ac_odd" title="抚顺北" data="FET">抚顺北</li>
+                            <li class="ac_even openLi ac_odd" title="佛山" data="FSQ">佛山</li>
+                        </ul>
+                        <ul class="popcitylist" style="overflow: auto; max-height: 260px; height: 170px; display: none;" id="ul_list4">
+                            <li class="ac_even openLi ac_odd" title="昆明" data="KMM">昆明</li>
+                            <li class="ac_even openLi ac_odd" title="昆明西" data="KXM">昆明西</li>
+                            <li class="ac_even openLi ac_odd" title="拉萨" data="LSO">拉萨</li>
+                            <li class="ac_even openLi ac_odd" title="兰州东" data="LVJ">兰州东</li>
+                            <li class="ac_even openLi ac_odd" title="兰州" data="LZJ">兰州</li>
+                            <li class="ac_even openLi ac_odd" title="兰州西" data="LAJ">兰州西</li>
+                            <li class="ac_even openLi ac_odd" title="南昌" data="NCG">南昌</li>
+                            <li class="ac_even openLi ac_odd" title="南京" data="NJH">南京</li>
+                            <li class="ac_even openLi ac_odd" title="南京南" data="NKH">南京南</li>
+                            <li class="ac_even openLi ac_odd" title="南宁" data="NNZ">南宁</li>
+                            <li class="ac_even openLi ac_odd" title="库尔勒" data="KLR">库尔勒</li>
+                            <li class="ac_even openLi ac_odd" title="开封" data="KFF">开封</li>
+                            <li class="ac_even openLi ac_odd" title="岢岚" data="KLV">岢岚</li>
+                            <li class="ac_even openLi ac_odd" title="凯里" data="KLW">凯里</li>
+                            <li class="ac_even openLi ac_odd" title="喀什" data="KSR">喀什</li>
+                            <li class="ac_even openLi ac_odd" title="昆山南" data="KNH">昆山南</li>
+                            <li class="ac_even openLi ac_odd" title="奎屯" data="KTR">奎屯</li>
+                            <li class="ac_even openLi ac_odd" title="开原" data="KYT">开原</li>
+                            <li class="ac_even openLi ac_odd" title="六安" data="UAH">六安</li>
+                            <li class="ac_even openLi ac_odd" title="灵宝" data="LBF">灵宝</li>
+                            <li class="ac_even openLi ac_odd" title="芦潮港" data="UCH">芦潮港</li>
+                            <li class="ac_even openLi ac_odd" title="隆昌" data="LCW">隆昌</li>
+                            <li class="ac_even openLi ac_odd" title="陆川" data="LKZ">陆川</li>
+                            <li class="ac_even openLi ac_odd" title="利川" data="LCN">利川</li>
+                            <li class="ac_even openLi ac_odd" title="临川" data="LCG">临川</li>
+                            <li class="ac_even openLi ac_odd" title="潞城" data="UTP">潞城</li>
+                            <li class="ac_even openLi ac_odd" title="鹿道" data="LDL">鹿道</li>
+                            <li class="ac_even openLi ac_odd" title="娄底" data="LDQ">娄底</li>
+                            <li class="ac_even openLi ac_odd" title="临汾" data="LFV">临汾</li>
+                            <li class="ac_even openLi ac_odd" title="良各庄" data="LGP">良各庄</li>
+                        </ul>
+                        <ul class="popcitylist" style="overflow: auto; max-height: 260px; height: 170px; display: none;" id="ul_list5">
+                            <li class="ac_even openLi ac_odd" title="上海" data="SHH">上海</li>
+                            <li class="ac_even openLi ac_odd" title="上海南" data="SNH">上海南</li>
+                            <li class="ac_even openLi ac_odd" title="上海虹桥" data="AOH">上海虹桥</li>
+                            <li class="ac_even openLi ac_odd" title="上海西" data="SXH">上海西</li>
+                            <li class="ac_even openLi ac_odd" title="天津北" data="TBP">天津北</li>
+                            <li class="ac_even openLi ac_odd" title="天津" data="TJP">天津</li>
+                            <li class="ac_even openLi ac_odd" title="天津南" data="TIP">天津南</li>
+                            <li class="ac_even openLi ac_odd" title="天津西" data="TXP">天津西</li>
+                            <li class="ac_even openLi ac_odd" title="石家庄北" data="VVP">石家庄北</li>
+                            <li class="ac_even openLi ac_odd" title="石家庄" data="SJP">石家庄</li>
+                            <li class="ac_even openLi ac_odd" title="沈阳" data="SYT">沈阳</li>
+                            <li class="ac_even openLi ac_odd" title="沈阳北" data="SBT">沈阳北</li>
+                            <li class="ac_even openLi ac_odd" title="沈阳东" data="SDT">沈阳东</li>
+                            <li class="ac_even openLi ac_odd" title="太原北" data="TBV">太原北</li>
+                            <li class="ac_even openLi ac_odd" title="太原东" data="TDV">太原东</li>
+                            <li class="ac_even openLi ac_odd" title="太原" data="TYV">太原</li>
+                            <li class="ac_even openLi ac_odd" title="平顶山" data="PEN">平顶山</li>
+                            <li class="ac_even openLi ac_odd" title="盘锦" data="PVD">盘锦</li>
+                            <li class="ac_even openLi ac_odd" title="平凉" data="PIJ">平凉</li>
+                            <li class="ac_even openLi ac_odd" title="平凉南" data="POJ">平凉南</li>
+                            <li class="ac_even openLi ac_odd" title="平泉" data="PQP">平泉</li>
+                            <li class="ac_even openLi ac_odd" title="坪石" data="PSQ">坪石</li>
+                            <li class="ac_even openLi ac_odd" title="萍乡" data="PXG">萍乡</li>
+                            <li class="ac_even openLi ac_odd" title="凭祥" data="PXZ">凭祥</li>
+                            <li class="ac_even openLi ac_odd" title="郫县西" data="PCW">郫县西</li>
+                            <li class="ac_even openLi ac_odd" title="攀枝花" data="PRW">攀枝花</li>
+                            <li class="ac_even openLi ac_odd" title="蕲春" data="QRN">蕲春</li>
+                            <li class="ac_even openLi ac_odd" title="青城山" data="QSW">青城山</li>
+                            <li class="ac_even openLi ac_odd" title="青岛" data="QDK">青岛</li>
+                            <li class="ac_even openLi ac_odd" title="清河城" data="QYP">清河城</li>
+                        </ul>
+                        <ul class="popcitylist" style="overflow: auto; max-height: 260px; height: 170px; display: none;" id="ul_list6">
+                            <li class="ac_even openLi ac_odd" title="武汉" data="WHN">武汉</li>
+                            <li class="ac_even openLi ac_odd" title="王家营西" data="KNM">王家营西</li>
+                            <li class="ac_even openLi ac_odd" title="乌鲁木齐南" data="WMR">乌鲁木齐南</li>
+                            <li class="ac_even openLi ac_odd" title="西安北" data="EAY">西安北</li>
+                            <li class="ac_even openLi ac_odd" title="西安" data="XAY">西安</li>
+                            <li class="ac_even openLi ac_odd" title="西安南" data="CAY">西安南</li>
+                            <li class="ac_even openLi ac_odd" title="西宁" data="XNO">西宁</li>
+                            <li class="ac_even openLi ac_odd" title="银川" data="YIJ">银川</li>
+                            <li class="ac_even openLi ac_odd" title="郑州" data="ZZF">郑州</li>
+                            <li class="ac_even openLi ac_odd" title="五常" data="WCB">五常</li>
+                            <li class="ac_even openLi ac_odd" title="武昌" data="WCN">武昌</li>
+                            <li class="ac_even openLi ac_odd" title="瓦房店" data="WDT">瓦房店</li>
+                            <li class="ac_even openLi ac_odd" title="威海" data="WKK">威海</li>
+                            <li class="ac_even openLi ac_odd" title="芜湖" data="WHH">芜湖</li>
+                            <li class="ac_even openLi ac_odd" title="乌海西" data="WXC">乌海西</li>
+                            <li class="ac_even openLi ac_odd" title="吴家屯" data="WJT">吴家屯</li>
+                            <li class="ac_even openLi ac_odd" title="武隆" data="WLW">武隆</li>
+                            <li class="ac_even openLi ac_odd" title="乌兰浩特" data="WWT">乌兰浩特</li>
+                            <li class="ac_even openLi ac_odd" title="渭南" data="WNY">渭南</li>
+                            <li class="ac_even openLi ac_odd" title="威舍" data="WSM">威舍</li>
+                            <li class="ac_even openLi ac_odd" title="歪头山" data="WIT">歪头山</li>
+                            <li class="ac_even openLi ac_odd" title="武威" data="WUJ">武威</li>
+                            <li class="ac_even openLi ac_odd" title="武威南" data="WWJ">武威南</li>
+                            <li class="ac_even openLi ac_odd" title="无锡" data="WXH">无锡</li>
+                            <li class="ac_even openLi ac_odd" title="乌西" data="WXR">乌西</li>
+                            <li class="ac_even openLi ac_odd" title="乌伊岭" data="WPB">乌伊岭</li>
+                            <li class="ac_even openLi ac_odd" title="武夷山" data="WAS">武夷山</li>
+                            <li class="ac_even openLi ac_odd" title="万源" data="WYY">万源</li>
+                            <li class="ac_even openLi ac_odd" title="万州" data="WYW">万州</li>
+                            <li class="ac_even openLi ac_odd" title="梧州" data="WZZ">梧州</li>
+                        </ul>
+                        <div id="flip_cities2" style="display: block;">«&nbsp;上一页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" class="cityflip" onclick="$.stationForBus.pageDesigh(15,1,2)">下一页&nbsp;»</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*页面底部*@
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    @*返回顶部按钮*@
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+
+
+

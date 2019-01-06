@@ -1,0 +1,181 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/userSecurity.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <style type="text/css">
+        .inf-mistake {
+            color: #f00;
+        }
+
+        .mobile_no_information {
+            color: #f00;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            //查询乘客联系信息
+            $.ajax({
+                url: "/MyTicket/getbindTel",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, data) {
+                        if (data.checkdate == "") {
+                            var c = '<span id="old_mobile_no">' + data.mobilephonenumber + '</span><a href="javascript:" id="has_hy_a" shape="rect" style="display: none;">已通过核验</a><a id="hy_a" style="cursor: pointer; margin-left: 5px; display: block;" shape="rect">手机核验</a>';
+                            $("#old-number").append($(c)).show();
+                        } else {
+                            var d = '<span id="old_mobile_no">' + data.mobilephonenumber + '</span><a href="javascript:" id="has_hy_a" shape="rect">已通过核验</a><a id="hy_a" style="cursor: pointer; margin-left: 5px; display: none;" shape="rect">手机核验</a>';
+                            $("#old-number").append($(d)).show();
+                        }
+                    })
+                }
+            })
+            $("#mobile_no").on("blur", function () {
+
+                if ("" == $("#mobile_no").val().trim() || null == $("#mobile_no").val().trim()) {
+                    return
+                }
+                var c = /^[1][0-9]{10}$/;
+                if (!c.test($("#mobile_no").val())) {
+                    $(".mobile_no_information").css("display", "block");
+                    $("#mobile_no").val("");
+                } else {
+                    $(".mobile_no_information").css("display", "none");
+                }
+            });
+        });
+
+        $.extend({
+            //修改手机号
+            _editSubmit: function () {
+                $.ajax({
+                    url: "/MyTicket/updatebindTel?phonenumber=" + $("#mobile_no").val() + "&"
+                                                               + "pwd=" + $('#_loginPwd').val() + "&",
+                    type: "post",
+                    dataType: "json",
+                    success: function (result) {
+                        alert(result);
+                        if ($.trim(result) != "您输入的密码不正确！请重新输入！") {
+                            location.reload();
+                        } else {
+                            $(".tips").css("display", "none");
+                            $(".inf-mistake").css("display", "block");
+                            $("#_loginPwd").val("");
+
+                        }
+                    }
+                })
+            },
+            //取消
+            _cancelSubmit: function () {
+                //location.reload();
+                window.location.href = "/MyTicket/userSecurity";
+            },
+        })
+
+    </script>
+</head>
+<!--手机核验-->
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        @*<div class="crumbs">
+                您现在的位置：<a href="/Main/Main" shape="rect">客运首页</a>
+                &nbsp;&gt;&nbsp;<a href="/MyTicket/MyTicket" shape="rect">我的Ticket</a>
+                &nbsp;&gt;&nbsp;<a href="#" shape="rect">个人信息</a>
+                &nbsp;&gt;&nbsp;<a href="/MyTicket/userSecurity" shape="rect">账号安全</a>
+                &nbsp;&gt;&nbsp;
+                <strong>手机核验</strong>
+            </div>*@
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--系统信息 开始-->
+            <div class="layout order">
+                <div class="lay-hd">账号安全</div>
+                <form action="" id="_editMobileForm" method="get" enctype="application/x-www-form-urlencoded" novalidate="novalidate">
+                    <div class="lay-bd">
+                        <div class="safe">
+                            <h2>手机核验</h2>
+                            <ul class="safe-list">
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        原手机号：
+                                    </div>
+                                    <div class="r-txt" id="old-number">
+                                        @*<span id="old_mobile_no">18707644495</span>
+                                            <a href="javascript:" id="has_hy_a" shape="rect">已通过核验</a>
+                                            <a id="hy_a" style="cursor: pointer; margin-left: 5px; display: none;" shape="rect">手机核验</a>*@
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        新手机号：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input name="mobile_no" id="mobile_no" type="text" class="inptxt w200 color333" maxlength="11">
+                                    </div>
+                                    <div class="mobile_no_information" style="display:none">*手机号格式不正确，请重新输入!</div>
+                                </li>
+                                <li class="line"></li>
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        登录密码：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input name="_loginPwd" id="_loginPwd" type="password" class="inptxt w200 color333">
+                                    </div>
+                                    <div class="tips">正确输入密码才能修改密保</div>
+                                    <div class="inf-mistake" style="display:none">*密码错误，请重新输入密码</div>
+                                </li>
+                            </ul>
+                            <div class="lay-btn">
+                                <a href="javascript:$._cancelSubmit();" class="btn92" shape="rect">取消</a>
+                                <a href="javascript:$._editSubmit();" class="btn92s" shape="rect">确认</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--系统信息 结束-->
+
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+    <!--页面底部  开始-->
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    <!--页面底部  结束-->
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+
+</body>
+</html>
+
+
+

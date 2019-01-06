@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="火车票务管理系统Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Addset">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="systemset" Type="bit" />
+    <Property Name="passengermanager" Type="bit" />
+    <Property Name="ticketmanager" Type="bit" />
+    <Property Name="ticketpurchage" Type="bit" />
+    <Property Name="systemsearch" Type="bit" />
+  </EntityType>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="carID" />
+    </Key>
+    <Property Name="carID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="carNum" Type="nchar" MaxLength="10" />
+    <Property Name="carTypeID" Type="int" />
+  </EntityType>
+  <EntityType Name="Carseat">
+    <Key>
+      <PropertyRef Name="carSeatID" />
+    </Key>
+    <Property Name="carSeatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="carID" Type="int" />
+    <Property Name="seat" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="CarType">
+    <Key>
+      <PropertyRef Name="cartypeID" />
+    </Key>
+    <Property Name="cartypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="carTypeName" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="cityID" />
+    </Key>
+    <Property Name="cityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cityName" Type="nchar" MaxLength="20" />
+    <Property Name="provinceID" Type="int" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“火车票务管理系统.dbo.Country”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="countryName" Type="nvarchar" MaxLength="255" />
+    <Property Name="shortcode" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customerID" />
+    </Key>
+    <Property Name="customerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="paperworkNumber" Type="nchar" MaxLength="30" />
+    <Property Name="name" Type="nchar" MaxLength="20" />
+    <Property Name="sex" Type="nchar" MaxLength="10" />
+    <Property Name="passengertypeID" Type="int" />
+  </EntityType>
+  <EntityType Name="Daily">
+    <Key>
+      <PropertyRef Name="dailyID" />
+    </Key>
+    <Property Name="dailyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date" Type="date" />
+    <Property Name="userID" Type="int" />
+    <Property Name="operate" Type="nchar" MaxLength="20" />
+    <Property Name="moduleID" Type="int" />
+  </EntityType>
+  <EntityType Name="Linkman">
+    <Key>
+      <PropertyRef Name="linkmanID" />
+    </Key>
+    <Property Name="linkmanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="linkmanName" Type="nchar" MaxLength="20" />
+    <Property Name="sex" Type="nchar" MaxLength="10" />
+    <Property Name="countryID" Type="int" />
+    <Property Name="paperworkTypeID" Type="int" />
+    <Property Name="paperworkNumber" Type="nchar" MaxLength="30" />
+    <Property Name="adddate" Type="date" />
+    <Property Name="chekestate" Type="nchar" MaxLength="16" />
+    <Property Name="phonenumber" Type="nchar" MaxLength="15" />
+    <Property Name="fixedphone" Type="nchar" MaxLength="15" />
+    <Property Name="email" Type="nchar" MaxLength="20" />
+    <Property Name="address" Type="nchar" MaxLength="100" />
+    <Property Name="postcode" Type="nchar" MaxLength="10" />
+    <Property Name="ticketTypeID" Type="int" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="moduleID" Type="int" Nullable="false" />
+    <Property Name="moduleName" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="NonstopView">
+    <Key>
+      <PropertyRef Name="nonstopViewID" />
+    </Key>
+    <Property Name="nonstopViewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="20" />
+    <Property Name="StartStation" Type="nvarchar" MaxLength="20" />
+    <Property Name="EndStation" Type="nvarchar" MaxLength="20" />
+    <Property Name="RouteID" Type="nvarchar" MaxLength="35" />
+    <Property Name="StopCount" Type="int" />
+    <Property Name="KM" Type="int" />
+    <Property Name="D_Time" Type="nvarchar" MaxLength="20" />
+    <Property Name="A_Time" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="orderID" />
+    </Key>
+    <Property Name="orderID" Type="int" Nullable="false" />
+    <Property Name="orderNum" Type="nchar" MaxLength="20" />
+    <Property Name="totalPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="orderTime" Type="date" />
+    <Property Name="rideDate" Type="date" />
+    <Property Name="ifPaid" Type="bit" />
+    <Property Name="ifCancel" Type="bit" />
+    <Property Name="userID" Type="int" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="orderDetailID" />
+    </Key>
+    <Property Name="orderDetailID" Type="int" Nullable="false" />
+    <Property Name="orderID" Type="int" />
+    <Property Name="trainSeatIntervalID" Type="int" />
+    <Property Name="ticketTypeID" Type="int" />
+    <Property Name="passengerName" Type="nchar" MaxLength="16" />
+    <Property Name="paperworkTypeID" Type="int" />
+    <Property Name="paperworkNumber" Type="nchar" MaxLength="30" />
+    <Property Name="phone" Type="nchar" MaxLength="15" />
+    <Property Name="ifChangeTicket" Type="bit" />
+    <Property Name="ifCancelTicket" Type="bit" />
+    <Property Name="intervalBit" Type="bigint" />
+    <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="orderstatus" Type="nchar" MaxLength="16" />
+    <Property Name="ifInsurance" Type="bit" />
+  </EntityType>
+  <EntityType Name="Outlet">
+    <Key>
+      <PropertyRef Name="OutletID" />
+    </Key>
+    <Property Name="OutletID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OutleName" Type="nchar" MaxLength="50" />
+    <Property Name="address" Type="nchar" MaxLength="100" />
+    <Property Name="businessHours" Type="nchar" MaxLength="30" />
+    <Property Name="windownumber" Type="int" />
+    <Property Name="provinceID" Type="int" />
+    <Property Name="cityID" Type="int" />
+    <Property Name="townID" Type="int" />
+  </EntityType>
+  <EntityType Name="PassworkType">
+    <Key>
+      <PropertyRef Name="passworkTypeID" />
+    </Key>
+    <Property Name="passworkTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="passworkType" Type="nchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Pinyin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Station" Type="nvarchar" MaxLength="20" />
+    <Property Name="Shortcode" Type="nvarchar" MaxLength="10" />
+    <Property Name="FullCode" Type="nvarchar" MaxLength="35" />
+    <Property Name="Province" Type="nvarchar" MaxLength="10" />
+    <Property Name="ProPinyin" Type="nvarchar" MaxLength="35" />
+    <Property Name="Call" Type="int" />
+  </EntityType>
+  <EntityType Name="Power">
+    <Key>
+      <PropertyRef Name="powerID" />
+    </Key>
+    <Property Name="powerID" Type="int" Nullable="false" />
+    <Property Name="powerName" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="provinceID" />
+    </Key>
+    <Property Name="provinceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="provinceName" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Returnticket">
+    <Key>
+      <PropertyRef Name="returnticketID" />
+    </Key>
+    <Property Name="returnticketID" Type="int" Nullable="false" />
+    <Property Name="returnNumber" Type="nchar" MaxLength="20" />
+    <Property Name="orderDetailID" Type="int" />
+    <Property Name="trainID" Type="int" />
+    <Property Name="returnDate" Type="date" />
+    <Property Name="returnMoney" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="fee" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Seat">
+    <Key>
+      <PropertyRef Name="seatID" />
+    </Key>
+    <Property Name="seatID" Type="int" Nullable="false" />
+    <Property Name="seatNum" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="studentID" />
+    </Key>
+    <Property Name="studentID" Type="int" Nullable="false" />
+    <Property Name="linkmanID" Type="int" />
+    <Property Name="provinceID" Type="int" />
+    <Property Name="schoolName" Type="nchar" MaxLength="50" />
+    <Property Name="department" Type="nchar" MaxLength="20" />
+    <Property Name="class" Type="nchar" MaxLength="20" />
+    <Property Name="studentNumber" Type="nchar" MaxLength="20" />
+    <Property Name="lengthOfschooling" Type="int" />
+    <Property Name="yearIn" Type="nchar" MaxLength="10" />
+    <Property Name="cardNumber" Type="nchar" MaxLength="20" />
+    <Property Name="interval" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TicketType">
+    <Key>
+      <PropertyRef Name="ticketTypeID" />
+    </Key>
+    <Property Name="ticketTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ticketTypename" Type="nchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Town">
+    <Key>
+      <PropertyRef Name="townID" />
+    </Key>
+    <Property Name="townID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="townName" Type="nchar" MaxLength="20" />
+    <Property Name="cityID" Type="int" />
+  </EntityType>
+  <EntityType Name="Train">
+    <Key>
+      <PropertyRef Name="trainID" />
+    </Key>
+    <Property Name="trainID" Type="int" Nullable="false" />
+    <Property Name="trainNum" Type="nchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="TrainList">
+    <Key>
+      <PropertyRef Name="TrainListID" />
+    </Key>
+    <Property Name="TrainListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="trainID" Type="nvarchar" MaxLength="35" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="20" />
+    <Property Name="startStation" Type="nvarchar" MaxLength="20" />
+    <Property Name="endStation" Type="nvarchar" MaxLength="20" />
+    <Property Name="R_Date" Type="nvarchar" MaxLength="20" />
+    <Property Name="Distance" Type="int" />
+  </EntityType>
+  <EntityType Name="TrainSeat">
+    <Key>
+      <PropertyRef Name="trainSeatID" />
+    </Key>
+    <Property Name="trainSeatID" Type="int" Nullable="false" />
+    <Property Name="trainID" Type="int" />
+    <Property Name="carSeatID" Type="int" />
+  </EntityType>
+  <EntityType Name="TrainStation">
+    <Key>
+      <PropertyRef Name="TrainStationID" />
+    </Key>
+    <Property Name="TrainStationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="trainID" Type="nvarchar" MaxLength="35" />
+    <Property Name="Type" Type="nvarchar" MaxLength="20" />
+    <Property Name="Station" Type="nvarchar" MaxLength="20" />
+    <Property Name="S_No" Type="int" />
+    <Property Name="Day" Type="int" />
+    <Property Name="A_Time" Type="nvarchar" MaxLength="20" />
+    <Property Name="D_Time" Type="nvarchar" MaxLength="20" />
+    <Property Name="R_Date" Type="nvarchar" MaxLength="20" />
+    <Property Name="Distance" Type="int" />
+    <Property Name="P1" Type="nvarchar" MaxLength="20" />
+    <Property Name="P2" Type="nvarchar" MaxLength="20" />
+    <Property Name="P3" Type="nvarchar" MaxLength="20" />
+    <Property Name="P4" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="int" Nullable="false" />
+    <Property Name="userName" Type="nchar" MaxLength="20" />
+    <Property Name="pwd" Type="nchar" MaxLength="20" />
+    <Property Name="cancelCount" Type="int" />
+  </EntityType>
+  <EntityContainer Name="火车票务管理系统ModelStoreContainer">
+    <EntitySet Name="Addset" EntityType="Self.Addset" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Carseat" EntityType="Self.Carseat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CarType" EntityType="Self.CarType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Daily" EntityType="Self.Daily" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Linkman" EntityType="Self.Linkman" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NonstopView" EntityType="Self.NonstopView" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Outlet" EntityType="Self.Outlet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PassworkType" EntityType="Self.PassworkType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pinyin" EntityType="Self.Pinyin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Power" EntityType="Self.Power" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Returnticket" EntityType="Self.Returnticket" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Seat" EntityType="Self.Seat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketType" EntityType="Self.TicketType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Town" EntityType="Self.Town" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Train" EntityType="Self.Train" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainList" EntityType="Self.TrainList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainSeat" EntityType="Self.TrainSeat" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainStation" EntityType="Self.TrainStation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Country].[CountryID] AS [CountryID], 
+    [Country].[countryName] AS [countryName], 
+    [Country].[shortcode] AS [shortcode]
+    FROM [dbo].[Country] AS [Country]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

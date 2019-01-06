@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="火车票务管理系统Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="火车票务管理系统Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addset" EntityType="火车票务管理系统Model.Addset" />
+    <EntitySet Name="Car" EntityType="火车票务管理系统Model.Car" />
+    <EntitySet Name="Carseat" EntityType="火车票务管理系统Model.Carseat" />
+    <EntitySet Name="CarType" EntityType="火车票务管理系统Model.CarType" />
+    <EntitySet Name="City" EntityType="火车票务管理系统Model.City" />
+    <EntitySet Name="Country" EntityType="火车票务管理系统Model.Country" />
+    <EntitySet Name="Customer" EntityType="火车票务管理系统Model.Customer" />
+    <EntitySet Name="Daily" EntityType="火车票务管理系统Model.Daily" />
+    <EntitySet Name="Linkman" EntityType="火车票务管理系统Model.Linkman" />
+    <EntitySet Name="Module" EntityType="火车票务管理系统Model.Module" />
+    <EntitySet Name="Order" EntityType="火车票务管理系统Model.Order" />
+    <EntitySet Name="OrderDetail" EntityType="火车票务管理系统Model.OrderDetail" />
+    <EntitySet Name="Outlet" EntityType="火车票务管理系统Model.Outlet" />
+    <EntitySet Name="Pinyin" EntityType="火车票务管理系统Model.Pinyin" />
+    <EntitySet Name="Power" EntityType="火车票务管理系统Model.Power" />
+    <EntitySet Name="Province" EntityType="火车票务管理系统Model.Province" />
+    <EntitySet Name="Returnticket" EntityType="火车票务管理系统Model.Returnticket" />
+    <EntitySet Name="Seat" EntityType="火车票务管理系统Model.Seat" />
+    <EntitySet Name="Student" EntityType="火车票务管理系统Model.Student" />
+    <EntitySet Name="TicketType" EntityType="火车票务管理系统Model.TicketType" />
+    <EntitySet Name="Town" EntityType="火车票务管理系统Model.Town" />
+    <EntitySet Name="Train" EntityType="火车票务管理系统Model.Train" />
+    <EntitySet Name="TrainSeat" EntityType="火车票务管理系统Model.TrainSeat" />
+    <EntitySet Name="User" EntityType="火车票务管理系统Model.User" />
+    <EntitySet Name="TrainList" EntityType="火车票务管理系统Model.TrainList" />
+    <EntitySet Name="TrainStation" EntityType="火车票务管理系统Model.TrainStation" />
+    <EntitySet Name="PassworkType" EntityType="火车票务管理系统Model.PassworkType" />
+    <EntitySet Name="NonstopView" EntityType="火车票务管理系统Model.NonstopView" />
+  </EntityContainer>
+  <EntityType Name="Addset">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="userID" Type="Int32" />
+    <Property Name="systemset" Type="Boolean" />
+    <Property Name="passengermanager" Type="Boolean" />
+    <Property Name="ticketmanager" Type="Boolean" />
+    <Property Name="ticketpurchage" Type="Boolean" />
+    <Property Name="systemsearch" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="carID" />
+    </Key>
+    <Property Name="carID" Type="Int32" Nullable="false" />
+    <Property Name="carNum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="carTypeID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Carseat">
+    <Key>
+      <PropertyRef Name="carSeatID" />
+    </Key>
+    <Property Name="carSeatID" Type="Int32" Nullable="false" />
+    <Property Name="carID" Type="Int32" />
+    <Property Name="seat" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CarType">
+    <Key>
+      <PropertyRef Name="cartypeID" />
+    </Key>
+    <Property Name="cartypeID" Type="Int32" Nullable="false" />
+    <Property Name="carTypeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="cityID" />
+    </Key>
+    <Property Name="cityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cityName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="provinceID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="countryName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="shortcode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customerID" />
+    </Key>
+    <Property Name="customerID" Type="Int32" Nullable="false" />
+    <Property Name="paperworkNumber" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="sex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="passengertypeID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Daily">
+    <Key>
+      <PropertyRef Name="dailyID" />
+    </Key>
+    <Property Name="dailyID" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="userID" Type="Int32" />
+    <Property Name="operate" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="moduleID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Linkman">
+    <Key>
+      <PropertyRef Name="linkmanID" />
+    </Key>
+    <Property Name="linkmanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="Int32" />
+    <Property Name="linkmanName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="sex" Type="Int32" />
+    <Property Name="countryID" Type="Int32" />
+    <Property Name="paperworkTypeID" Type="Int32" />
+    <Property Name="paperworkNumber" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="adddate" Type="DateTime" Precision="0" />
+    <Property Name="chekestate" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
+    <Property Name="phonenumber" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="fixedphone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="postcode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ticketTypeID" Type="Int32" />
+    <Property Name="e_mail" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="moduleID" />
+    </Key>
+    <Property Name="moduleID" Type="Int32" Nullable="false" />
+    <Property Name="moduleName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="orderID" />
+    </Key>
+    <Property Name="orderID" Type="Int32" Nullable="false" />
+    <Property Name="orderNum" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="totalPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="orderTime" Type="DateTime" Precision="0" />
+    <Property Name="rideDate" Type="DateTime" Precision="0" />
+    <Property Name="ifPaid" Type="Boolean" />
+    <Property Name="ifCancel" Type="Boolean" />
+    <Property Name="userID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="orderDetailID" />
+    </Key>
+    <Property Name="orderDetailID" Type="Int32" Nullable="false" />
+    <Property Name="orderID" Type="Int32" />
+    <Property Name="trainSeatIntervalID" Type="Int32" />
+    <Property Name="ticketTypeID" Type="Int32" />
+    <Property Name="passengerName" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
+    <Property Name="paperworkTypeID" Type="Int32" />
+    <Property Name="paperworkNumber" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="ifChangeTicket" Type="Boolean" />
+    <Property Name="ifCancelTicket" Type="Boolean" />
+    <Property Name="intervalBit" Type="Int64" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="orderstatus" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
+    <Property Name="ifInsurance" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Outlet">
+    <Key>
+      <PropertyRef Name="OutletID" />
+    </Key>
+    <Property Name="OutletID" Type="Int32" Nullable="false" />
+    <Property Name="OutleName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="businessHours" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="windownumber" Type="Int32" />
+    <Property Name="provinceID" Type="Int32" />
+    <Property Name="cityID" Type="Int32" />
+    <Property Name="townID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Pinyin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Station" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Shortcode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="FullCode" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ProPinyin" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="Call" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Power">
+    <Key>
+      <PropertyRef Name="powerID" />
+    </Key>
+    <Property Name="powerID" Type="Int32" Nullable="false" />
+    <Property Name="powerName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="provinceID" />
+    </Key>
+    <Property Name="provinceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="provinceName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Returnticket">
+    <Key>
+      <PropertyRef Name="returnticketID" />
+    </Key>
+    <Property Name="returnticketID" Type="Int32" Nullable="false" />
+    <Property Name="returnNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="orderDetailID" Type="Int32" />
+    <Property Name="trainID" Type="Int32" />
+    <Property Name="returnDate" Type="DateTime" Precision="0" />
+    <Property Name="returnMoney" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="fee" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Seat">
+    <Key>
+      <PropertyRef Name="seatID" />
+    </Key>
+    <Property Name="seatID" Type="Int32" Nullable="false" />
+    <Property Name="seatNum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="studentID" />
+    </Key>
+    <Property Name="studentID" Type="Int32" Nullable="false" />
+    <Property Name="linkmanID" Type="Int32" />
+    <Property Name="provinceID" Type="Int32" />
+    <Property Name="schoolName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="department" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="class" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="studentNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="lengthOfschooling" Type="Int32" />
+    <Property Name="yearIn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="cardNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="interval" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TicketType">
+    <Key>
+      <PropertyRef Name="ticketTypeID" />
+    </Key>
+    <Property Name="ticketTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ticketTypename" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Town">
+    <Key>
+      <PropertyRef Name="townID" />
+    </Key>
+    <Property Name="townID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="townName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="cityID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Train">
+    <Key>
+      <PropertyRef Name="trainID" />
+    </Key>
+    <Property Name="trainID" Type="Int32" Nullable="false" />
+    <Property Name="trainNum" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TrainSeat">
+    <Key>
+      <PropertyRef Name="trainSeatID" />
+    </Key>
+    <Property Name="trainSeatID" Type="Int32" Nullable="false" />
+    <Property Name="trainID" Type="Int32" />
+    <Property Name="carSeatID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="pwd" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="cancelCount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TrainList">
+    <Key>
+      <PropertyRef Name="trainID" />
+      <PropertyRef Name="TrainListID" />
+    </Key>
+    <Property Name="trainID" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="startStation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="endStation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="R_Date" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Distance" Type="Int32" />
+    <Property Name="TrainListID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="TrainStation">
+    <Key>
+      <PropertyRef Name="trainID" />
+      <PropertyRef Name="TrainStationID" />
+    </Key>
+    <Property Name="trainID" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Station" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="S_No" Type="Int32" />
+    <Property Name="Day" Type="Int32" />
+    <Property Name="A_Time" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="D_Time" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="R_Date" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Distance" Type="Int32" />
+    <Property Name="P1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="P2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="P3" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="P4" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="TrainStationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="PassworkType">
+    <Key>
+      <PropertyRef Name="passworkTypeID" />
+    </Key>
+    <Property Name="passworkTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="passworkType1" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="NonstopView">
+    <Key>
+      <PropertyRef Name="nonstopViewID" />
+    </Key>
+    <Property Name="nonstopViewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="StartStation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="EndStation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="RouteID" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <Property Name="StopCount" Type="Int32" />
+    <Property Name="KM" Type="Int32" />
+    <Property Name="D_Time" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="A_Time" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

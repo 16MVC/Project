@@ -1,0 +1,750 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>注册 | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/JQuery/slide-tab.js"></script>
+    <script src="~/JQuery/JS/Register.js"></script>
+    <link href="~/css/Register.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+    <script>
+        //获取鼠标坐标 改变.name-tips的坐标
+        //$("#name_rule").mouseenter(function (ev) {
+        //    var e = ev || window.ev;
+        //    alert("Y:"+ev.pageY+"X:"+ev.pageX);
+        //    var Top = ev.pageY + 10;
+        //    var Left = ev.pageX;
+        //    $(".name-tips").eq(0).css({
+        //        top: Top,
+        //        left: Left
+        //    });
+        //    //$(".name-tips").eq(0).show();
+        //    //$(".name-tips").hide();
+        //});
+        function Save(){
+            $.getJSON("/Main/Register?userID"+1+"&"
+                +"linkmanName="+ $('#userName').val() + "&"
+                +"sex="+ $('#userName').val() + "&"
+                +"countryID="+ $('#nation').val() + "&"
+                +"paperworkTypeID="+ $('#cardType').val() + "&"
+                +"paperworkNumber="+ $('#cardCode').val() + "&"
+                +"adddate="+ $('#born_date').val() + "&"
+                +"phonenumber="+ $('#mobileNo').val() + "&"
+                +"fixedphone="+ $('#userName').val() + "&"
+                +"email="+ $('#email').val() + "&"
+                +"address="+ $('#userName').val() + "&"
+                +"postcode="+ $('#userName').val() + "&"
+                +"ticketTypeID="+ $('#passengerType').val() + "&",function(data){
+                    if(data>0){
+                        window.location.href="/Main/Login";
+                    }else{
+                        alert("系统繁忙…，请稍后注册！");
+                    }
+
+                });
+        }
+
+        //验证密码安全程度 checkPwdRank(this,'_div_password_rank','_span_password_rank')
+        function checkPwdRank(e, a, d) {
+            var b = $(e);
+            var c = b.val();
+            if (c.length <= 6 || new RegExp("^[a-zA-Z]{6,}$").test(c) || new RegExp("^[0-9]{6,}$").test(c) || new RegExp("^[_]{6,}$").test(c)) {
+                $("#" + a).attr("title", "危险");
+                $("#" + d).html("危险");
+                $("#" + a).removeClass("rank-a");
+                $("#" + a).removeClass("rank-b");
+                $("#" + a).removeClass("rank-c");
+                $("#" + a).addClass("rank-a")
+            } else {
+                if (c.length > 6 && new RegExp("[a-zA-Z]").test(c) && new RegExp("[0-9]").test(c) && new RegExp("[_]").test(c)) {
+                    $("#" + a).attr("title", "安全");
+                    $("#" + d).html("安全");
+                    $("#" + a).removeClass("rank-a");
+                    $("#" + a).removeClass("rank-b");
+                    $("#" + a).removeClass("rank-c");
+                    $("#" + a).addClass("rank-c")
+                } else {
+                    $("#" + a).attr("title", "一般");
+                    $("#" + d).html("一般");
+                    $("#" + a).removeClass("rank-a");
+                    $("#" + a).removeClass("rank-b");
+                    $("#" + a).removeClass("rank-c");
+                    $("#" + a).addClass("rank-b")
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    @*姓名填写规则说明*@
+    <div class="name-tips" style="top: 300px; left: 780px; display: none;">
+        <ul>
+            <li>确认姓名中生僻字无法输入时，可用生僻字拼音或同音字替代。</li>
+            <li>
+                输入姓名保存后，遇有系统无法正确显示的汉字，可用该汉字的拼音或同音字重新修改后保存。
+            </li>
+            <li>姓名中有繁体字无法输入时，可用简体替代。</li>
+            <li>姓名较长，汉字与英文字符合计超过30个（1个汉字算2个字符）的，需按姓名中第一个汉字或英文字符开始按顺序连续输入30个字符（空格字符不输入），其中英文字符输入时不区别大小写。</li>
+            <li>姓名中有“.”或“• ”时，请仔细辨析身份证件原件上的“.”或“• ”，准确输入。</li>
+        </ul>
+    </div>
+    @*手机双向验证*@
+    <div class="up-box w600" style="display: none;" id="dialog_mobile">
+        <div class="up-box-hd">
+            <strong id="tip_title">手机双向验证</strong>
+            <a href="javascript:" id="mobile_hy_dia_close" shape="rect">关闭</a>
+        </div>
+        <div class="up-bd">
+            <div class="number-test">
+                <div class="test-tips" id="tip_msg" style="line-height:30px;">
+                    <i></i>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="tr" width="95" rowspan="1" colspan="1">验证码：</td>
+                            <td rowspan="1" colspan="1">
+                                <input style="width: 220px" type="text" onkeypress="return $.isNum(event)" maxlength="6" name="mobile_hy_code" id="mobile_hy_code" class="inp-txt">
+                            </td>
+                            <td rowspan="1" colspan="1">
+                                <a id="mobile_hy_dia_get" href="javascript:" class="btn92s" shape="rect">重新获取验证码</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr" rowspan="1" colspan="1">&nbsp;</td>
+                            <td colspan="2" class="colorA" id="mobile_hy_errorMsg_id" rowspan="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="tr" rowspan="1" colspan="1">&nbsp;</td>
+                            <td colspan="2" rowspan="1">
+                                <a href="javascript:" id="mobile_hy_dia_ok" class="btn92s mr15" shape="rect">完成注册</a>
+                                <a href="javascript:" id="mobile_hy_dia_cancel" shape="rect">返回修改</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*顶部*@
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">江苏客运客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list" style="display: none;">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/address">车票快递地址</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
+                        您好，请
+                    </span>
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
+                    | <a id="regist_out" href="/Main/register">注册</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main" class="current">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook" class="">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect" class="">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:" class="">出行向导</a>
+                        <div class="nav-list" style="display: none;">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/queryStationBus">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/DrivingTime">车程时间查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor" class="">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @*主体*@
+    <div class="content" style="min-height: 429px;">
+        <div class="crumbs">
+            您现在的位置：<a href="/Main/Main" shape="rect">客运首页</a>
+            &nbsp;&gt;&nbsp;<a href="/Main/register" shape="rect">注册</a>
+        </div>
+        <form id="registForm" method="get" enctype="application/x-www-form-urlencoded">
+            <div class="layout reg">
+                <div class="lay-hd">账户信息</div>
+                <div class="lay-bd">
+                    <ul class="reg-list">
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                用 户 名：
+                            </div>
+                            <div class="r-txt">
+                                <input type="text" placeholder="用户名设置成功后不可修改" class="inptxt w200" name="loginUserDTO.user_name" id="userName" maxlength="30" style="color: rgb(51, 51, 51);">
+                            </div>
+                            <div class="tips">
+                                <span id="iok_userName" class="tips i-ok" style="margin-top: 10px;margin-right: 5px;display:none;"></span>
+                                6-30位字母、数字或“_”,字母开头
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                登录密码：
+                            </div>
+                            <div class="r-txt">
+                                <input placeholder="6-20位字母、数字或符号" onkeyup="checkPwdRank(this,'_div_password_rank','_span_password_rank')" class="inptxt w200" name="userDTO.password" id="passWord" type="password" maxlength="25" style="color: rgb(51, 51, 51);">
+                            </div>
+                            <div class="tips">
+                                <span></span>
+                                <div id="_div_password_rank" class="safe-rank rank-a" title="请输入密码！">
+                                    <!--危险rank-a,一般rank-b,安全rank-c-->
+                                    <span class="s1"></span>
+                                    <span class="s2"></span>
+                                    <span class="s3"></span>
+                                </div>
+                                <span id="_span_password_rank">危险</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                确认密码：
+                            </div>
+                            <div class="r-txt">
+                                <input placeholder="再次输入您的登录密码" class="inptxt w200" name="confirmPassWord" id="confirmPassWord" type="password" maxlength="25" style="color: rgb(51, 51, 51);">
+                            </div>
+                            <div class="tips">
+                                <span id="iok_confirmPassWord" class="tips i-ok" style="margin-top: 10px;margin-right: 5px;display:none;"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                姓   名：
+                            </div>
+                            <div class="r-txt">
+                                <input placeholder="请输入姓名" type="text" class="inptxt w200" name="loginUserDTO.name" maxlength="30">
+                            </div>
+                            <div class="tips" id="name_rule">
+                                <a style="color: #FF7F00;text-decoration: underline;" shape="rect" onmousemove="javascript: $.onMousemove()" onmouseout="javascript:$.onMouseout()">姓名填写规则</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                证件类型：
+                            </div>
+                            <div class="r-txt">
+                                <select class="w200sel" name="loginUserDTO.id_type_code" id="cardType" onchange="javascript: $.changeForm(this.value)"></select>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                证件号码：
+                            </div>
+                            <div class="r-txt">
+                                <div class="pos-rel">
+                                    <input placeholder="请输入您的证件号码" type="text" name="loginUserDTO.id_no" id="cardCode" class="inptxt w200 color333" maxlength="18" value="">
+                                    <div class="inp-focus inp-focus-card" id="cardCode_div" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li style="display:none;" class="cardLi">
+                            <div class="label">
+                                <span class="required">*</span>
+                                性 别：
+                            </div>
+                            <div class="r-txt">
+                                <span class="mr25">
+                                    <input type="radio" name="userDTO.sex_code" value="M">
+                                    <label>男</label>
+                                </span>
+                                <span>
+                                    <input type="radio" name="userDTO.sex_code" value="F">
+                                    <label>女</label>
+                                </span>
+                            </div>
+                        </li>
+                        <li style="display:none;" class="gjLi">
+                            <div class="label">
+                                <span class="required">*</span>
+                                国家/地区：
+                            </div>
+                            <div class="r-txt">
+                                <select class="w200sel" name="userDTO.country_code" id="nation"></select>
+                            </div>
+                        </li>
+                        <li style="display: none;" class="cardLi">
+                            <div class="label">
+                                <span class="required">*</span>
+                                出生日期：
+                            </div>
+                            <div class="r-txt">
+                                <input type="text" class="inptxt w200 color333" name="userDTO.born_date" id="born_date" value="1900-01-01" readonly="readonly">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">邮    箱：</div>
+                            <div class="r-txt">
+                                <ul class="emailist" style="position: absolute; margin-top: 30px; min-width: 200px; visibility: hidden; z-index: 11;"></ul><input placeholder="请正确填写邮箱地址" type="text" id="email" name="userDTO.email" class="inptxt w200 inp-transform" autocomplete="off">
+                            </div>
+                            <div class="tips"></div>
+                        </li>
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                手机号码：
+                            </div>
+                            <div class="r-txt">
+                                <div class="pos-rel">
+                                    <input type="text" placeholder="请输入您的手机号码" name="userDTO.mobile_no" class="inptxt w200 color333" id="mobileNo" maxlength="30" value="">
+                                </div>
+                            </div>
+                            <div class="tips" style="color: #FF7F00;">请正确填写手机号码，稍后将向该手机号码发送短信验证码</div>
+                        </li>
+                        <li>
+                            <div class="label">
+                                <span class="required">*</span>
+                                旅客类型：
+                            </div>
+                            <div class="r-txt">
+                                <select class="w200sel" id="passengerType" name="passenger_type" onchange="javascript: $.changePassenger(this.value)"></select>
+                            </div>
+                            <div class="tips">
+                                <a href="#nogo" shape="rect"></a>
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">
+                                <span class="required">*</span>
+                                学校所在省份：
+                            </div>
+                            <div class="r-txt">
+                                <select class="w200sel" id="province_code" name="studentInfoDTO.province_code"></select>
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">
+                                <span class="required">*</span>
+                                学校名称：
+                            </div>
+                            <div class="r-txt">
+                                <div id="schoolNameSuggest" class="ac_results_school" style="top: 171px; left: 0px; display: none;"></div>
+                                <input type="hidden" name="studentInfoDTO.school_code" id="schoolCode">
+                                <input type="text" name="studentInfoDTO.school_name" class="inptxt w200" id="schoolNameText" autocomplete="off">
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">院系：</div>
+                            <div class="r-txt">
+                                <input type="text" name="studentInfoDTO.department" class="inptxt w200">
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">班级：</div>
+                            <div class="r-txt">
+                                <input type="text" name="studentInfoDTO.school_class" class="inptxt w200">
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">
+                                <span class="required">*</span>
+                                学号：
+                            </div>
+                            <div class="r-txt">
+                                <input type="text" name="studentInfoDTO.student_no" class="inptxt w200" maxlength="30">
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">
+                                <span class="required">*</span>
+                                学制：
+                            </div>
+                            <div class="r-txt">
+                                <select class="w200sel" name="studentInfoDTO.school_system" id="school_system">
+                                    <option value="1">
+                                        1
+                                    </option>
+                                    <option value="2">
+                                        2
+                                    </option>
+                                    <option value="3">
+                                        3
+                                    </option>
+                                    <option value="4">
+                                        4
+                                    </option>
+                                    <option value="5">
+                                        5
+                                    </option>
+                                    <option value="6">
+                                        6
+                                    </option>
+                                    <option value="7">
+                                        7
+                                    </option>
+                                    <option value="8">
+                                        8
+                                    </option>
+                                    <option value="9">
+                                        9
+                                    </option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">
+                                <span class="required">*</span>
+                                入学年份：
+                            </div>
+                            <div class="r-txt">
+                                <select class="w200sel" id="enter_year" name="studentInfoDTO.enter_year">
+                                    <option value="2018">
+                                        2018
+                                    </option>
+                                    <option value="2017">
+                                        2017
+                                    </option>
+                                    <option value="2016">
+                                        2016
+                                    </option>
+                                    <option value="2015">
+                                        2015
+                                    </option>
+                                    <option value="2014">
+                                        2014
+                                    </option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">优惠卡号：</div>
+                            <div class="r-txt">
+                                <input type="text" name="studentInfoDTO.preference_card_no" class="inptxt w200">
+                            </div>
+                        </li>
+                        <li class="studentType" style="display: none;">
+                            <div class="label">
+                                <span class="required">*</span>
+                                优惠区间：
+                            </div>
+                            <div class="r-txt">
+                                <input type="text" name="studentInfoDTO.preference_from_station_name" class="inptxt w90" id="preference_from_station_name" autocomplete="off">
+                                <div id="preferenceFromStationNameSuggest" class="ac_results" style="top: 171px; left: 0px; display: none;"></div>
+                                <input name="studentInfoDTO.preference_from_station_code" id="preferenceFromStationCode" type="hidden">
+                                <span class="fg-line">--</span>
+                                <input type="text" name="studentInfoDTO.preference_to_station_name" class="inptxt w90" id="preference_to_station_name" autocomplete="off">
+                                <div id="preferenceToStationNameSuggest" class="ac_results" style="top: 171px; left: 0px; display: none;"></div>
+                                <input name="studentInfoDTO.preference_to_station_code" id="preferenceToStationCode" type="hidden">
+                            </div>
+                            <div class="tips">填写与学生证一致的优惠区间（选择车站所在城市）</div>
+                        </li>
+                        <li>
+                            <div class="label" style="width:373px;">&nbsp;</div>
+                            <div class="r-txt">
+                                <input type="checkbox" class="check" id="checkAgree">
+                                <span style="font-size: 14px;">
+                                    <label for="checkAgree">我已阅读并同意遵守</label>
+                                </span>
+                                <a href="#" class="ft14" target="_blank" shape="rect">《中国路客户服务中心网站服务条款》</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="lay-btn captchaButton " style="position:relative;" data-touclick-name="">
+                        <a id="nextBtn" href="javascript:$.Save();" class="btn122s" shape="rect" onclick="Save()">保存</a>
+                        <a id="nextBtn" href="javascript:$.Return();" class="btn123s" shape="rect" style="width: 122px;">返回</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    @*页面底部*@
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    @*返回顶部按钮*@
+    <div class="dhtmlxcalendar_container dhtmlxcalendar_skin_dhx_terrace"
+         style="visibility: visible; left: 543px; top: 447px; display:none;">
+        <div class="dhtmlxcalendar_month_cont">
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_month_hdr">
+                    <div name="arrow_left" onclick="leftArrowClick()" class="dhtmlxcalendar_month_arrow dhtmlxcalendar_month_arrow_left"
+                         onmouseover="this.className=&quot;dhtmlxcalendar_month_arrow dhtmlxcalendar_month_arrow_left_hover&quot;;"
+                         onmouseout="this.className=&quot;dhtmlxcalendar_month_arrow dhtmlxcalendar_month_arrow_left&quot;;">
+                    </div>
+                    <span class="dhtmlxcalendar_month_label_month">
+                        1月
+                    </span>
+                    <span class="dhtmlxcalendar_month_label_year">
+                        1900
+                    </span>
+                    <div name="arrow_right" onclick="rightArrowClick()" class="dhtmlxcalendar_month_arrow dhtmlxcalendar_month_arrow_right"
+                         onmouseover="this.className=&quot;dhtmlxcalendar_month_arrow dhtmlxcalendar_month_arrow_right_hover&quot;;"
+                         onmouseout="this.className=&quot;dhtmlxcalendar_month_arrow dhtmlxcalendar_month_arrow_right&quot;;">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="dhtmlxcalendar_days_cont">
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell_first">
+                    一
+                </li>
+                <li class="dhtmlxcalendar_cell">
+                    二
+                </li>
+                <li class="dhtmlxcalendar_cell">
+                    三
+                </li>
+                <li class="dhtmlxcalendar_cell">
+                    四
+                </li>
+                <li class="dhtmlxcalendar_cell">
+                    五
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_day_weekday_cell">
+                    六
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_day_weekday_cell">
+                    日
+                </li>
+            </ul>
+        </div>
+        <div class="dhtmlxcalendar_dates_cont">
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_date">
+                    1
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    2
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    3
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    4
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    5
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    6
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    7
+                </li>
+            </ul>
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    8
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    9
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    10
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    11
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    12
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    13
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    14
+                </li>
+            </ul>
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    15
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    16
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    17
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    18
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    19
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    20
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    21
+                </li>
+            </ul>
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    22
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    23
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    24
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    25
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    26
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    27
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month_weekend">
+                    28
+                </li>
+            </ul>
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    29
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    30
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_month">
+                    31
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell">
+                    1
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell">
+                    2
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_weekend">
+                    3
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_weekend">
+                    4
+                </li>
+            </ul>
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell">
+                    5
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell">
+                    6
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell">
+                    7
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell">
+                    8
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell">
+                    9
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_weekend">
+                    10
+                </li>
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_cell_weekend">
+                    11
+                </li>
+            </ul>
+        </div>
+        <div class="dhtmlxcalendar_time_cont">
+            <ul class="dhtmlxcalendar_line">
+                <li class="dhtmlxcalendar_cell dhtmlxcalendar_time_hdr">
+                    <div class="dhtmlxcalendar_time_label">
+                    </div>
+                    <span class="dhtmlxcalendar_label_hours">
+                        14
+                    </span>
+                    <span class="dhtmlxcalendar_label_colon">
+                        :
+                    </span>
+                    <span class="dhtmlxcalendar_label_minutes">
+                        00
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+
+

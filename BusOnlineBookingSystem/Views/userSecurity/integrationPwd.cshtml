@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/userSecurity.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Main/getpassengertype",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, data) {
+
+                    })
+                }
+            })
+        });
+
+    </script>
+</head>
+<!--账号安全 兑奖密码修改-->
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        @*<div class="crumbs">
+                您现在的位置：<a href="/otn/index/init" shape="rect">客运首页</a>
+                &nbsp;&gt;&nbsp;<a href="/otn/index/initMyTicket" shape="rect">我的Ticket</a>
+                &nbsp;&gt;&nbsp;<a href="#nogo" shape="rect">个人信息</a>
+                &nbsp;&gt;&nbsp;<a href="/otn/userSecurity/init" shape="rect">账号安全</a>
+                &nbsp;&gt;&nbsp;<strong>兑奖密码修改</strong>
+            </div>*@
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--系统信息 开始-->
+            <div class="layout order">
+                <div class="lay-hd">账号安全</div>
+                <div class="lay-bd">
+                    <form action="" id="_editAssingeePwd" method="get" enctype="application/x-www-form-urlencoded" novalidate="novalidate">
+                        <div class="safe">
+                            <h2>兑奖密码修改</h2>
+                            <ul class="safe-list">
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        原密码：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input id="oldPwd" name="oldPwd" type="password" class="inptxt w200 color333">
+                                    </div>
+                                    <div class="tips">请输入原密码</div>
+                                </li>
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        新密码：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input onkeyup="checkPwdRank(this,'_div_password_rank','_span_password_rank')" id="newPwd" name="newPwd" type="password" class="inptxt w200 color333">
+                                    </div>
+                                    <div class="tips">兑奖密码为6位纯数字</div>
+                                </li>
+                                <li>
+                                    <div class="label">安全级别：</div>
+                                    <div class="r-txt">
+                                        <div id="_div_password_rank" class="safe-rank rank-a" title="请输入密码！">
+                                            <!--危险rank-a,一般rank-b,安全rank-c-->
+                                            <span class="s1"></span>
+                                            <span class="s2"></span>
+                                            <span class="s3"></span>
+                                        </div>
+                                        <span id="_span_password_rank">危险</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        密码确认：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input name="comfPwd" id="comfPwd" type="password" class="inptxt w200 color333">
+                                    </div>
+                                    <div class="tips">请再次输入密码。</div>
+                                </li>
+                            </ul>
+                            <div class="line"></div>
+                            <div class="lay-btn">
+                                <a href="javascript:$._cancelSubmit();" class="btn92" shape="rect">取消</a>
+                                <a href="javascript:$._editSubmit();" class="btn92s" shape="rect">确认</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--系统信息 结束-->
+            <div class="tips-txt hide mt10">
+                <h2>温馨提示：</h2>
+                <p>在互联网购买学生票后，须携带购票时所使用的有效身份证件、附有“学生火车票优惠卡”的学生证（均为原件）和订单号码于列车开车前到安装有学生火车票优惠卡识别器的车站售票窗口或铁路客票代售点换取纸质车票后乘车。 </p>
+            </div>
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+</body>
+</html>

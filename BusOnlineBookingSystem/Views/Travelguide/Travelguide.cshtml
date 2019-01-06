@@ -1,0 +1,213 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>出行向导 | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/JQuery/JS/Railway.js"></script>
+    <link href="~/css/agencySellTicke.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+</head>
+<!--代售点查询-->
+<body class="dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <!--header start-->
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">江苏客运客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list" style="display: none;">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/address">车票快递地址</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Busk@rails.com.cn</a>
+                        您好，请
+                    </span>
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
+                    | <a id="regist_out" href="/Main/register">注册</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main" class="">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook" class="">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect" class="">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:" class="current">出行向导</a>
+                        <div class="nav-list" style="display: block;">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/queryStationBus">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/DrivingTime">车程时间查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor" class="">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <!--页面主体  开始-->
+    <div class="content">
+        <!--搜索框 开始-->
+        <div class="lay-sear lay-sear-place clearfix">
+            <div class="btn-area">
+                <a id="_a_search_btn" href="javascript:$._to_search();" class="btn122s" shape="rect">查询</a>
+            </div>
+            <ul>
+                <li>
+                    <span class="label">
+                        <b class="required">*</b>
+                        所在地区
+                    </span>
+                    <div class="inp-w">
+                        <select name="province" id="province" onchange="javascript: $._change_province(this.value)">
+                            <option value="" selected="selected">请选择省</option>
+                        </select>
+                    </div>
+                    <span class="fg-line">--</span>
+                    <div class="inp-w">
+                        <select name="city" id="city" onchange="javascript: $._change_city(this.value)">
+                            <option value="">请选择市</option>
+                        </select>
+                    </div>
+                    <span class="fg-line">--</span>
+                    <div class="inp-w">
+                        <select name="county" id="county">
+                            <option value="">请选择区/县</option>
+                        </select>
+                    </div>
+                </li>
+            </ul>
+            <div class="s-box-w">
+                <span class="label">快速查找</span>
+                <div class="s-box">
+                    <input id="agencyName" name="agencyName" type="text" value="输入代售点名称" class="txt">
+                    <input id="_submitBtn" type="button" class="sub" style="">
+                </div>
+            </div>
+        </div>
+        @*导航栏   安徽亳州市亳州市 共有 5 个代售点*@
+        <div class="sear-tips" id="_sear_tips" style="display: none;">
+            @*<p>
+                    <strong class="colorA">北京市朝阳区</strong>
+                    &nbsp;共有&nbsp;<strong class="colorA">187</strong>
+                    &nbsp;个代售点
+                </p>*@
+        </div>
+        <!--搜索框 结束-->
+        <div class="t-list sell-place mt10 agencySellTicket">
+            <table>
+                <tbody>
+                    <tr class="th" id="float">
+                        <th width="95" rowspan="1" colspan="1">序号</th>
+                        <th width="300" rowspan="1" colspan="1">代售点名称</th>
+                        <th width="300" rowspan="1" colspan="1">地址</th>
+                        <th width="130" rowspan="1" colspan="1">营业时间</th>
+                        <th class="last" width="130" rowspan="1" colspan="1">窗口数量</th>
+                    </tr>
+                </tbody>
+                <tbody id="_tableDatas"></tbody>
+            </table>
+        </div>
+    </div>
+    <!--页面主体  结束-->
+    <!--页面底部  开始-->
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    <!--页面底部  结束-->
+    <div class="t-list sell-place agencySellTicket" id="floatTable" style="display: none; width: 978px; top: 212.842px;">
+        <table>
+            <tbody>
+                <tr class="th">
+                    <th width="95" rowspan="1" colspan="1">序号</th>
+                    <th width="300" rowspan="1" colspan="1">代售点名称</th>
+                    <th width="300" rowspan="1" colspan="1">地址</th>
+                    <th width="130" rowspan="1" colspan="1">营业时间</th>
+                    <th class="last" width="130" rowspan="1" colspan="1">窗口数量</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+

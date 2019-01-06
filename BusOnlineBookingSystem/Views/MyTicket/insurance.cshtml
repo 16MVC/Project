@@ -1,0 +1,329 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+
+    <link href="~/Content/jquery-easyui-1.3.3/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        //设置时间格式
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+        //检索日期格式
+        function myparser(s) {
+            if (!s) return new Date();
+            var ss = (s.split('-'));
+            var y = parseInt(ss[0], 10);
+            var m = parseInt(ss[1], 10);
+            var d = parseInt(ss[2], 10);
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                return new Date(y, m - 1, d);
+            } else {
+                return new Date();
+            }
+        }
+
+        $(document).ready(function () {
+            $("#sequeue_train_nameText").on("focus",
+             function () {
+                 if ($(this).val() == "保险单号/乘客姓名") {
+                     $(this).val("");
+                     $(this).css("color", "#333")
+                 }
+             }).on("blur",
+             function () {
+                 if ($(this).val() == "") {
+                     $(this).val("保险单号/乘客姓名");
+                     $(this).css("color", "#999")
+                 }
+             });
+
+            //清空文本 querymyInsbutton
+            $("#clear_input_txt").on("click", function () {
+                $("#sequeue_train_nameText").val("保险单号/乘客姓名");
+                $("#sequeue_train_nameText").css("color", "#999")
+            });
+            //查询
+            $("#querymyInsbutton").click(function () {
+                $.ajax({
+                    url: "/My12306/",
+                    type: "get",
+                    dataType: "json",
+                    success: function (result) {
+
+                    }, error: function () {
+                        $(".no-ticket-w").css("display", "block");
+                    }
+                })
+            });
+            //缩进订单列表
+            var i = 0;
+            $(".icon-btn").click(function () {
+                if (i == 0) {
+                    $(this).parent().parent().addClass("close");
+                    i = 1;
+                } else {
+                    $(this).parent().parent().removeClass("close");
+                    i = 0;
+                }
+
+            });
+        });
+
+    </script>
+</head>
+<!--我的保险-->
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        @*<div class="crumbs">
+                您现在的位置：<a href="/Main/Main" shape="rect">首页</a>
+                &nbsp;&gt;&nbsp;<a href="/My12306/My12306" shape="rect">我的12306</a>
+                &nbsp;&gt;&nbsp;<strong>我的保险</strong>
+            </div>*@
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--已完成订单 开始-->
+            <div class="layout order">
+                <div class="lay-hd">我的保险</div>
+                <div class="lay-bd">
+                    <form id="queryInsForm" method="get" enctype="application/x-www-form-urlencoded">
+                        <div class="order-tab">
+                            <div class="order-tab-bd">
+                                <div style="display:block" class="item">
+                                    <a id="querymyInsbutton" class="btn92s fr" href="#nogo" shape="rect">
+                                        <label style="cursor:pointer;" for="querybutton">查询</label>
+                                    </a>
+                                    <span>
+                                        <label for="orderdate">购保日期:</label>
+                                    </span>
+                                    <span>
+                                        <input name="queryStartDate" class="easyui-datebox" id="queryStartDate" value="" type="text" style="width:100px;height:22px" data-options="formatter:myformatter,parser:myparser">
+
+                                        -<input name="queryEndDate" class="easyui-datebox" id="queryEndDate" value="" type="text" style="width:100px;height:22px" data-options="formatter:myformatter,parser:myparser">
+                                    </span>
+                                    <span class="inp-s">
+                                        <input id="sequeue_train_nameText" class="inpA" value="保险单号/乘客姓名" type="text">
+                                        <span class="i-clear" id="clear_input_txt" title="清除"></span>
+                                    </span>
+                                </div>
+                                <input name="come_from_flag" id="come_from_flag" value="my_order" type="hidden">
+                                <input name="pageSize" id="pageSize" value="8" type="hidden">
+                                <input name="pageIndex" id="pageIndex" value="0" type="hidden">
+                                <input name="query_where" id="query_where" value="G" type="hidden">
+                            </div>
+                        </div>
+                        <div class="order-line"></div>
+                    </form>
+                    <div id="loading"></div>
+                    <!-- 未查询出数据开始   -->
+                    <div class="no-ticket-w" id="noInslist" style="display:none;">
+                        <div class="no-ticket">
+                            <span class="i-no"></span>
+                            <p>您没有对应的保单内容。</p>
+                        </div>
+                    </div>
+                    <!-- 未查询出数据结束   -->
+                    <div id="insbodyTable" style="display:block;">
+                        <div class="order-item">
+                            <div class="order-item-hd">
+                                <span class="icon-btn"></span>
+                                <div class="time">
+                                    订单日期：<strong>2013-03-03</strong>
+                                </div>
+                                <div class="per">
+                                    <span>李某某</span>
+                                </div>
+                                <div class="place-bx">北京→成都→乌鲁木齐</div>
+                                <div class="bx-order-num">
+                                    订单号：<strong>E258465</strong>
+                                </div>
+                                <a class="print" href="#nogo" shape="rect">打印</a>
+                                <a href="#" class="bx-tg-btn" shape="rect">
+                                    <i></i>
+                                    购/赠/退保险
+                                </a>
+                                <i class="new"></i>
+                            </div>
+                            <div class="order-item-bd">
+                                <table class="table-c">
+                                    <tbody>
+                                        <tr>
+                                            <th width="37" rowspan="1" colspan="1">序号</th>
+                                            <th width="200" rowspan="1" colspan="1">车次信息</th>
+                                            <th width="160" rowspan="1" colspan="1">被保险人信息</th>
+                                            <th width="240" rowspan="1" colspan="1">保险信息</th>
+                                            <th rowspan="1" colspan="1">状态</th>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="1" colspan="1">1</td>
+                                            <td rowspan="1" colspan="1">
+                                                2013-03-16  7:30开<br clear="none">
+                                                G42 北京南-上海虹桥
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                刘某<br clear="none">
+                                                二代身份证
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                4548687987564567895467/88554656 <br clear="none">
+                                                乘意险2元*1份
+                                            </td>
+                                            <td rowspan="1" colspan="1">已支付</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="order-item close">
+                            <div class="order-item-hd">
+                                <span class="icon-btn"></span>
+                                <div class="time">
+                                    订单日期：<strong>2013-03-03</strong>
+                                </div>
+                                <div class="per">
+                                    <span>李某某</span>
+                                </div>
+                                <div class="place-bx">北京→成都→乌鲁木齐</div>
+                                <div class="bx-order-num">
+                                    订单号：<strong>E258465</strong>
+                                </div>
+                                <a class="print" href="#nogo" shape="rect">打印</a>
+                                <a href="#" class="bx-tg-btn" shape="rect">
+                                    <i></i>
+                                    购/赠/退保险
+                                </a>
+                                <i class="new"></i>
+                            </div>
+                            <div class="order-item-bd">
+                                <table class="table-c">
+                                    <tbody>
+                                        <tr>
+                                            <th width="37" rowspan="1" colspan="1">序号</th>
+                                            <th width="200" rowspan="1" colspan="1">车次信息</th>
+                                            <th width="160" rowspan="1" colspan="1">被保险人信息</th>
+                                            <th width="240" rowspan="1" colspan="1">保险信息</th>
+                                            <th rowspan="1" colspan="1">状态</th>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="1" colspan="1">1</td>
+                                            <td rowspan="1" colspan="1">
+                                                2013-03-16  7:30开<br clear="none">
+                                                G42 北京南-上海虹桥
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                刘某<br clear="none">
+                                                二代身份证
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                4548687987564567895467/88554656 <br clear="none">
+                                                乘意险2元*1份
+                                            </td>
+                                            <td rowspan="1" colspan="1">已支付</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="order-item close">
+                            <div class="order-item-hd">
+                                <span class="icon-btn"></span>
+                                <div class="time">
+                                    订单日期：<strong>2013-03-03</strong>
+                                </div>
+                                <div class="per">
+                                    <span>李某某</span>
+                                </div>
+                                <div class="place-bx">北京→成都→乌鲁木齐</div>
+                                <div class="bx-order-num">
+                                    订单号：<strong>E258465</strong>
+                                </div>
+                                <a class="print" href="#nogo" shape="rect">打印</a>
+                                <a href="#" class="bx-tg-btn" shape="rect">
+                                    <i></i>
+                                    购/赠/退保险
+                                </a>
+                                <i class="new"></i>
+                            </div>
+                            <div class="order-item-bd">
+                                <table class="table-c">
+                                    <tbody>
+                                        <tr>
+                                            <th width="37" rowspan="1" colspan="1">序号</th>
+                                            <th width="200" rowspan="1" colspan="1">车次信息</th>
+                                            <th width="160" rowspan="1" colspan="1">被保险人信息</th>
+                                            <th width="240" rowspan="1" colspan="1">保险信息</th>
+                                            <th rowspan="1" colspan="1">状态</th>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="1" colspan="1">1</td>
+                                            <td rowspan="1" colspan="1">
+                                                2013-03-16  7:30开<br clear="none">
+                                                0564 北京南-上海虹桥
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                刘某<br clear="none">
+                                                二代身份证
+                                            </td>
+                                            <td rowspan="1" colspan="1">
+                                                4548687987564567895467/88554656 <br clear="none">
+                                                乘意险2元*1份
+                                            </td>
+                                            <td rowspan="1" colspan="1">已支付</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 查询出数据结束 -->
+                    <!--翻页  开始-->
+                    <div class="page" id="pagination" style="display:block;">
+                        <a href="#nogo" class="btn92" shape="rect">客运首页</a>
+                        <a href="#nogo" class="btn92" shape="rect">上一页</a>
+                        <a href="#nogo" class="btn30s" shape="rect">1</a>
+                        <a href="#nogo" class="btn30" shape="rect">2</a>
+                        <a href="#nogo" class="btn30" shape="rect">3</a>
+                        <a href="#nogo" class="btn30" shape="rect">4</a>
+                        <span class="btn30">...</span>
+                        <a href="#nogo" class="btn30" shape="rect">16</a>
+                        <a href="#nogo" class="btn92" shape="rect">下一页</a>
+                        <a href="#nogo" class="btn92" shape="rect">末页</a>
+                    </div>
+                    <!--翻页  结束-->
+                </div>
+            </div>
+            <!--已完成订单 结束-->
+            <div class="tips-txt mt10">
+                <h2>温馨提示：</h2>
+                <p>1.在本网站可查询乘车日为当前日期前30天以内的历史保单。</p>
+                <p>2.办理车票改签、变更到站后，电子保单按改签、变更到站后车票信息自动批改，保单号不变。</p>
+                <p>3.办理退票或单独退保后，相应保险合同自动解除，已退保费按银行规定时限退回投保银行卡。</p>
+            </div>
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none ; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+
+
+

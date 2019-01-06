@@ -1,0 +1,471 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的Ticket | 客运服务 | 铁路客户服务中心</title>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/userSecurity.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <script>
+        $(document).ready(function () {
+            //我的火车票
+            $("#link_4_myTicket").on("click", function () {
+                //$('#f网页区').attr("src", "../MyTicket/MyTicket");
+            });
+            //未完成订单
+            $("#link_4_NonComOrder").on("click", function () {
+                //$('#f网页区').attr("src", "../MyTicket/initNoComplete");
+                window.location.href = "/MyTicket/initNoComplete";
+            });
+            //已完成订单
+            $("#link_4_comOrder").on("click", function () {
+                window.location.href = "/MyTicket/queryOrder";
+            });
+            //我的保险
+            $("#link_4_ticketInfo").on("click", function () {
+                window.location.href = "/MyTicket/insurance";
+            });
+            //个人信息
+            $("#link_4_myInfor").on("click", function () {
+                window.location.href = "/MyTicket/insurance";
+            });
+            //查看个人信息
+            $("#link_4_showMyInfor").on("click", function () {
+                window.location.href = "/MyTicket/initQueryUserInfo";
+            });
+            //账号安全
+            $("#link_4_showSafe").on("click", function () {
+                window.location.href = "/MyTicket/userSecurity";
+            });
+            //手机核验
+            $("#link_4_sjhy").on("click", function () {
+                //window.location.href = "/MyTicket/initNoComplete";
+            });
+            //常用信息管理
+            $("#link_4_passengerInfor").on("click", function () {
+                window.location.href = "/MyTicket/passengers";
+            });
+            //常用联系人
+            $("#link_4_passengerIns").on("click", function () {
+                window.location.href = "/MyTicket/passengers";
+            });
+            //车票快递地址
+            $("#dd_4_address").on("click", function () {
+                window.location.href = "/MyTicket/address";
+            });
+            //贴心服务
+            $("#dd_4_qxyy").on("click", function () {
+                window.location.href = "/MyTicket/qxyyInfo";
+            });
+            //重点旅客预约
+            $("#dd_4_qxyy").on("click", function () {
+                window.location.href = "/MyTicket/qxyyInfo";
+            });
+            //遗失物品查找
+            $("#dd_4_lostitems").on("click", function () {
+                window.location.href = "/MyTicket/lostInfo";
+            });
+        });
+
+    </script>
+</head>
+<!--车票快递地址-->
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <!--header start-->
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">江苏客运客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/address">车票快递地址</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666;">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
+                        您好，
+                    </span>
+                    <a id="login_user" href="/MyTicket/MyTicket" class="colorA" style="margin-left:-0.5px;">
+                        <span style="width:50px;">sa</span>
+                    </a>
+                    | <a id="regist_out" href="/Main/Login">退出</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:">出行向导</a>
+                        <div class="nav-list">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/czxxcx">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/zzzcx">中转查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/zwdch">正晚点查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <div id="dialog_del" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box w600">
+            <div class="up-box-hd">
+                删除车票快递地址<a id="dialog_del_close" shape="rect">关闭</a>
+            </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-opt"></span>
+                    <div class="r-txt">
+                        <div class="tit">您确定要删除选中的车票快递地址吗？</div>
+                    </div>
+                </div>
+                <div class="lay-btn">
+                    <a id="dialog_del_cancel" href="javascript:" class="btn92" shape="rect">取消</a>
+                    <a href="javascript:" id="dialog_del_ok" class="btn92s" shape="rect">确认</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        <div class="crumbs">
+            您现在的位置：<a href="/Main/Main" shape="rect">客运首页</a>
+            &nbsp;&gt;&nbsp;<a href="/MyTicket/MyTicket" shape="rect">我的Ticket</a>
+            &nbsp;&gt;&nbsp;<a href="/MyTicket/passengers" shape="rect">常用信息管理</a>
+            &nbsp;&gt;&nbsp;<strong>车票快递地址</strong>
+        </div>
+        <!--当前位置 结束-->
+        <!--左侧导航 开始-->
+        <div class="sidebar">
+            <div class="layout my">
+                <div class="lay-hd">我的Ticket</div>
+                <div class="lay-bd" id="js-myTicket">
+                    <div class="nav-label" style="top: 418.405px; display: block;">
+                        <span></span>
+                    </div>
+                    <dl>
+                        <dt class="">
+                            <a href="javascript:void(0);" id="link_4_myTicket" class="">我的火车票</a>
+                        </dt>
+                        <dd id="dd_4_NonComOrder" class="">
+                            <a href="javascript:void(0);" id="link_4_NonComOrder">未完成订单</a>
+                        </dd>
+                        <dd id="dd_4_comOrder" class="">
+                            <a href="javascript:void(0);" id="link_4_comOrder" class="">已完成订单</a>
+                        </dd>
+                        <dt class="">
+                            <a href="javascript:void(0);" id="link_4_ticketInfo">我的保险</a>
+                        </dt>
+                        <dt class="">
+                            <a href="javascript:void(0);" id="link_4_myInfor">个人信息</a>
+                        </dt>
+                        <dd id="dd_4_showMyInfor">
+                            <a href="javascript:void(0);" id="link_4_showMyInfor">查看个人信息</a>
+                        </dd>
+                        <dd id="dd_4_showSafe">
+                            <a href="javascript:void(0);" id="link_4_showSafe">账号安全</a>
+                        </dd>
+                        <dd id="dd_4_sjhy">
+                            <a href="javascript:void(0);" id="link_4_sjhy">手机核验</a>
+                        </dd>
+                        <dt>
+                            <a href="javascript:void(0);" id="link_4_passengerInfor">常用信息管理</a>
+                        </dt>
+                        <dd id="dd_4_passengerIns" class="prev">
+                            <a href="javascript:void(0);" id="link_4_passengerIns">常用联系人</a>
+                        </dd>
+                        <dd id="dd_4_address" class="cur">
+                            <a href="javascript:void(0);" id="dd_4_address" class="cur-txt">车票快递地址</a>
+                        </dd>
+                        <dt>
+                            <a href="javascript:void(0);">贴心服务</a>
+                        </dt>
+                        <dd id="dd_4_qxyy" class="last">
+                            <a href="javascript:void(0);">重点旅客预约</a>
+                        </dd>
+                        <dd id="dd_4_lostitems">
+                            <a href="javascript:void(0);">遗失物品查找</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <!--左侧导航 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--系统信息 开始-->
+            <div id="add_main" class="layout order">
+                <div class="lay-hd">车票快递地址</div>
+                <div class="lay-bd">
+                    <div id="address_list_div" class="lay-per">
+                        <div class="lay-perhd">
+                            <a class="add" href="javascript:void(0)" onclick="$.address_addInit();" shape="rect">增加</a>
+                        </div>
+                        <div class="lay-perbd" style="min-height: 450px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 30px;" rowspan="1" colspan="1">
+                                            <label>序号</label>
+                                        </th>
+                                        <th style="width: 80px;text-align: center;" rowspan="1" colspan="1">收件人</th>
+                                        <th style="text-align: center;" rowspan="1" colspan="1">地址</th>
+                                        <th style="width: 80px;text-align: center;" rowspan="1" colspan="1">手机</th>
+                                        <th style="width: 55px;" rowspan="1" colspan="1">是否默认</th>
+                                        <th class="tc" width="50" rowspan="1" colspan="1">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="addressAllTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--  添加、修改div开始 -->
+                    <div id="address_edit_div" class="infoblock linkman" style="display: none;">
+                        <div class="tit clearfix">
+                            <div class="tit-txt">
+                                选择车票快递地址<span class="tips-red">（*为必填项）</span>
+                            </div>
+                        </div>
+                        <form action="" id="_addForm" method="get" enctype="application/x-www-form-urlencoded">
+                            <div class="base">
+                                <div class="info-item">
+                                    <span class="label" style="width: 100px;">
+                                        <span class="required">*</span>
+
+                                        所在地址：
+                                    </span>
+                                    <div class="con">
+                                        <select id="addresseeProvince" name="addressee_province" style="width:90px;"><option value="">请选择省</option><option value="云南省">云南省</option><option value="北京">北京</option><option value="广东省">广东省</option><option value="湖南省">湖南省</option><option value="四川省">四川省</option><option value="贵州省">贵州省</option><option value="重庆市">重庆市</option></select>
+                                        <select id="addresseeCity" name="addressee_city" style="width:90px;">
+                                            <option value="">请选择市</option>
+                                        </select>
+                                        <select id="addresseeCounty" name="addressee_county" style="width:90px;">
+                                            <option value="">请选择区/县</option>
+                                        </select>
+                                        <select id="addresseeTown" name="addressee_town" style="width:155px;">
+                                            <option value="">请选择乡镇（周边地区）</option>
+                                        </select>
+                                        <select id="addresseeStreet" name="addressee_street" style="width:140px;">
+                                            <option value="">请选择附近区域</option>
+                                        </select>
+                                    </div>
+                                    <span name="errormsg" style="margin-left:2px;line-height:30px;color:red;"></span>
+                                </div>
+                                <div class="info-item" style="display:none">
+                                    <span class="label" style="width: 100px;"></span>
+                                    <span name="errormsg" id="error_for_checkbox" style="margin-left:2px;line-height:30px;color:red;"></span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label" style="width: 100px;">
+                                        <span class="required">*</span>
+
+                                        详细地址：
+                                    </span>
+                                    <div class="con">
+                                        <input id="detailAddress" name="detail_address" type="text" class="inptxt color333" style="width:404px;">
+                                        <div id="detail_address_div" class="inp-focus tel" style="display:none">大柳树路111号</div>
+                                    </div>
+                                    <div id="name_rule" style="margin-left:2px;line-height:30px;color:#FF7F00;">(地址填写规则)</div>
+                                </div>
+                                <div class="info-item" style="display:none">
+                                    <span class="label" style="width: 100px;"></span>
+                                    <span name="errormsg" id="error_msg_detail_address" style="margin-left:2px;line-height:30px;color:red;"></span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label" style="width: 100px;">
+                                        <span class="required">*</span>
+
+                                        收件人：
+                                    </span>
+                                    <div class="con">
+                                        <input id="addresseeName" name="addressee_name" type="text" class="inptxt w200 color333">
+                                        <div id="address_name_div" class="inp-focus tel" style="display:none">张三</div>
+                                    </div>
+                                    <span name="errormsg" style="margin-left:2px;line-height:30px;color:red;"></span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label" style="width: 100px;">
+                                        <span class="required">*</span>
+
+                                        手机号码：
+                                    </span>
+                                    <div class="con">
+                                        <input id="mobileNo" name="mobile_no" type="text" class="inptxt w200 color333">
+                                        <div id="mobile_no_div" class="inp-focus tel" style="display:none">139 9191 1991</div>
+                                    </div>
+                                    <span name="errormsg" style="margin-left:2px;line-height:30px;color:red;"></span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label" style="width: 120px;"></span>
+                                    <div class="con">
+                                        <input id="default_address" type="checkbox" class="check">
+                                        <label>设为默认地址</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="lay-btn line-top">
+                            <a id="btnCancel" href="javascript:void(0)" onclick="$.cancelAdd();" class="btn92" shape="rect">取消</a>
+                            <a id="btnSave" href="javascript:void(0)" onclick="$._toAdd();" class="btn92s" shape="rect">保存</a>
+                            <a id="btnUpdate" href="javascript:void(0)" onclick="$._toUpdate();" class="btn92s" style="display:none;" shape="rect">保存</a>
+                        </div>
+                    </div>
+                    <!--  添加、修改div结束 -->
+                </div>
+            </div>
+            <!--系统信息 结束-->
+            <div id="cntract_div" class="layout" style="display: none;">
+                <div class="lay-hd">车票快递服务协议</div>
+                <div class="lay-bd up-box-contract-bd">
+                    <div class="contract">
+                        <div class="name">甲方：中国铁路客户服务中心网站注册用户&nbsp;&nbsp;&nbsp;&nbsp;乙方：中铁快运股份有限公司</div>
+                        <div class="name"></div>
+                        <h2>1．约定事项</h2>
+                        <p>甲方在铁路客户服务中心网站购票后，委托乙方将所购车票换取纸质车票，在订单日期的次日，送达至甲方指定的收件人、地址，并支付车票快递服务费。</p>
+                        <h2>2．适用车票</h2>
+                        <p>对票面记载开车时间为订单日期的第三日及其以后，且乘车人身份证件为有效的可识读二代居民身份证购买的全价票（含“折”字票）和随行儿童票办理快递业务。</p>
+                        <h2>3．费用及支付</h2>
+                        <p>车票快递服务按件收费，每件一个地址，不超过5张车票。</p>
+                        <p>车票快递服务费由乙方依据国家有关规定确定。甲方在网站上与购票票款一并支付，乙方在送达车票时提供服车票快递务费的发票。</p>
+                        <h2>4．签收</h2>
+                        <p>车票送达时，甲方指定的收件人应出示本人有效身份证件原件，并与快递员共同核对车票记载车次、发车日期、乘车人等信息。核对正确后，收件人应在配送标签上签字确认。收件人未签字确认的，乙方将车票回收，待乙方恢复电子客票状态后，乘车人可自行办理改签、退票、换取纸质车票等业务。</p>
+                        <p>甲方未成功签收的，乙方将退还快递服务费。</p>
+                        <h2>5．甲方的权利和义务</h2>
+                        <p>（1）甲方有权在双方约定时间内收到快递的车票；</p>
+                        <p>（2）甲方应正确、完整、规范地填写收件地址、收件人姓名、手机号码等信息，并确保收件人在约定时间、地址接收车票，接收完毕在配送标签上签字确认；</p>
+                        <p>（3）甲方有权在预定车票快递服务时起至票面记载乘车日期30天内获得免费的信息查询服务；</p>
+                        <p>（4）甲方有权取消快递服务。</p>
+                        <h2>6．乙方的权利和义务</h2>
+                        <p>（1）乙方应根据约定提供安全、及时的车票快递服务；</p>
+                        <p>（2）除车票快递及相应的代办换取纸质车票服务外，乙方不办理关于车票的其他业务；</p>
+                        <p>（3）保证甲方个人信息安全、不外泄。</p>
+                        <h2>7．责任免除条款</h2>
+                        <p>对以下损失，乙方不负赔偿责任：（1）因不可抗力造成延误派送、无法派送的；（2）因甲方收件信息填写错误、地址无人签收、电话无人接听、收件人拒收等原因造成车票未能及时送达的；（3）不承担因车票快递服务带来的延迟办理退票手续可能造成手续费增加的责任；（4）甲方自预定车票快递服务起满一年未提出异议的；（5）基于车票可能获得的收益、利润、实际用途、商业机会、商业价值等任何直接、间接损失。</p>
+                        <h2>8．争议解决：因履行本协议发生的争议，由当事人协商解决，协商不成的，可以向乙方所在地法院提起诉讼。</h2>
+                        <h2>9．《铁路车票快递服务须知》为本协议一部分，乙方保留修改、解释的权利。</h2>
+                        <h2>10．本协议条款未作规定的，或者本协议条款与法律法规相冲突的，按照法律法规执行。</h2>
+                    </div>
+                    <div class="lay-btn">
+                        <a href="javascript:void(0)" onclick="$.show_contact()" class="btn92" shape="rect">不同意</a>
+                        <a href="javascript:void(0)" onclick="$.agree_contact()" class="btn92s" shape="rect">同意</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tips-txt mt10">
+                <h2>温馨提示：</h2>
+                <p>1.您最多可添加20个车票快递地址，对已支付的地址30天内不可删除与修改。</p>
+                <p>2.请您准确完整的填写收件地址、收件人姓名、手机号码等信息，并保持电话畅通，以免耽误接收车票。</p>
+            </div>
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+    <div class="name-tips">
+        <ul>
+            <li>例如您的地址为：北京市海淀区学院南路中国铁道科学研究院A号楼1109室；</li>
+            <li>依次选择省：北京；选择市：北京市；选择区/县：海淀区；选择乡镇（周边地区）：学院南路；选择附近区域：铁科院；</li>
+            <li>详细地址只需填写：A号楼1109室</li>
+            <li>注意事项：周边地区、附近区域依照就近原则选择；详细地址不需重复填写已选的省市区等信息</li>
+        </ul>
+    </div>
+    <!--页面底部  开始-->
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    <!--页面底部  结束-->
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none ; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+
+

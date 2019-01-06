@@ -1,0 +1,533 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+
+    <link href="~/Content/jquery-easyui-1.3.3/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <style type="text/css">
+        .dispatch {
+            margin-left: 80px;
+            color: #fff;
+        }
+
+        .close .dispatch {
+            color: #333;
+        }
+
+        .dispatch_img {
+            background: url(../images/icon.png) no-repeat;
+            display: block;
+            width: 30px;
+            height: 11px;
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            z-index: 10;
+            background-position: 0 -100px;
+        }
+
+        .table-c .btn92 {
+            background-position: 0 0;
+            color: #fff;
+            border: 1px solid #fb7403;
+        }
+
+            .table-c .btn92:hover {
+                background-position: 0 -50px;
+                color: #fff;
+            }
+    </style>
+    <script type="text/javascript">
+        //设置时间格式
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+        //检索日期格式
+        function myparser(s) {
+            if (!s) return new Date();
+            var ss = (s.split('-'));
+            var y = parseInt(ss[0], 10);
+            var m = parseInt(ss[1], 10);
+            var d = parseInt(ss[2], 10);
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                return new Date(y, m - 1, d);
+            } else {
+                return new Date();
+            }
+        }
+
+        $(document).ready(function () {
+            //历史订单
+            $("#query_H").click(function () {
+                $(this).addClass("active");
+                $(this).siblings().removeClass("active");
+                $(".item").css("display", "none");
+                $("#history_order").css("display", "block");
+                $("#query_what_order").css("display", "none");
+            });
+            //未出行订单
+            $("#query_G").click(function () {
+                $(this).addClass("active");
+                $(this).siblings().removeClass("active");
+                $("#history_order").css("display", "none");
+                $(".item").css("display", "block");
+                $("#query_what_order").css("display", "block ");
+            });
+            //查询未出行订单
+            $("#querymyorderbutton").click(function () {
+                $.ajax({
+                    url: "/MyTicket/getqueryOrder",
+                    type: "get",
+                    dataType: "json",
+                    success: function (result) {
+                        var s = 0;
+                        $.each(result, function (key, data) {                                                                                                                        //2013-03-16  7:30开     G42 北京南-上海虹桥                            软卧 08车厢               27号 上铺
+                            var c = '<tr><td rowspan="1" colspan="1"><input type="checkbox" class="check"><label>' + (key + 1) + '</label></td><td rowspan="1" colspan="1"><div class="ccxx">' + data + '<br clear="none">' + data + '</div></td><td rowspan="1" colspan="1">' + data + '<br clear="none">' + data + '</td><td rowspan="1" colspan="1">' + 李某 + '<br clear="none">' + 二代身份证 + '</td><td rowspan="1" colspan="1">' + 成人票 + '<span class="colorA">' + 409.5 + '元</span></td><td rowspan="1" colspan="1">' + 已支付 + '</td><td rowspan="1" colspan="1"><a href="#" class="btn92" shape="rect">' + 退票 + '</a></td></tr>';
+                            $(".table-c tbody").append($(c)).show();
+                            s = key + 1;
+                        })
+                        if (result > 0) {
+                            var w = '<span>订单号：<strong>' + E160802101 + '</strong></span>';
+                            $(".t-foot").append($(w)).show();
+                            $("#orderinfobodyTable").css("display", "block");
+                            var e = "";
+                            for (var i = 0; i < s; i++) {
+                                e += '<a href="#nogo" class="btn30" shape="rect">' + (i + 2) + '</a>';
+                            }
+                            e += '<a href="#nogo" class="btn92" shape="rect">下一页</a><a href="#nogo" class="btn92" shape="rect">末页</a>';
+                            $(".btn30s").after().append($(e)).show();
+                            $("#pagination").css("display", "block");
+                        }
+                    }, error: function () {
+                        $("#noticketlist").css("display", "block");
+                    }
+                })
+            });
+            //查询历史订单
+            $("#").click(function () {
+                $.ajax({
+                    url: "/MyTicket/getHistoryqueryOrder",
+                    type: "get",
+                    dataType: "json",
+                    success: function (result) {
+                        $.each(result, function (key, data) {
+
+                        })
+                    }, error: function () {
+
+                    }
+                })
+            });
+
+            $("#sequeue_train_nameText").on("focus",
+            function () {
+                if ($(this).val() == "订单号/车次/乘客姓名") {
+                    $(this).val("");
+                    $(this).css("color", "#333")
+                }
+            }).on("blur",
+            function () {
+                if ($(this).val() == "") {
+                    $(this).val("订单号/车次/乘客姓名");
+                    $(this).css("color", "#999")
+                }
+            });
+            //清空文本
+            $("#clear_input_txt").on("click", function () {
+                $("#sequeue_train_nameText").val("订单号/车次/乘客姓名");
+                $("#sequeue_train_nameText").css("color", "#999")
+            });
+            //全部
+            $("#queryAllMyOrders").click(function () {
+                alert("全部");
+            });
+            //可改签
+            $("#queryResginOrders").click(function () {
+                alert("可改签");
+            });
+            //可变更到站
+            $("#queryCSOrders").click(function () {
+                alert("可变更到站");
+            });
+            //可退票
+            $("#queryReturnOrders").click(function () {
+                alert("可退票");
+            });
+            //缩进订单列表
+            var i = 0;
+            $(".icon-btn").click(function () {
+                if (i == 0) {
+                    $(this).parent().parent().addClass("close");
+                    i = 1;
+                } else {
+                    $(this).parent().parent().removeClass("close");
+                    i = 0;
+                }
+
+            });
+            //全选
+            $(".check").click(function () {
+
+            });
+            //退票弹窗
+            $("").click(function () {
+
+                $("#return_ticket_id").css("display", "block");
+            });
+            //关闭退票弹窗
+            $("#close_trade_notice_return").click(function () {
+
+                $("#return_ticket_id").css("display", "none");
+            });
+            //取消
+            $("#cacel_return_ticket").click(function () {
+
+                $("#return_ticket_id").css("display", "none");
+            });
+            //确认
+            $("#return_ticket_ok").click(function () {
+
+                $("#return_ticket_id").css("display", "none");
+            });
+
+        });
+
+        //提示日期输入不能小于07/20/2015
+        //<input class="easyui-datebox" id="dateExecuteEnd" data-options="validType:'md[\'07/20/2015\']'"></input>
+        //$.extend($.fn.validatebox.defaults.rules, {
+        //    md: {
+        //        validator: function (value, param) {
+        //            var d1 = $.fn.datebox.defaults.parser(param[0]);
+        //            var d2 = $.fn.datebox.defaults.parser(value);
+        //            return d2 >= d1;
+        //        },
+        //        message: '所选日期必须大于 {0}.'
+        //    }
+        //})
+
+    </script>
+</head>
+<!--已完成订单-->
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <!-- 查看改签详情 开始-->
+    <div class="up-box w600" style="display:none;" id="cancel_resign_id">
+        <div class="up-box-hd">
+            退票详情<a href="javascript:" id="cancel_resign_close" shape="rect">关闭</a>
+        </div>
+        <div class="up-box-bd" style="padding-left: 30px;font-size: 14px;">
+            <p>
+                车票:<span id="resign_details"></span>
+            </p>
+            <br clear="none">
+            <p>
+                状态:<span class="colorA">已改签</span>
+            </p>
+            <br clear="none">
+        </div>
+    </div>
+    <!-- 查看改签详情 结束 -->
+    <!-- 查看退票详情 开始 -->
+    <div class="up-box w600" style="display:none;" id="cancel_return_id">
+        <div class="up-box-hd">
+            改签详情<a href="javascript:" id="cancel_return_close" shape="rect">关闭</a>
+        </div>
+        <div class="up-box-bd" style="padding-left: 30px;font-size: 14px;">
+            <p>
+                车票:<span id="return_details"></span>
+            </p>
+            <p>
+                状态:<span class="colorA">已退票，已成功退至银行。</span>
+            </p>
+            <p style="margin-left: 60px">如已超过15个工作日尚未到账，请持银行交易流水号ZS34538596至</p>
+            <p>发卡银行查询</p>
+            <p>交易详细信息:</p>
+            <table class="table-c">
+                <tbody>
+                    <tr>
+                        <th rowspan="1" colspan="1">交易时间</th>
+                        <th rowspan="1" colspan="1">交易信息</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="1" colspan="1">2018-10-26 10:23</td>
+                        <td rowspan="1" colspan="1">购票成功</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="1" colspan="1">2018-10-27 08:23</td>
+                        <td rowspan="1" colspan="1">退票成功，应退金额30.5元</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 查看退票详情 结束 -->
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        @*<div class="crumbs">
+                您现在的位置：<a href="/Main/Main" shape="rect">客运首页</a>
+                &nbsp;&gt;&nbsp;<a href="/MyTicket/MyTicket" shape="rect">我的Ticket</a>
+                &nbsp;&gt;&nbsp;<strong>已完成订单</strong>
+            </div>*@
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--已完成订单 开始-->
+            <div class="layout order">
+                <div class="lay-hd">已完成订单</div>
+                <div class="lay-bd">
+                    <form id="queryOrderForm" method="get" enctype="application/x-www-form-urlencoded">
+                        <div class="order-tab">
+                            <div class="order-tab-hd">
+                                <ul>
+                                    <li class="active" id="query_G">
+                                        <a href="#" shape="rect">未出行订单</a>
+                                    </li>
+                                    <li id="query_H">
+                                        <a href="#" shape="rect">历史订单</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="order-tab-bd">
+                                <div style="display:block" class="item">
+                                    <a id="querymyorderbutton" class="btn92s fr" href="#nogo" shape="rect">
+                                        <label style="cursor:pointer;" for="querybutton">查询</label>
+                                    </a>
+                                    <span id="use_G">
+                                        <select name="queryType">
+                                            <option value="1">按订票日期查询</option>
+                                            <option value="2">按乘车日期查询</option>
+                                        </select>
+                                    </span>
+                                    <span>
+                                        <label for="orderdate">查询日期</label>
+                                    </span>
+                                    <span>
+                                        <input type="text" class="easyui-datebox" name="queryStartDate" id="queryStartDate" value="" style="width:100px;height:28px" data-options="formatter:myformatter,parser:myparser">
+                                        -<input type="text" class="easyui-datebox" name="queryEndDate" value="" id="queryEndDate" style="width:100px;height:28px" data-options="formatter:myformatter,parser:myparser">
+                                    </span>
+                                    <span class="inp-s">
+                                        <input type="text" id="sequeue_train_nameText" class="inpA" value="订单号/车次/乘客姓名">
+                                        <span class="i-clear" id="clear_input_txt" title="清除"></span>
+                                    </span>
+                                </div>
+                                <div id="history_order" style="display:none">
+                                    <a id="querymyorderbutton" class="btn92s fr" href="#nogo" shape="rect">
+                                        <label style="cursor:pointer;" for="querybutton">查询</label>
+                                    </a>
+                                    <span>
+                                        <label for="orderdate">乘车日期</label>
+                                    </span>
+                                    <span>
+                                        <input type="text" class="easyui-datebox" name="queryStartDate" id="queryStartDate" value="" style="width:100px;height:28px" data-options="formatter:myformatter,parser:myparser">
+                                        -<input type="text" class="easyui-datebox" name="queryEndDate" value="" id="queryEndDate" style="width:100px;height:28px" data-options="formatter:myformatter,parser:myparser">
+                                    </span>
+                                    <span class="inp-s">
+                                        <input type="text" id="sequeue_train_nameText" class="inpA" value="订单号/车次/乘客姓名">
+                                        <span class="i-clear" id="clear_input_txt" title="清除"></span>
+                                    </span>
+                                </div>
+                                <input type="hidden" name="come_from_flag" id="come_from_flag" value="">
+                                <input type="hidden" name="pageSize" id="pageSize" value="8">
+                                <input type="hidden" name="pageIndex" id="pageIndex" value="0">
+                                <input type="hidden" name="query_where" id="query_where" value="">
+                            </div>
+                        </div>
+                        <div class="order-line"></div>
+                        <div class="sear-lay" id="query_what_order">
+                            <div class="sear-bot">
+                                <a class="cur" id="queryAllMyOrders" href="javascript:void(0);" shape="rect">全部</a>
+                                <a id="queryResginOrders" href="javascript:void(0);" shape="rect">可改签</a>
+                                <a id="queryCSOrders" href="javascript:void(0);" shape="rect">可变更到站</a>
+                                <a href="javascript:void(0);" id="queryReturnOrders" shape="rect">可退票</a>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="loading"></div>
+                    <!-- 未查询出数据开始   -->
+                    <div class="no-ticket-w" id="noticketlist" style="display:none;">
+                        <div class="no-ticket">
+                            <span class="i-no"></span>
+                            <p>
+                                您没有对应的订单内容，您可以通过<br clear="none">
+                                <a href="#nogo" id="book_ticket_id" shape="rect">车票预订</a>
+                                功能，来制定出行计划。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 未查询出数据结束   -->
+                    <!-- 查询出数据开始  -->
+                    <div id="orderinfobodyTable" style="display:none;">
+                        <div class="order-item">
+                            <div class="order-item-hd">
+                                <span class="icon-btn"></span>
+                                <div class="time">
+                                    订单日期：<strong>2013-03-03</strong>
+                                </div>
+                                <div class="per-s">
+                                    <span>李某某</span>
+                                </div>
+                                <div class="place">
+                                    <strong>北京南</strong>
+                                    <b class="dc"></b>
+                                    <strong>上海虹桥</strong>
+                                </div>
+                                <div class="time2">
+                                    乘车日期：<strong>2013-03-16</strong>
+                                </div>
+                                <i class="dispatch_img"></i>
+                                <a class="dispatch" href="#nogo" title="订单详情" shape="rect">订单详情</a>
+                                <a class="print" target="_blank" href="#nogo" shape="rect">打印</a>
+                                <i class="new"></i>
+                            </div>
+                            <div class="order-item-bd">
+                                <table class="table-c">
+                                    <tbody>
+                                        <tr>
+                                            <th width="37" rowspan="1" colspan="1">序号</th>
+                                            <th width="145" rowspan="1" colspan="1">车次信息</th>
+                                            <th width="120" rowspan="1" colspan="1">席位信息</th>
+                                            <th width="100" rowspan="1" colspan="1">旅客信息</th>
+                                            <th width="110" rowspan="1" colspan="1">票款金额</th>
+                                            <th width="100" rowspan="1" colspan="1">车票状态</th>
+                                            <th rowspan="1" colspan="1">操作</th>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div class="t-foot">
+                                    @*<span>
+                                            订单号：<strong>E160802101</strong>
+                                        </span>*@
+                                </div>
+                                <div class="t-btn">
+                                    <span class="fl">
+                                        <input type="checkbox" class="check">
+                                        <label>全选</label>
+                                    </span>
+                                    <div class="btn">
+                                        <a href="#" class="btn92s" shape="rect">变更到站</a>
+                                    </div>
+                                    <div class="btn">
+                                        <a href="#" class="btn92s" shape="rect">改签</a>
+                                    </div>
+                                    <div class="btn">
+                                        <a href="#" class="btn92s" shape="rect">购/赠/退保险</a>
+                                    </div>
+
+                                    <div class="btn">
+                                        <a href="#" class="btn92s" shape="rect">退款详情</a>
+                                    </div>
+                                    <div class="btn">
+                                        <a href="#" class="btn92s" shape="rect">订单跟踪</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 查询出数据结束 -->
+                        <!--翻页  开始-->
+                        <div class="page" id="pagination" style="display:block;">
+                            <a href="#nogo" class="btn92" shape="rect">客运首页</a>
+                            <a href="#nogo" class="btn92" shape="rect">上一页</a>
+                            <a href="#nogo" class="btn30s" shape="rect">1</a>
+                        </div>
+                        <!--翻页  结束-->
+                    </div>
+                </div>
+                <!--已完成订单 结束-->
+                <div class="tips-txt mt10">
+                    <h2>温馨提示：</h2>
+                    <p>1.订单信息在本网站保存期限为30日。</p>
+                    <p>2.在本网站购票后，没有换取纸质车票的，可不晚于开车前30分钟在本网站办理改签、退票业务，或不晚于开车前48小时在本网站办理“变更到站”业务。</p>
+                    <p>3.在本网站办理退票，只能逐次单张办理。</p>
+                    <p>4. 车票改签、变更到站均只能办理一次。已经改签或变更到站的车票不再办理改签；对已改签车票、团体票暂不提供“变更到站”服务。</p>
+                    <p>5.退票、改签、变更到站后，如有应退票款，按购票时所使用的在线支付工具相关规定，将在规定时间内退还至原在线支付工具账户，请及时查询。如有疑问，请致电人工客服查询。</p>
+                    <p>6.如需取消或查看车票快递状态，请点击“快递详情”。</p>
+                    <p>7.投保、退保或查看电子保单状态，请点击“我的保险”或“购/赠/退保险”。</p>
+                    <!--
+                            <a href="#nogo" id="show_more_titel_info">更多内容...</a>
+                            -->
+                    <div id="hide_info_id">
+                        <!--  <a href="#nogo" id="hide_more_titel_info" class='hide'>隐藏...</a> -->
+                    </div>
+                </div>
+            </div>
+            <!--右侧主体 结束-->
+        </div>
+        <!--页面主体  结束-->
+        <!-- 退票页面弹出层 开始    -->
+        <div class="up-box w600" style="display:none;border: solid rgb(245, 234, 240) 1px" id="return_ticket_id">
+            <div class="up-box-hd">
+                交易提示<a href="#nogo" id="close_trade_notice_return" shape="rect">关闭</a>
+            </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-opt"></span>
+                    <div class="r-txt">
+                        <div class="tit">您确认要退票吗？</div>
+
+                        <div id="returnTicketInfo">
+                            <p>
+                                票款原价：<strong class="mr5">100.0元</strong>
+
+                                退票费：<strong class="mr5">5.0元</strong>
+                                共计退款：<strong class="colorA">95.0元</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lay-btn">
+                    <a href="#nogo" id="cacel_return_ticket" class="btn92" shape="rect">取消</a>
+                    <a href="#nogo" id="return_ticket_ok" class="btn92s" shape="rect">确认</a>
+                </div>
+                <p class="tips">
+                    1. 退票费按如下规则核收：票面乘车站开车时间前15天（不含）以上不收取退票费，48小时以上的按票价5%计，24小时以上、不足48小时的 按票价10%计，不足24小时的按票价20%计。改签或变更到站后的车票乘车日期在春运期间的，退票时一律按开车时间前不足24小时标准核收退票费。<br clear="none">
+
+                    2. 应退款项按银行规定时限退还至购票时所使用的网上支付工具账户，请注意查询，如有疑问请致电人工客服查询。<br clear="none">
+
+                    3. 2016=8年春运期间为1月24日至3月3日。
+
+                </p>
+            </div>
+        </div>
+        <!-- 退票页面弹出层 结束   -->
+        <!-- 加载中开始 -->
+        <div class="up-box w600" id="dataLoad" style="display:none">
+            <div>
+                <img src="/images/bg_login2.jpg">
+
+
+                数据载入中，请稍候......
+
+                &nbsp;
+
+            </div>
+        </div>
+        <!-- 加载中结束 -->
+        <!-- /wrap -->
+        <form id="_es_hiddenform" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="_json_att" value="">
+        </form>
+        <div class="mask" id="detail_mask" style="display: none;"></div>
+        <div class="new-tips" style="display: none;" id="detail_f_content">
+            <i></i>
+            <a href="javascript:void(0);" class="close" id="detail_f_close" shape="rect">关闭</a>
+            <img src="/images/bg09.png" width="387" height="143">
+        </div>
+
+        <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+        <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>

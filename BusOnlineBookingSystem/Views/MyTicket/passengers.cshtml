@@ -1,0 +1,146 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/userSecurity.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+    <script type="text/javascript">
+
+
+    </script>
+</head>
+@*常用联系人*@
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+
+    <div id="dialog_del" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box w600">
+            <div class="up-box-hd">
+                删除常用联系人<a id="dialog_del_close" shape="rect">关闭</a>
+            </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-opt"></span>
+                    <div class="r-txt">
+                        <div class="tit">您确定要删除选中的常用联系人吗？</div>
+                    </div>
+                </div>
+                <div class="lay-btn">
+                    <a id="dialog_del_cancel" href="javascript:" class="btn92" shape="rect">取消</a>
+                    <a href="javascript:" id="dialog_del_ok" class="btn92s" shape="rect">确认</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        <div class="crumbs">
+            您现在的位置：<a href="/Main/Main" shape="rect">客运首页</a>
+            &nbsp;&gt;&nbsp;<a href="/MyTicket/MyTicket" shape="rect">我的Ticket</a>
+            &nbsp;&gt;&nbsp;<a href="#" shape="rect">常用信息管理</a>
+            &nbsp;&gt;&nbsp;<strong>常用联系人</strong>
+        </div>
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--系统信息 开始-->
+            <div class="layout order">
+                <div class="lay-hd">常用联系人</div>
+                <div class="lay-bd">
+                    <div class="lay-per">
+                        <div class="lay-perhd">
+                            <div class="s-box">
+                                <input id="_search_name" type="text" value="输入乘客姓名" class="txt">
+                                <input id="_search_butn" type="submit" class="sub" style="cursor: pointer;">
+                            </div>
+                            <a class="add" href="javascript:$.passenger_addInit();" shape="rect">增加</a>
+                            <a class="del" href="javascript:$.passenger_delChecked();" shape="rect">删除</a>
+                        </div>
+                        <div class="lay-perbd">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="1" colspan="1">
+                                            <input id="_checkAll" type="checkbox" class="check" style="cursor: pointer;">
+                                            <label>序号</label>
+                                        </th>
+                                        <th rowspan="1" colspan="1">姓名</th>
+                                        <th rowspan="1" colspan="1">证件类型</th>
+                                        <th width="175" rowspan="1" colspan="1">证件号码</th>
+                                        <th rowspan="1" colspan="1">手机/电话</th>
+                                        <th rowspan="1" colspan="1">旅客类型</th>
+                                        <th rowspan="1" colspan="1">核验状态</th>
+                                        <th class="tc" width="50" rowspan="1" colspan="1">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="passengerAllTable">
+                                    <tr>
+                                        <td>
+                                            <input disabled="disabled" value="刘东君#1#440982199403204953#Y" type="checkbox" class="check" style="cursor: pointer;">
+                                            <label>1</label>
+                                        </td>
+                                        <td>sa</td>
+                                        <td>二代身份证</td>
+                                        <td>440982199403204953</td>
+                                        <td>18707644495</td>
+                                        <td>成人</td>
+                                        <td style="color: #0077FF;">已通过</td>
+                                        <td class="tc"></td>
+                                    </tr>
+                                    <tr class="last">
+                                        <td>
+                                            <input value="钟政#1#440982199303195375#N" type="checkbox" class="check" style="cursor: pointer;">
+                                            <label>2</label>
+                                        </td>
+                                        <td>Admin</td>
+                                        <td>二代身份证</td>
+                                        <td>440982199303195375</td>
+                                        <td></td>
+                                        <td>成人</td>
+                                        <td style="color: #0077FF;">已通过</td>
+                                        <td class="tc">
+                                            <a class="i-del" href='javascript:$.passenger_del("Admin","1","440982199303195375","N")'></a>
+                                            <a class="i-edit" href='javascript:$.passenger_show("Admin","1","440982199303195375","1")'></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--翻页  开始-->
+                    <div class="page gigantic pagination" id="pagination">
+                        <a href="/otn/passengers/query?page=1" class="btn92 first disabled" data-action="first">首页</a>
+                        <a href="/otn/passengers/query?page=1" class="btn92 previous disabled" data-action="previous">上一页</a>
+                        <span class="pageItems"><a href="#nogo" class="btn30s" data-action="cur_1">1</a></span>
+                        <a href="/otn/passengers/query?page=1" class="btn92 next disabled" data-action="next">下一页</a>
+                        <a href="/otn/passengers/query?page=1" class="btn92 last disabled" data-action="last">末页</a>
+                    </div>
+                    <!--翻页  结束-->
+                </div>
+            </div>
+            <!--系统信息 结束-->
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+

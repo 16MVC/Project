@@ -1,0 +1,125 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/intNoComplete.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //查询
+            $.ajax({
+                url: "/Ticket/getinitNoComplete",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    var s = 0;
+                    var money = 0;
+                    $.each(result, function (key, data) {                                                                                        //2013-03-16  7:30开      G42 北京南-上海虹桥                           软卧 08车厢             27号 上铺
+                        var c = '<tr><td rowspan="1" colspan="1"><label>' + (key + 1) + '</label></td><td rowspan="1" colspan="1"> <div class="ccxx"> ' + data + '<br clear="none">' + data + '</div></td><td rowspan="1" colspan="1">' + data + '<br clear="none">' + data + ' </td><td rowspan="1" colspan="1">' + sa + '<br clear="none">' + 二代身份证 + '</td><td rowspan="1" colspan="1">' + 成人票 + '<span class="colorA">' + 409.5 + '元</span></td><td rowspan="' + (key + 1) + '" colspan="1">' + 待支付 + '</td></tr>';
+                        $(".table-c tbody").append($(c)).show();
+                        s = key + 1;
+                    })
+                    if (result > 0) {
+                        var w = '<span class="icon-btn"></span><div class="time">订单日期：<strong>' + 2013 - 03 - 03 + '</strong></div><div class="per-s"><span>' + sa + '</span></div><div class="place"><strong>' + 北京南 + '</strong><b class="dc"></b><strong>' + 上海虹桥 + '</strong></div><div class="time2">乘车日期：<strong>' + 2013 - 03 - 16 + '</strong></div>';
+                        $(".order-item-hd").append($(w)).show();
+                        var e = '<span>总张数：<strong>' + s + '</strong></span><span>待支付金额：<strong class="colorA">' + 409.5 + '元</strong></span>';
+                        $(".t-foot").append($(e)).show();
+                        $("#orderinfobodyTable").css("display", "block");
+                    }
+                }, error: function () {
+                    $("#noticketlist").css("display", "block");
+                }
+            })
+
+            //缩进订单详细
+            var i = 0;
+            $(".icon-btn").click(function () {
+                if (i == 0) {
+                    $(this).parent().parent().addClass("close");
+                    i = 1;
+                } else {
+                    $(this).parent().parent().removeClass("close");
+                    i = 0;
+                }
+
+            });
+
+            $("#book_ticket_id").click(function () {
+                //window.location.href = "/Buyticket/TicketBook";
+            });
+        });
+
+    </script>
+
+</head>
+<!--未完成订单-->
+<body>
+    <div class="main">
+        <!--未完成订单-->
+        <div class="layout order">
+            <div class="lay-hd">未完成订单</div>
+            <div class="lay-bd">
+                <div id="orderinfobodyTable" style="display: none;">
+                    <div class="order-item">
+                        <div class="order-item-hd">
+
+                        </div>
+                        <div class="order-item-bd">
+                            <table class="table-c">
+                                <tbody>
+                                    <tr>
+                                        <th width="37" rowspan="1" colspan="1">序号</th>
+                                        <th width="145" rowspan="1" colspan="1">车次信息</th>
+                                        <th width="120" rowspan="1" colspan="1">席位信息</th>
+                                        <th width="100" rowspan="1" colspan="1">乘客信息</th>
+                                        <th width="110" rowspan="1" colspan="1">票款金额</th>
+                                        <th width="100" rowspan="1" colspan="1">车票状态</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="t-foot">
+
+                            </div>
+                            <div class="t-btn">
+                                <div class="btn">
+                                    <a href="#" class="btn92s" shape="rect">继续支付</a>
+                                </div>
+                                <div class="btn">
+                                    <a href="#" class="btn92s btn93s" shape="rect">取消订单</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--翻页-->
+                <div class="page" id="pagination" style="display:none;">
+                    <a href="#nogo" class="btn92" shape="rect">客运首页</a>
+                    <a href="#nogo" class="btn92" shape="rect">上一页</a>
+                    <a href="#nogo" class="btn30s" shape="rect">1</a>
+                    @*<a href="#nogo" class="btn30" shape="rect">2</a>*@
+                    <a href="#nogo" class="btn92" shape="rect">下一页</a>
+                    <a href="#nogo" class="btn92" shape="rect">末页</a>
+                </div>
+                <!--没数据提示-->
+                <div class="no-ticket-w" id="noticketlist" style="display:none;">
+                    <div class="no-ticket">
+                        <span class="i-no"></span>
+                        <p>
+                            您没有对应的订单内容，您可以通过<br clear="none">
+                            <a href="#nogo" id="book_ticket_id" shape="rect">车票预订</a>
+                            功能，来制定出行计划。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

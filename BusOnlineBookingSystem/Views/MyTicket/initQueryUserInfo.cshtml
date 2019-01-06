@@ -1,0 +1,635 @@
+﻿@{
+    Layout = null;
+}
+
+
+<html>
+<head>
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/initQueryUserInfo.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.ico">
+
+    <link href="~/Content/jquery-easyui-1.3.3/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        //设置时间格式
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+        //检索日期格式
+        function myparser(s) {
+            if (!s) return new Date();
+            var ss = (s.split('-'));
+            var y = parseInt(ss[0], 10);
+            var m = parseInt(ss[1], 10);
+            var d = parseInt(ss[2], 10);
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                return new Date(y, m - 1, d);
+            } else {
+                return new Date();
+            }
+        }
+
+        $(document).ready(function () {
+            //编辑基本信息
+            $("#basic_info_edit").click(function () {
+                $(this).parent().css("display", "none");
+                $("#basic_info_save").parent().css("display", "block");
+                $("#basic_info_view").css("display", "none");
+                $("#basic_info_base").css("display", "block");
+            });
+            //保存基本信息
+            $("#basic_info_save").click(function () {
+                $(this).parent().css("display", "none");
+                $("#basic_info_edit").parent().css("display", "block");
+                $("#basic_info_base").css("display", "none");
+                $("#basic_info_view").css("display", "block");
+            });
+            //编辑联系方式
+            $("#relation_way_edit").click(function () {
+                $(this).parent().css("display", "none");
+                $("#relation_way_save").parent().css("display", "block");
+                $("#relation_way_view").css("display", "none");
+                $("#relation_way_base").css("display", "block");
+            });
+            //保存联系方式
+            $("#relation_way_save").click(function () {
+                $(this).parent().css("display", "none");
+                $("#relation_way_edit").parent().css("display", "block");
+                $("#relation_way_base").css("display", "none");
+                $("#relation_way_view").css("display", "block");
+            });
+
+            //编辑附加信息
+            $("#append_info_edit").click(function () {
+                $(this).parent().css("display", "none");
+                $("#append_info_save").parent().css("display", "block");
+                $("#append_info_view").css("display", "none");
+                $("#append_info_base").css("display", "block");
+            });
+            //保存附加信息
+            $("#append_info_save").click(function () {
+                $(this).parent().css("display", "none");
+                $("#append_info_edit").parent().css("display", "block");
+                $("#append_info_base").css("display", "none");
+                $("#append_info_view").css("display", "block");
+            });
+
+            //绑定乘客类型
+            $.ajax({
+                url: "/Main/getpassengertype",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, data) {
+                        if ((key + 1) == 1) {
+                            $("#user_type_change").append("<option selected='selected' value=" + data.value + ">" + data.name + "</option>");
+                        } else {
+                            $("#user_type_change").append("<option value=" + data.value + ">" + data.name + "</option>");
+                        }
+                    })
+                }
+            })
+            //绑定省份
+            $.ajax({
+                url: "/Main/getProvince",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $.each(result, function (key, data) {
+                        $("#province_code").append("<option value=" + data.value + ">" + data.name + "</option>");
+                    })
+                }
+            })
+            //入学年份
+            var datetime = new Date();
+            var year = datetime.getFullYear();
+            var c = '<select name="userDTO.studentInfoDTO.enter_year"> ';
+            for (var i = 0; i < 11; i++) {
+                c += '<option value="' + (year - i) + '">' + (year - i) + '</option>';
+            }
+            c += '</select>';
+            $("#student_id_edit .con year").append($(c)).show();
+        });
+        //显示学生填写信息
+        $.extend({
+            changeuser_type: function (val) {
+                if (val == 3) {
+                    $('#student_id_edit').css('display', 'block');
+                } else {
+                    $('#student_id_edit').css('display', 'none');
+                }
+            },
+        })
+
+    </script>
+</head>
+<!--查看个人信息-->
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        @*<div class="crumbs">
+                您现在的位置：<a href="/Main/Main" shape="rect">客运首页</a>
+                &nbsp;&gt;&nbsp;<a href="/My12306/My12306" shape="rect">我的12306</a>
+                &nbsp;&gt;&nbsp;<strong>个人信息</strong>
+            </div>*@
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--系统信息 开始-->
+            <div class="layout order">
+                <form id="modifyUserForm" method="get" enctype="application/x-www-form-urlencoded">
+                    <div class="lay-hd">个人信息</div>
+                    <div class="lay-bd">
+                        <div class="infoblock">
+                            <div class="tit clearfix">
+                                <div class="tit-txt">
+                                    <span class="required">*</span>
+                                    <label>基本信息</label>
+                                </div>
+                                <div class="tit-btn" id="basic_info_edit_div">
+                                    <a href="javascript:void(0);" class="btn92" id="basic_info_edit" shape="rect">
+                                        <span class="i-editbtn">
+                                            <label>编辑</label>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="tit-btn" id="basic_info_save_div" style="display: none;">
+                                    <a href="javascript:void(0);" class="btn92" id="basic_info_save" shape="rect">
+                                        <span class="i-savebtn">
+                                            <label>保存</label>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--编辑-->
+                            <div class="base" id="basic_info_base">
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        用户名：
+                                    </span>
+                                    <input name="userDTO.loginUserDTO.user_name" style="display:none;" type="text" value="liudongjun12345678">
+                                    <div class="con">liudongjun12345678</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        姓名：
+                                    </span>
+                                    <div class="con">刘**</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        性别：
+                                    </span>
+                                    <div class="con">
+                                        <span class="mr15">
+                                            <input type="radio" class="radio" name="userDTO.sex_code" value="M" checked="checked">
+                                            <label>男</label>
+                                        </span>
+                                        <span>
+                                            <input type="radio" name="userDTO.sex_code" value="F" class="radio">
+                                            <label>女</label>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">国家/地区：</span>
+                                    <div class="con">
+                                        <span>
+                                            <span>中国CHINA</span>
+                                        </span>
+                                        <input type="hidden" name="userDTO.country_code" value="CN">
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        证件类型：
+                                    </span>
+                                    <div class="con">二代身份证</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        证件号码：
+                                    </span>
+                                    <div class="con">44098*******53</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">出生日期：</span>
+                                    <div class="con">
+                                        @*<input type="text" readonly="readonly" value="1994-03-20" id="born_date" name="userDTO.born_date" class="inptxt w200 color333">*@
+                                        <input type="text" class="easyui-datebox" value="1994-03-20" name="userDTO.born_date" id="born_date" style="width:195px;height:28px" data-options="formatter:myformatter,parser:myparser">
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">核验状态：</span>
+                                    <div>
+                                        <div class="con" style="color:#0077FF;" title="">已通过</div>
+                                    </div>
+                                    <!-- <div  style="color:#FF7F00" th:text="${notice1}">测试</div> -->
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        登录密码：
+                                    </span>
+                                    <div class="con">
+                                        <input type="password" value="" name="userDTO.password" maxlength="25" class="inptxt w200 color333">
+                                    </div>
+                                    <div class="tips one-line">正确输入密码才能修改个人资料</div>
+                                </div>
+                            </div>
+                            <!--查看-->
+                            <div class="base-view" id="basic_info_view">
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        用户名：
+                                    </span>
+                                    <div class="con">liudongjun12345678</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        姓名：
+                                    </span>
+                                    <div class="con">刘**</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        性别：
+                                    </span>
+                                    <div class="con">男</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">国家/地区：</span>
+                                    <div class="con">中国CHINA</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        证件类型：
+                                    </span>
+                                    <div class="con">二代身份证</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        证件号码：
+                                    </span>
+                                    <div class="con">44098******53</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">出生日期：</span>
+                                    <div class="con">1994-03-20</div>
+                                </div>
+                                <div class="info-item" style="height:60px;">
+                                    <span class="label">核验状态：</span>
+                                    <div class="con" title="">
+                                        <div style="color:#0077FF;">已通过</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoblock">
+                            <div class="tit clearfix">
+                                <div class="tit-txt">
+                                    <span class="required">*</span>
+                                    <label>联系方式</label>
+                                </div>
+                                <div class="tit-btn" id="relation_way_edit_div">
+                                    <a href="#nogo" class="btn92" id="relation_way_edit" shape="rect">
+                                        <span class="i-editbtn">
+                                            <label>编辑</label>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="tit-btn" id="relation_way_save_div" style="display: none;">
+                                    <a href="#nogo" class="btn92" id="relation_way_save" shape="rect">
+                                        <span class="i-savebtn">
+                                            <label>保存</label>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--编辑-->
+                            <div class="base" id="relation_way_base">
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        手机号码：
+                                    </span>
+                                    <div class="con">18707644495</div>
+                                    <input type="text" name="userDTO.mobile_no" maxlength="30" style="display:none;" value="18707644495">
+                                    <div class="tips one-line">
+                                        去<a href="javascript:void(0);" id="phone_binding_href" shape="rect">
+                                            <span>手机核验</span>
+                                        </a>
+                                        修改
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">固定电话：</span>
+                                    <div class="con">
+                                        <input type="text" maxlength="30" name="userDTO.phone_no" class="inptxt w200 color333" value="7711522">
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">电子邮件：</span>
+                                    <div class="con">1319000861@qq.com</div>
+                                    <input type="text" name="userDTO.email" style="display:none;" value="1319000861@qq.com">
+                                    <div class="tips one-line">
+                                        去<a href="#nogo" id="security_email_href" shape="rect">安全邮箱</a>
+                                        修改
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">地址：</span>
+                                    <div class="con">
+                                        <input name="userDTO.address" type="text" value="广东省化州市***村" class="inptxt w200 color333">
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">邮编：</span>
+                                    <div class="con">
+                                        <input name="userDTO.postalcode" type="text" value="511400" class="inptxt w200 color333">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--查看-->
+                            <div class="base-view" id="relation_way_view">
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        手机号码：
+                                    </span>
+                                    <div class="con">187***95</div>
+                                    <div class="tips one-line" style="left:350px;color: #0077FF;">已通过核验</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">固定电话：</span>
+                                    <div class="con">77***2</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">电子邮件：</span>
+                                    <div class="con">1319000861@qq.com</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">地址：</span>
+                                    <div class="con" style="height:30px;max-width: 470px;overflow:hidden;" title="广东省化州市***村">广东省化州市***村</div>
+                                </div>
+                                <div class="info-item">
+                                    <span class="label">邮编：</span>
+                                    <div class="con">511400</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="infoblock">
+                            <div class="tit clearfix">
+                                <div class="tit-txt">
+                                    <span class="required">*</span>
+                                    <label>附加信息</label>
+                                </div>
+                                <div class="tit-btn" id="append_info_edit_div">
+                                    <a href="#nogo" class="btn92" id="append_info_edit" shape="rect">
+                                        <span class="i-editbtn">
+                                            <label>编辑</label>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="tit-btn" id="append_info_save_div" style="display: none;">
+                                    <a href="#nogo" class="btn92" id="append_info_save" shape="rect">
+                                        <span class="i-savebtn">
+                                            <label>保存</label>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--编辑-->
+                            <div class="base" id="append_info_base">
+                                <div class="info-item">
+                                    <span class="label">
+                                        <span class="required">*</span>
+                                        旅客类型：
+                                    </span>
+                                    <div class="con">
+                                        <select name="userDTO.loginUserDTO.user_type" id="user_type_change" value="1" onchange="javascript: $.changeuser_type(this.value)">
+                                            @*<option selected="selected" value="1">成人</option>
+                                                <option value="2">儿童</option>
+                                                <option value="3">学生</option>
+                                                <option value="4">残疾军人、伤残人民警察</option>*@
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="student_id_edit" style="display:none;">
+                                    <div class="info-item">
+                                        <span class="label">
+                                            <span class="required">*</span>
+                                            学校所在省份：
+                                        </span>
+                                        <div class="con">
+                                            <input type="text" id="province_name" name="userDTO.studentInfoDTO.province_name" style="display: none;" value="">
+                                            <select name="userDTO.studentInfoDTO.province_code" id="province_code">
+                                                <option value="11">北京</option>
+                                                <option value="12">天津</option>
+                                                <option value="13">河北</option>
+                                                <option value="14">山西</option>
+                                                <option value="15">内蒙古</option>
+                                                <option value="21">辽宁</option>
+                                                <option value="22">吉林</option>
+                                                <option value="23">黑龙江</option>
+                                                <option value="31">上海</option>
+                                                <option value="32">江苏</option>
+                                                <option value="33">浙江</option>
+                                                <option value="34">安徽</option>
+                                                <option value="35">福建</option>
+                                                <option value="36">江西</option>
+                                                <option value="37">山东</option>
+                                                <option value="41">河南</option>
+                                                <option value="42">湖北</option>
+                                                <option value="43">湖南</option>
+                                                <option value="44">广东</option>
+                                                <option value="45">广西</option>
+                                                <option value="46">海南</option>
+                                                <option value="50">重庆</option>
+                                                <option value="51">四川</option>
+                                                <option value="52">贵州</option>
+                                                <option value="53">云南</option>
+                                                <option value="54">西藏</option>
+                                                <option value="61">陕西</option>
+                                                <option value="62">甘肃</option>
+                                                <option value="63">青海</option>
+                                                <option value="64">宁夏</option>
+                                                <option value="65">新疆</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">
+                                            <span class="required">*</span>
+                                            学校名称：
+                                        </span>
+                                        <div class="con">
+                                            <input id="schoolNameText" name="userDTO.studentInfoDTO.school_name" type="text" value="" class="inptxt w200 color333" autocomplete="off">
+                                            <input type="text" id="schoolCode" name="userDTO.studentInfoDTO.school_code" style="display: none;" value="">
+                                            <div id="schoolNameSuggest" class="ac_results ac_results_school" style="top: 30px; left: 0px;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">院系：</span>
+                                        <div class="con">
+                                            <input name="userDTO.studentInfoDTO.department" type="text" value="" class="inptxt w200 color333">
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">班级：</span>
+                                        <div class="con">
+                                            <input name="userDTO.studentInfoDTO.school_class" type="text" value="" class="inptxt w200 color333">
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">
+                                            <span class="required">*</span>
+                                            学号：
+                                        </span>
+                                        <div class="con">
+                                            <input name="userDTO.studentInfoDTO.student_no" type="text" value="" class="inptxt w200 color333">
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">
+                                            <span class="required">*</span>
+                                            学制：
+                                        </span>
+                                        <div class="con">
+                                            <select name="userDTO.studentInfoDTO.school_system">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">
+                                            <span class="required">*</span>
+                                            入学年份：
+                                        </span>
+                                        <div class="con year">
+
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">优惠卡号：</span>
+                                        <div class="con">
+                                            <input name="userDTO.studentInfoDTO.preference_card_no" type="text" value="" class="inptxt w200 color333">
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">
+                                            <span class="required">*</span>
+                                            优惠区间：
+                                        </span>
+                                        <div class="con">
+                                            <input type="text" id="preference_from_province_code_id" name="userDTO.studentInfoDTO.preference_from_province_code" style="display: none;" value="">
+                                            <input type="text" id="preference_to_province_code_id" name="userDTO.studentInfoDTO.preference_to_province_code" style="display: none;" value="">
+                                            <input name="userDTO.studentInfoDTO.preference_from_station_name" type="text" id="preference_from_station_name" value="" class="inptxt w90 color333" autocomplete="off">
+                                            <input type="text" id="preferenceFromStationCode" name="userDTO.studentInfoDTO.preference_from_station_code" style="display: none;" value="">
+                                            <div id="preferenceFromStationNameSuggest" class="ac_results" style="top: 30px; left: 0px;"></div>
+                                            <span class="fg-line">--</span>
+                                            <input id="preference_to_station_name" name="userDTO.studentInfoDTO.preference_to_station_name" type="text" value="" class="inptxt w90 color333" autocomplete="off">
+                                            <input type="text" id="preferenceToStationCode" name="userDTO.studentInfoDTO.preference_to_station_code" style="display: none;" value="">
+                                            <div id="preferenceToStationNameSuggest" class="ac_results" style="top: 30px; left: 0px;"></div>
+                                        </div>
+                                        <div class="tips">填写与学生证一致的优惠区间（选择车站所在城市）</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--查看-->
+                            <div class="base-view" id="append_info_view">
+                                <div class="info-item">
+                                    <span class="label">旅客类型：</span>
+                                    <div class="con">成人</div>
+                                </div>
+                                <div id="student_id_view" style="display: none;">
+                                    <div class="info-item">
+                                        <span class="label">学校所在省份：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">学校名称：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">院系：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">班级：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">学号：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">学制：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">入学年份：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">优惠卡号：</span>
+                                        <div class="con"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">优惠区间：</span>
+                                        <div class="con">
+                                            <span></span>
+                                            <span class="fg-line">--</span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--系统信息 结束-->
+            <
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+
+
+    <!--页面主体  结束-->
+    <!-- /wrap -->
+    <form id="_es_hiddenform" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_json_att" value="">
+    </form>
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+

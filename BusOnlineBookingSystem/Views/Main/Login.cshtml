@@ -1,0 +1,293 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <
+    <title>客运服务 | 公路客户服务中心</title>
+    <link rel="stylesheet" href="~/css/common.css" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+    <script type="text/javascript">
+        function Login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            if (username != "" && password != "") {
+                $.getJSON("/Main/Login?Name=" + username + "&" + "Password=" + password, function (result) {
+                    if (result == "OK") {
+                        document.location.href = "/MyTicket/MyTicket";
+                    } else {
+                        alert("对不起，您输入的密码不正确！请重新输入！");
+                        $("#password").val("");
+                    }
+                });
+            } else {
+                alert("登录失败！密码和账号不能为空！！请重新登录！！")
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">江苏客运客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list" style="display: none;">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/address">车票快递地址</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
+                        您好，请
+                    </span>
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
+                    | <a id="regist_out" href="/Main/register">注册</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main" class="current">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook" class="">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect" class="">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:" class="">出行向导</a>
+                        <div class="nav-list" style="display: none;">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/queryStationBus">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/DrivingTime">车程时间查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor" class="">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @*所在位置*@
+    <div style="height: 0px; line-height: 32px;width: 962px;position: relative; margin:auto;">
+        您现在的位置：
+        <a href="/Main/Main" style="color: #333333;" shape="rect">客运首页</a>
+
+        &nbsp;&gt;&nbsp;
+        <strong>登录</strong>
+    </div>
+    @*主体部分*@
+    <div class="content" style="min-height: 414px;">
+        <div class="lay-login clearfix">
+            <form id="loginForm" method="get" enctype="application/x-www-form-urlencoded">
+                <div class="login" style="height: 340px;">
+                    <ul style="float: left; width: 147px;">
+                        <li class="zc" style="padding-left: 0px; margin-top: 0px; height: 10px; padding-right: 10px; zoom: 1;">
+                        </li>
+                        <li class="zc" style="margin-top: 0px; padding-left: 0px; height: auto; padding-right: 10px; zoom: 1;">
+                            <h2 style="height: 25px;line-height: 25px;font-size: 14px;">温馨提示：</h2>
+                        </li>
+                        <li class="zc" style="margin-top: 0px; line-height: 20px; color: rgb(102, 102, 102); padding-left: 0px; height: auto; padding-right: 10px; zoom: 1;">1、Bus.cn网站自3月16日起启用图形验证码</li>
+                        <li class="zc" style="margin-top: 0px; line-height: 20px; color: rgb(102, 102, 102); padding-left: 0px; height: auto; padding-right: 10px; zoom: 1;">2、Bus.cn网站每日07:00~23:00提供服务</li>
+                        <li class="zc" style="margin-top: 0px; line-height: 20px; color: rgb(102, 102, 102); padding-left: 0px; height: auto; padding-right: 10px; zoom: 1;">3、在Bus.cn网站购票、改签和退票须不晚于开车前30分钟；办理“变更到站”业务时，请不晚于开车前48小时。</li>
+                    </ul>
+                    <ul style="float: left; width: 510px; border-left-width: 1px; border-left-style: solid; border-left-color: rgb(187, 187, 187);">
+                        <li>
+                            <span class="label">登录名：</span>
+                            <input id="username" tabindex="1" name="loginUserDTO.user_name" type="text" class="inptxt w200" style="color: rgb(51, 51, 51); width: 309px;" placeholder="用户名／邮箱／手机号码">
+                        </li>
+                        <li>
+                            <span class="label">密码：</span>
+                            <input id="password" name="userDTO.password" tabindex="2" type="password" class="inptxt w200" maxlength="25" style="color: rgb(51, 51, 51); width: 309px;">
+                            <a href="/Main/ForgetMyPassword" id="forget_password_id" shape="rect">忘记用户名/密码？</a>
+                        </li>
+                        <li id="mypasscode1" data-code_type="login" data-touclick-type="inside" style="display: none"></li>
+                        <input type="hidden" name="randCode" data-targetdiv="mypasscode1" id="randCode" value="" style="color: rgb(51, 51, 51); display: none; width: 309px;">
+                        <div style="height: 12px;">
+                            <li id="error_msgmypasscode1" class="error" style="display: none; position: absolute;"></li>
+                        </div>
+                        <li class="dl captchaButton" data-touclick-name="" style="margin-top: 0px; height: auto; padding-left: 0px; zoom: 1;">
+                            <a href="#" class="btn200s" id="loginSub" shape="rect" style="width: 155px; float: left; margin-left: 75px;" onclick="Login()">登录</a>
+                            <a href="/Main/register" class="btn200" shape="rect" style="width: 155px; float: left; margin-left: 6px;">快速注册</a>
+                        </li>
+
+                        <li class="txt" style="height: 4px; display: none;"></li>
+                    </ul>
+                </div>
+            </form>
+            <div class="lay-guide" style="height: 360px;">
+                <ul>
+                    <li style="padding-top: 28px;">
+                        <a href="/Travelguide/queryTrainInfo" title="可查询车站的车次、发车时间等汽车信息。" shape="rect">
+                            <span class="img tgcz"></span>
+                            <span>车站查询</span>
+                        </a>
+                    </li>
+                    <li style="padding-top: 28px;">
+                        <a title="可查询两站间汽车的票价信息。" shape="rect" href="/Travelguide/leftTicketPrice">
+                            <span class="img zzcx"></span>
+                            <span>票价查询</span>
+                        </a>
+                    </li>
+                    <li style="padding-top: 28px;">
+                        <a href="/Travelguide/DrivingTime" title="可查询车程时间信息。" shape="rect">
+                            <span class="img zwd"></span>
+                            <span>车程时间查询</span>
+                        </a>
+                    </li>
+                    <li style="padding-top: 28px;">
+                        <a href="/Travelguide/Travelguide" title="选择省、市、区并点击查询，可查询代售点名称、地址、电话、营业时间等信息。" shape="rect">
+                            <span class="img dsd"></span>
+                            <span>客票代售点</span>
+                        </a>
+                    </li>
+                    <li style="padding-top: 28px;">
+                        <a href="#" shape="rect">
+                            <span class="img jqqd"></span>
+                            <span>起售时间</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <div class="about-txt">
+                <ul>
+                    <li>
+                        <dl>
+                            <dt>使用须知</dt>
+                            <dd>
+                                <a href="#" shape="rect">注册新用户</a>
+                            </dd>
+                            <dd>
+                                <a href="#" shape="rect">网上购票流程</a>
+                            </dd>
+                            <dd>
+                                <a href="#" shape="rect">铁路电子客票</a>
+                            </dd>
+                            <dd>
+                                <a href="#" shape="rect">身份核验</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="cjwt">
+                        <dl>
+                            <dt>购票常见问题</dt>
+                            <dd>
+                                <a id="ticketLost" href="#" shape="rect">身份核验结果有哪几种状态？</a>
+                            </dd>
+                            <dd>
+                                <a id="onlineEndorse" href="#" shape="rect">如何了解自己的身份信息核验结果？</a>
+                            </dd>
+                            <dd>
+                                <a id="changeToPaperTicket" href="#" shape="rect">“已通过”的二代身份证注册用户如何添加常用联系人(乘车人)？</a>
+                            </dd>
+                            <dd>
+                                <a id="luggage" href="#" shape="rect">购买实名制车票后丢失了怎么办？</a>
+                            </dd>
+                            <dd>
+                                <a href="#" style="color:#0077FF" shape="rect">更多&gt;</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="last">
+                        <dl>
+                            <dt>相关规章</dt>
+                            <dd>
+                                <a href="#" shape="rect">《汽车互联网售票暂行办法》</a>
+                            </dd>
+                            <dd>
+                                <a href="#" shape="rect">《汽车互联网购票须知》</a>
+                            </dd>
+                            <dd>
+                                <a href="#" shape="rect">《汽车互联网购票身份核验须知》</a>
+                            </dd>
+                            <dd>
+                                <a href="#" shape="rect">《汽车旅客运输规程》</a>
+                            </dd>
+                            <dd>
+                                <a href="#" shape="rect">《汽车旅客运输办理细则》</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @*页面底部*@
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    @*返回顶部按钮*@
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+
+</body>
+</html>
+

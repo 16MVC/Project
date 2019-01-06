@@ -1,0 +1,404 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/common.css" rel="stylesheet" />
+    <link href="~/css/userSecurity.css" rel="stylesheet" />
+    <link href="~/css/queryOrder.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+    <style type="text/css">
+        .tips_check {
+            color: #f00;
+        }
+
+        label.error {
+            background: url(../images/icon_wrong.png) left center no-repeat;
+            padding: 0;
+            padding-left: 20px;
+            height: 20px;
+            color: #FF2626;
+            line-height: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+
+        //验证密码安全程度 checkPwdRank(this,'_div_password_rank','_span_password_rank')
+        function checkPwdRank(e, a, d) {
+            var b = $(e);
+            var c = b.val();
+            if (c.length <= 6 || new RegExp("^[a-zA-Z]{6,}$").test(c) || new RegExp("^[0-9]{6,}$").test(c) || new RegExp("^[_]{6,}$").test(c)) {
+                $("#" + a).attr("title", "危险");
+                $("#" + d).html("危险");
+                $("#" + a).removeClass("rank-a");
+                $("#" + a).removeClass("rank-b");
+                $("#" + a).removeClass("rank-c");
+                $("#" + a).addClass("rank-a")
+            } else {
+                if (c.length > 6 && new RegExp("[a-zA-Z]").test(c) && new RegExp("[0-9]").test(c) && new RegExp("[_]").test(c)) {
+                    $("#" + a).attr("title", "安全");
+                    $("#" + d).html("安全");
+                    $("#" + a).removeClass("rank-a");
+                    $("#" + a).removeClass("rank-b");
+                    $("#" + a).removeClass("rank-c");
+                    $("#" + a).addClass("rank-c")
+                } else {
+                    $("#" + a).attr("title", "一般");
+                    $("#" + d).html("一般");
+                    $("#" + a).removeClass("rank-a");
+                    $("#" + a).removeClass("rank-b");
+                    $("#" + a).removeClass("rank-c");
+                    $("#" + a).addClass("rank-b")
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            //获取焦点
+            $("#mobile_randcode").on("focus",
+            function () {
+                $(this).css("color", "#333");
+            }).on("blur",
+            function () {
+                $(this).css("color", "#333");
+            });
+            //判断密码是否一致
+            $("#confirmPassWord").on("blur",
+            function () {
+                if ($("#password_new").val() != "") {
+                    if ($(this).val() != $("#password_new").val()) {
+                        $("#confirmPassWord").val("");
+
+                        //$(".tips").text("两次输入密码不一致");
+                    } else {
+
+                    }
+                }
+            });
+
+        });
+
+        var countdown = 120;
+        function settime() {
+            if (countdown == 0) {
+                $(".btn122").removeAttr("disabled");
+                $(".btn122").text("获取手机验证码");
+                countdown = 120;
+                return;
+            } else {
+                $(".btn122").attr({ "disabled": "disabled" });
+                $(".btn122").text("重新获取(" + countdown + ")");
+                countdown--;
+            }
+            setTimeout(function () {
+                settime()
+            }, 1000)
+        }
+
+
+        $.extend({
+            //修改
+            _editSubmit: function () {
+                $.ajax({
+                    url: "/Main/updatepassengertype?old_pwd=" + $("#password").val() + "&"
+                                                              + "pwd=" + $("#password_new").val() + "&"
+                                                              + "checkcode=" + $("#mobile_randcode").val() + "&",
+                    type: "post",
+                    dataType: "json",
+                    success: function (result) {
+                        if ($.trim(result) != "您输入的密码不正确！请重新输入！") {
+                            location.reload();
+                        } else {
+                            $("#password").val("");
+                        }
+                    }
+                })
+            },
+            //获取手机验证码
+            getMobileRandCode: function (val) {
+                $.ajax({
+                    url: "/userSecurity/Page_zwdch?time=" + Date(),
+                    type: "get",
+                    dataType: "json",
+                    success: function (result) {
+                        alert(result);
+                        settime();
+                        if (result.status) {
+                            if (e.data.errorMsg && e.data.errorMsg.length > 0) {
+                                $("#mobile_randcode_error").show().find("label").show().text(e.data.errorMsg)
+                            } else {
+                                $.nextSendTime()
+                            }
+                        } else {
+                            $("#mobile_randcode_error").show().find("label").show().text("获取手机验证码失败")
+                        }
+                    }
+                })
+
+            },
+            //取消
+            _cancelSubmit: function () {
+                window.location.href = "/MyTicket/userSecurity";
+            },
+            //判断输入是否为数字
+            isNum: function (f) {
+                var d = window.event ? f.keyCode : f.which;
+                if (!(((d >= 48) && (d <= 57)) || d == 8 || d == 0)) {
+                    if (window.event) {
+                        window.event.returnValue = false
+                    } else {
+                        f.preventDefault()
+                    }
+                }
+            },
+            //60s倒计时
+            nextSendTime: function () {
+                b = false;
+                if (a) {
+                    clearInterval(a)
+                }
+                a = window.setInterval(function () {
+                    if (c > 0) {
+                        $("#get_mobile_randcode").html('<a href="javascript:void(0);"yz class="btn122" style="margin-left: -90px">重新获取(' + (c--) + ")</a>")
+                    } else {
+                        b = true;
+                        c = 120;
+                        clearInterval(a);
+                        $("#get_mobile_randcode").html('<a onclick="$.getMobileRandCode(\'1\');" href="javascript:void(0);" class="btn122" style="margin-left: -90px">获取手机验证码</a>')
+                    }
+                },
+                1000)
+            },
+            //检验输入文本
+            _initForm: function () {
+                $("#_editLoginPwd").validate({
+                    wrapper: "li",
+                    rules: {
+                        password: {
+                            required: true
+                        },
+                        password_new: {
+                            required: true,
+                            checkPwdValidate: "checkPwdValidate",
+                            minlength: 6
+                        },
+                        confirmPassWord: {
+                            required: true,
+                            checkConfirmPassWard: "#password_new"
+                        },
+                        mobileRandcode: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        password: {
+                            required: "请输入原密码！"
+                        },
+                        password_new: {
+                            required: "请输入新密码！",
+                            minlength: "密码长度至少为6位！",
+                            checkPwdValidate: "密码只能为字母和数字或下划线中的两个的组合！"
+                        },
+                        confirmPassWord: {
+                            required: "请输入确认密码！",
+                            checkConfirmPassWard: "您输入的确认密码与新密码不一致"
+                        },
+                        mobileRandcode: {
+                            required: "请输入短信验证码！"
+                        }
+                    },
+                    errorPlacement: function (d, e) {
+                        d.insertAfter(e.parent().parent())
+                    },
+                    submitHandler: function (d) {
+                        $.ajax({
+                            url: ctx + "userSecurity/editLoginPwd",
+                            type: "post",
+                            data: $("#_editLoginPwd").serialize(),
+                            success: function (e) {
+                                if (e.status) {
+                                    if (e.data.flag) {
+                                        dhtmlx.alert({
+                                            title: "修改登录密码",
+                                            ok: "确定",
+                                            text: "修改成功!",
+                                            type: "dhtmlx_popup_title",
+                                            callback: function () {
+                                                otsRedirect("post", ctx + "userSecurity/init")
+                                            }
+                                        })
+                                    } else {
+                                        dhtmlx.alert({
+                                            title: "修改登录密码",
+                                            ok: "确定",
+                                            text: e.data.message,
+                                            type: "alert-error",
+                                            callback: function () {
+                                                if (e.data.errorCode) {
+                                                    var f = e.data.errorCode;
+                                                    if ("1" == f) {
+                                                        $("#password").focus()
+                                                    } else {
+                                                        if ("2" == f) {
+                                                            $("#password_new").focus()
+                                                        } else {
+                                                            if ("3" == f) {
+                                                                $("#confirmPassWord").focus()
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        })
+                                    }
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+        })
+
+    </script>
+</head>
+<!--账号安全 密码修改-->
+<body class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+
+    <!--页面主体  开始-->
+    <div class="content clearfix">
+        <!--当前位置 开始-->
+        @*<div class="crumbs">
+                您现在的位置：<a href="/otn/index/init" shape="rect">客运首页</a>
+                &nbsp;&gt;&nbsp;<a href="/otn/index/initMyTicket" shape="rect">我的Ticket</a>
+                &nbsp;&gt;&nbsp;<a href="/otn/modifyUser/initQueryUserInfo" shape="rect">个人信息</a>
+                &nbsp;&gt;&nbsp;<a href="/otn/userSecurity/init" shape="rect">账号安全</a>
+                &nbsp;&gt;&nbsp;<strong>密码修改</strong>
+            </div>*@
+        <!--当前位置 结束-->
+        <!--右侧主体 开始-->
+        <div class="main">
+            <!--系统信息 开始-->
+            <div class="layout order">
+                <div class="lay-hd">账号安全</div>
+                <div class="lay-bd">
+                    <div class="safe">
+                        <h2>密码修改</h2>
+                        <form id="_editLoginPwd" method="get" enctype="application/x-www-form-urlencoded" novalidate="novalidate">
+                            <ul class="safe-list">
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        原密码：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input id="password" name="password" type="password" class="inptxt w200 color333" maxlength="25">
+                                    </div>
+                                    <div class="tips">请输入原密码</div>
+                                </li>
+                                <!--输入原密码提示-->
+                                @*<li>
+                                        <div class="label">
+                                            <span class="required"></span>
+                                        </div>
+                                        <label for="password" class="error" style="display: inline;">请输入原密码！</label>
+                                    </li>*@
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        新密码：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input onkeyup="checkPwdRank(this,'_div_password_rank','_span_password_rank')" id="password_new" name="password_new" type="password" class="inptxt w200 color333" value="" maxlength="25">
+                                    </div>
+                                    <div class="tips">需包含字母、数字、下划线中不少于两种且长度不少于6。</div>
+                                </li>
+                                <!--密码格式提示-->
+                                @*<li style="display: list-item;">
+                                        <div class="label">
+                                            <span class="required"></span>
+                                        </div>
+                                        <label for="password_new" class="error" style="display: inline;">密码只能为字母和数字或下划线中的两个的组合！</label>
+                                    </li>*@
+                                <li>
+                                    <div class="label">安全级别：</div>
+                                    <div class="r-txt">
+                                        <div id="_div_password_rank" class="safe-rank rank-a" title="请输入密码！">
+                                            <!--危险rank-a,一般rank-b,安全rank-c-->
+                                            <span class="s1"></span>
+                                            <span class="s2"></span>
+                                            <span class="s3"></span>
+                                        </div>
+                                        <span id="_span_password_rank">危险</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        密码确认：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input id="confirmPassWord" name="confirmPassWord" type="password" class="inptxt w200 color333" value="" maxlength="25">
+                                    </div>
+                                    <div class="tips">请再次输入密码。</div>
+                                </li>
+                                <!--两次密码输入对比-->
+                                @*<li style="display: list-item;">
+                                        <div class="label">
+                                            <span class="required"></span>
+                                        </div>
+                                        <label for="confirmPassWord" class="error" style="display: inline;">您输入的确认密码与新密码不一致</label>
+                                    </li>*@
+                                <li>
+                                    <div class="label">
+                                        <span class="required">*</span>
+                                        请填写手机验证码：
+                                    </div>
+                                    <div class="r-txt">
+                                        <input maxlength="6" onkeypress="return $.isNum(event)" type="text" id="mobile_randcode" name="mobileRandcode" class="inptxt w200 inp-transform">
+                                    </div>
+                                    <div class="r-txt tc" style="margin-left: 5px" id="get_mobile_randcode">
+                                        <a onclick="$.getMobileRandCode('1');" href="javascript:void(0);" class="btn122" style="margin-left: -90px" shape="rect">获取手机验证码</a>
+                                    </div>
+                                    @*<div class="r-txt tc" style="margin-left: 5px" id="get_mobile_randcode">
+                                            <a href="javascript:void(0);" class="btn122" style="margin-left: -90px"></a>
+                                        </div>*@
+                                </li>
+                                <li style="display: none;" id="mobile_randcode_error">
+                                    <div class="label">
+                                        <span class="required"></span>
+                                    </div>
+                                    <label for="mobile_randcode" class="error">请输入短信验证码！</label>
+                                </li>
+                                <li>
+                                    <div class="label"></div>
+                                    <div class="r-txt tips" style="margin-left: 212px;width:300px;">一个用户一天可以获取三次修改密码的手机验证码。</div>
+                                </li>
+                            </ul>
+                        </form>
+                        <div class="line"></div>
+                        <div class="lay-btn">
+                            <a href="javascript:$._cancelSubmit();" class="btn92" shape="rect">取消</a>
+                            <a href="javascript:$._editSubmit();" class="btn92s" shape="rect">确认</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--系统信息 结束-->
+            <div class="tips-txt hide mt10">
+                <h2>温馨提示：</h2>
+                <p>在互联网购买学生票后，须携带购票时所使用的有效身份证件、附有“学生火车票优惠卡”的学生证（均为原件）和订单号码于列车开车前到安装有学生火车票优惠卡识别器的车站售票窗口或铁路客票代售点换取纸质车票后乘车。 </p>
+            </div>
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+</body>
+</html>
+
+
+

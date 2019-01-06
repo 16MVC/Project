@@ -1,0 +1,303 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>出行向导 | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/queryTrainInfo.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <link href="~/Content/jquery-easyui-1.3.3/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        //设置时间格式
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+        //检索日期格式
+        function myparser(s) {
+            if (!s) return new Date();
+            var ss = (s.split('-'));
+            var y = parseInt(ss[0], 10);
+            var m = parseInt(ss[1], 10);
+            var d = parseInt(ss[2], 10);
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                return new Date(y, m - 1, d);
+            } else {
+                return new Date();
+            }
+        }
+        $(document).ready(function () {
+            //弹出日期
+            $("#date_icon").on("click", function () {
+                alert("弹出日期");
+            });
+        });
+
+        $.extend({
+            //查询
+            queryResult: function () {
+                $.ajax({
+                    url: "/Travelguide/getqueryTrainInfo",
+                    type: "get",
+                    dataType: "json",
+                    success: function (result) {
+                        var s = 0;
+                        //设置奇偶行样式
+                        $.each(result, function (key, data) {
+                            var sex = (key + 1) % 2 ? "偶" : "奇";
+                            switch (sex) {
+                                case "偶":
+                                    $("#_query_table_datas").append("<tr><td>" + (key + 1) + "</td><td class='tl'>" + data.name + "</td><td class='tl'>" + data.address + "</td><td>" + data.businessHours + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td></tr>");
+                                    break;
+                                case "奇":
+                                    $("#_query_table_datas").append("<tr class='bgc'><td>" + (key + 1) + "</td><td class='tl'>" + data.name + "</td><td class='tl'>" + data.address + "</td><td>" + data.businessHours + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td><td>" + data.windownumber + "</td></tr>");
+                                    break;
+                            }
+                            s = key + 1;
+                        })
+                        if (result > 0) {
+                            var c = "";
+                            c = '搜索结果：<strong>' + $(".dhx_combo_input").val() + '</strong>共有' + s + '个结果';
+                            $("#sear-result p").append($(c)).show();
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
+            },
+        })
+
+        //刷新验证码
+        function getImage() {
+            $("#img_rand_code").attr("src", "/Travelguide/Page_zwdch?time=" + Date());
+        }
+    </script>
+</head>
+<body class="dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <div class="dhx_combo_list " style="width: 172px; display: none;"></div>
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">江苏客运客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/My12306/My12306" class="menu-bd" id="js-my">
+                        我的12306<b></b>
+                    </a>
+                    <div class="menu-list" style="display: none;">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/My12306/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/My12306/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/My12306/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/My12306/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/My12306/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/My12306/passengers">常用联系人</a>
+                            </li>
+                            <li>
+                                <a href="/My12306/address">车票快递地址</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/My12306/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/My12306/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">12306yjfk@rails.com.cn</a>
+                        您好，请
+                    </span>
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
+                    | <a id="regist_out" href="/Main/register">注册</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main" class="">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook" class="">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect" class="">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:" class="current">出行向导</a>
+                        <div class="nav-list" style="display: block;">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo" class="on">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/czxxcx">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor" class="">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <div class="content">
+        <!--搜索框 开始-->
+        <div class="lay-sear lay-sear-station clearfix">
+            <ul style="margin-right:7px;">
+                <li style="width:258px;">
+                    <span class="label">
+                        <b class="required">*</b>
+                        日期
+                    </span>
+                    <div class="inp-w">
+                        @*<input readonly="readonly" type="text" id="train_start_date" name="train_start_date" class="inptxt color333" value="">
+                            <span id="date_icon" class="i-date"></span>*@
+                        <input id="train_start_date" class="easyui-datebox" type="text" name="train_start_date" readonly="readonly" style="width:145px;height:28px;" data-options="formatter:myformatter,parser:myparser" />
+                    </div>
+                </li>
+                <li style="width:258px;">
+                    <span class="label">
+                        <b class="required">*</b>
+                        车次
+                    </span>
+                    <div class="section-bd" id="train_combo_box_div" style="padding-top:2px">
+                        <input type="text" class="inptxt w90 color333" style="float: left; margin-top: -2px; width: 172px; display: none;" id="train_combo_box">
+                        <div class="dhx_combo_box " style="width: 172px;"><input autocomplete="off" type="text" class="dhx_combo_input" maxlength="5" style="width: 172px; text-transform: uppercase; padding-left: 5px; "><input type="hidden" name="cc"><input type="hidden" name="cc_new_value" value="true"><span style="display: none;" class="i-clear dhx_combo_img_iClear" id="iLcear"></span></div>
+                    </div>
+                    <!--
+                                    <div class="inp-w">
+                                        <input type="text" autocomplete="off" id="train_code_text" class="inptxt color333" style="width:120px"></input>
+                                    </div>
+                                     -->
+                </li>
+                <li style="width:258px; margin-left:17px;">
+                    <span class="label">
+                        <b class="required">*</b>
+                        验证码
+                    </span>
+                    <div class="yzm">
+                        <input maxlength="4" autocomplete="off" name="randCode" id="randCode" type="text" class="inptxt color333" value="">
+                        <span class="img">
+                            <img src="/Travelguide/Page_zwdch" onclick="getImage()" title="单击刷新验证码" id="img_rand_code">
+                        </span>
+                        <span class="i-re" onclick="getImage()" title="单击刷新验证码"></span>
+                        <span id="randCode_span" class="tips"></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="btn-area">
+                <a href="javascript:void(0);" class="btn122s" onclick="$.queryResult()" shape="rect">查询</a>
+            </div>
+        </div>
+        <!--搜索框 结束-->
+        <div class="sear-result" id="sear-result" style="margin-top:-5px;">
+            <!-- <span class="fr"><input type="checkbox" class="check" id="" /><label for="">仅查看可预订车次 </label></span> -->
+            <p></p>
+        </div>
+        <div class="t-list">
+            <table class="" id="queryTable">
+                <tbody>
+                    <tr class="th">
+                        <th width="40" rowspan="1" colspan="1">站序</th>
+                        <th width="80" rowspan="1" colspan="1">车站</th>
+                        <th width="80" rowspan="1" colspan="1">车次</th>
+                        <th width="90" rowspan="1" colspan="1">
+                            <div class="two-line" id="startendtime"><span id="_span_starttime">出发时间</span><br><span id="_span_endtime">到达时间</span></div>
+                        </th>
+                        <th width="78" rowspan="1" colspan="1">
+                            <span id="_span_lishi">历时</span>
+                        </th>
+                        <th width="54" rowspan="1" colspan="1">商务座</th>
+                        <th width="54" rowspan="1" colspan="1">特等座</th>
+                        <th width="54" rowspan="1" colspan="1">一等座</th>
+                        <th width="54" rowspan="1" colspan="1">二等座</th>
+                        <th width="60" rowspan="1" colspan="1">
+                            高级软卧<br clear="none">
+                            （下）
+                        </th>
+                        <th width="59" rowspan="1" colspan="1">
+                            软卧<br clear="none">
+                            （下）
+                        </th>
+                        <th width="59" rowspan="1" colspan="1">
+                            硬卧<br clear="none">
+                            （中）
+                        </th>
+                        <th width="54" rowspan="1" colspan="1">软座</th>
+                        <th width="54" rowspan="1" colspan="1">硬座</th>
+                        <th width="54" rowspan="1" colspan="1">无座</th>
+                        <th class="last" rowspan="1" colspan="1">其他</th>
+                    </tr>
+                </tbody>
+                <tbody id="_query_table_datas"></tbody>
+            </table>
+            <div class="t-list-bd" id="t-list-bd">
+                <div class="no-ticket" id="no_filter_ticket" style="display: none;">
+                    <span class="i-no"></span>
+                    <p>
+                        很抱歉，根据您的查询条件，当前未找到满足条件的列车。您可以更改查询条件后再次查询。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页面底部  开始-->
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+
+

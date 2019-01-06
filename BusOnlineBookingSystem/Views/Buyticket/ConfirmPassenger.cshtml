@@ -1,0 +1,566 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>车票预订 | 客运服务 | 公路客户服务中心</title>
+    <meta charset="utf-8" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/css/Public.css" rel="stylesheet" />
+    <link href="~/css/ConfirmPassenger.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+</head>
+<body id="body_id" class="dhtmlx_winviewport  dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    @*弹窗*@
+    <div id="dialog_fczk" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box w600">
+            <div class="up-box-hd">温馨提示<a href="javascript:" id="dialog_fczk_close" shape="rect">关闭</a> </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-opt"></span>
+                    <div class="r-txt">
+                        <div class="tit">购买往返优惠票的旅客，不得单独办理往程车票的退票业务。是否继续?</div>
+                    </div>
+                </div>
+                <div class="lay-btn"><a href="javascript:" id="dialog_fczk_cancel" class="btn92" shape="rect">取消</a> <a href="javascript:" id="dialog_fczk_ok" class="btn92s" shape="rect">确认</a> </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog_smoker" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box w600">
+            <div class="up-box-hd">温馨提示<a href="javascript:" id="dialog_smoker_close" shape="rect">关闭</a> </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-opt"></span>
+                    <div class="r-txt">
+                        <div class="tit" id="dialog_smoker_msg"></div>
+                    </div>
+                </div>
+                <div class="lay-btn"><a href="javascript:" id="dialog_smoker_cancel" class="btn92" shape="rect">取消</a> <a href="javascript:" id="dialog_smoker_ok" class="btn92s" shape="rect">确定</a> </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog_xsertcj" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box w600">
+            <div class="up-box-hd">温馨提示<a href="javascript:" id="dialog_xsertcj_close" shape="rect">关闭</a> </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-opt"></span>
+                    <div class="r-txt">
+                        <div class="tit" id="dialog_xsertcj_msg"></div>
+                    </div>
+                </div>
+                <div class="lay-btn"><a href="javascript:" id="dialog_xsertcj_cancel" class="btn92" shape="rect">取消</a> <a href="javascript:" id="dialog_xsertcj_ok" class="btn92s" shape="rect">确认</a> </div>
+            </div>
+        </div>
+    </div>
+    @*新增乘客*@
+    <div id="dialog_add" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box" style="width:640px;">
+            <div class="up-box-hd">新增乘客<a href="javascript:" id="dialog_add_close" shape="rect">关闭</a> </div>
+            <div class="up-box-bd" style="padding:15px 10px;border:1px solid #298CCE;">
+                <table class="per-ticket" style="margin-left:0px;">
+                    <tbody>
+                        <tr>
+                            <th style="text-align:center;" rowspan="1" colspan="1">票种</th>
+                            <th style="text-align:center;" rowspan="1" colspan="1">姓名</th>
+                            <th style="text-align:center;" rowspan="1" colspan="1">证件类型</th>
+                            <th style="text-align:center;" rowspan="1" colspan="1">证件号码</th>
+                            <th style="text-align:center;" rowspan="1" colspan="1">国家/地区</th>
+                        </tr>
+                    </tbody>
+                    <tbody id="showaddpassenger">
+                        <tr>
+                            <td rowspan="1" colspan="1">
+                                <select id="ptypeselect"></select>
+                            </td>
+                            <td rowspan="1" colspan="1">
+                                <div>
+                                    <input id="pname_value" class="inptxt w110" type="text">
+                                </div>
+                            </td>
+                            <td rowspan="1" colspan="1">
+                                <select id="typeselect" class="w110"></select>
+                            </td>
+                            <td rowspan="1" colspan="1"><input id="pidno_value" class="inptxt w160" value="" type="text"></td>
+                            <td rowspan="1" colspan="1">
+                                <select id="pcountry_value" class="w160"></select>
+                            </td>
+                        </tr>
+                        <tr id="error_update_tr" style="display: none;">
+                            <td colspan="5" rowspan="1"><span class="txt-wrong" id="error_for_update_nameandidno" style=""></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="lay-btn"><a href="javascript:" id="dialog_update_cancel" class="btn92" shape="rect">取消</a> <a href="javascript:" id="dialog_update_ok" class="btn92s" shape="rect">确认</a> </div>
+            </div>
+        </div>
+    </div>
+    <div id="608_complain" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box" style="width:640px;">
+            <div class="up-box-hd">举报告知确认书<a href="javascript:" id="608_complain_close" shape="rect">关闭</a> </div>
+            <div class="up-box-bd" style="padding:15px 10px;border:1px solid #298CCE;">
+                <table class="per-ticket" style="margin-left:0px;">
+                    <tbody>
+                        <tr>
+                            <td rowspan="1" colspan="1">举报人姓名：<strong id="608_name" style="font-size:20px"></strong></td>
+                            <td rowspan="1" colspan="1">联系电话：<strong id="608_tel" style="font-size:20px"></strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1">身份证件号码：<strong id="608_card" style="font-size:20px"></strong></td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td colspan="2" rowspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本人确认举报身份信息被他人冒用购买<strong id="ticketInfo" style="font-size:20px"></strong> 次车票。本人承诺本次举报及购票所提交的身份信息属实，并对虚假举报后果负责。</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客运部门郑重提醒，将在车站和列车对该车票进行重点查验。根据国务院颁布的《铁路安全管理条例》，对该车票所记载身份信息与所持身份证件或者真实身份不符的持票人，铁路部门将拒绝其进站乘车。同时，公安机关将依法调查。</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客运部门将对您的举报信息保密，谢谢您的合作！</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="lay-btn"><a href="javascript:" id="608_complain_cancel" class="btn92" shape="rect">取消</a> <a href="javascript:" id="608_complain_ok" class="btn92s" shape="rect">确认举报</a> </div>
+            </div>
+        </div>
+    </div>
+    <div id="608_check" style="display: none;">
+        <div class="mark"></div>
+        <div class="up-box">
+            <div class="up-box-hd">温馨提示<a href="javascript:" id="608_check_close" shape="rect">关闭</a> </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-opt"></span>
+                    <div class="r-txt">
+                        <div class="tit" id="608_check_msg"></div>
+                        <div class="tit" style="color:#FB7403">是否举报？</div>
+                    </div>
+                </div>
+                <div class="lay-btn"><a href="javascript:" id="608_check_cancel" class="btn92" shape="rect">取消</a> <a href="javascript:" id="608_check_ok" class="btn92s" shape="rect">网上举报</a> </div>
+            </div>
+        </div>
+    </div>
+    <!--header start-->
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">中国公路客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list" style="display: none;">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
+                        您好，请
+                    </span>
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
+                    | <a id="regist_out" href="/Main/register">注册</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main" class="current">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook" class="">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect" class="">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:" class="">出行向导</a>
+                        <div class="nav-list" style="display: none;">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/queryStationBus">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor" class="">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <!--页面主体  开始-->
+    <div class="content">
+        <!--列车信息 开始-->
+        <div class="layout t-info">
+            <div class="lay-hd"> 列车信息<span class="small">（以下余票信息仅供参考）</span> </div>
+            <div class="lay-bd">
+                <p class="t-tit" id="ticket_tit_id"> <strong class="mr5">2016-05-01（周日）</strong><strong class="ml5">T8349</strong>次<strong class="ml5">广州</strong>站<strong>（21:46开）—高州</strong>站（05:11到） </p>
+                <p class="t-con" id="ticket_con_id"> <span id="ticket_status_id" class="s1">硬卧（<span class="colorA">￥132.5</span>）有票</span> <span id="ticket_status_id" class="s1">硬座（<span class="colorA">￥70.5</span>）有票</span> <span id="ticket_status_id" class="s1">无座（<span class="colorA">￥70.5</span>）有票</span> </p>
+            </div>
+        </div>
+        <!--列车信息 结束-->
+        <!--改签原票信息 开始-->
+        <!--改签原票信息 结束-->
+        <div style="display: none;">
+            <input style="display: none;" type="checkbox" id="fczk">
+        </div>
+        <!--乘客信息 开始-->
+        <div class="layout person">
+            <div class="lay-hd">
+                乘客信息<span class="small" id="psInfo">（填写说明）</span>
+                <div class="s-box">
+                    <input id="quickQueryPassenger_id" type="text" value="输入乘客姓名" class="txt">
+                    <input id="submit_quickQueryPassenger" type="submit" class="sub">
+                </div>
+            </div>
+            <div class="lay-bd">
+                <div class="per-sel">
+                    <div class="item clearfix">
+                        <h2 class="srr" id="dg_passenger_image_id" title="受让人" style="display: none;">受让人</h2>
+                        <ul id="dj_passenger_id"></ul>
+                    </div>
+                    <div class="item clearfix">
+                        <h2 class="cy" id="normal_passenger_image_id" title="常用联系人" style="">常用联系人</h2>
+                        <ul id="normal_passenger_id">
+                            <li>
+                                <input totaltimes="99" typeflag="1" id="normalPassenger_0" type="checkbox" class="check">
+                                <label for="normalPassenger_0" style="cursor: pointer">sa</label>
+                            </li>
+                            <li>
+                                <input totaltimes="99" typeflag="1" id="normalPassenger_1" type="checkbox" class="check">
+                                <label for="normalPassenger_1" style="cursor: pointer">Admin</label>
+                            </li>
+                        </ul>
+                        <div class="btn-all" style="display: none;" id="btnAll">
+                            <a id="show_more_passenger_id" title="展开" href="javascript:" style="" shape="rect">
+                                <label id="gd">更多</label>
+                                <b></b>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <table class="per-ticket">
+                    <tbody>
+                        <tr>
+                            <th width="28" rowspan="1" colspan="1">序号</th>
+                            <th rowspan="1" colspan="1">席别 </th>
+                            <th rowspan="1" colspan="1">票种</th>
+                            <th rowspan="1" colspan="1">姓名</th>
+                            <th rowspan="1" colspan="1">证件类型</th>
+                            <th rowspan="1" colspan="1">证件号码</th>
+                            <th rowspan="1" colspan="1">手机号码</th>
+                            <!--
+                                        <th><input type="checkbox" class="check" id="selected_ticket_passenger_all"
+                                            onclick="javascript:selectedTicketPassengerAll(this,true);" checked="checked" />全部</th>
+                                        -->
+                            <th width="70" rowspan="1" colspan="1"></th>
+                            <th width="30" rowspan="1" colspan="1"></th>
+                        </tr>
+                    </tbody>
+                    <tbody id="ticketInfo_id">
+                        <tr id="tr_id_1">
+                            <td align="center">1</td>
+                            <td>
+                                <select onclick="javascript:stepFirValidatorTicketInfo(true);" id="seatType_1">
+                                    <option value="3" selected="selected"> 硬卧（￥） </option>
+                                    <option value="1"> 硬座（￥） </option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="ticketType_1" onchange="javascript:updateSeatTypeByeTickeType(this);">
+                                    <option name="ticket_type_option" value="1" selected="selected">成人票</option>
+                                    <option value="2">儿童票 </option>
+                                    <option value="3">学生票 </option>
+                                    <option value="4">残军票 </option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="pos-rel">
+                                    <input onkeyup="javascript:elemOnkeyupNotice(this);" id="passenger_name_1" class="inptxt w110" value="" size="12" maxlength="20" disabled="disabled" style="color:#999999" title="不允许修改乘车人信息">
+                                    <div class="w110-focus" id="passenger_name_1_notice"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <select id="passenger_id_type_1" disabled="disabled" style="color:#999999" title="不允许修改乘车人信息">
+                                    <option value="1" selected="selected">二代身份证</option>
+                                    <option value="C">港澳通行证</option>
+                                    <option value="G">台湾通行证</option>
+                                    <option value="B">护照</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="pos-rel">
+                                    <input onkeyup="javascript:elemOnkeyupNotice(this);" id="passenger_id_no_1" class="inptxt w160" value="" size="20" maxlength="35" disabled="disabled" style="color:#999999" title="不允许修改乘车人信息">
+                                    <div class="w160-focus" id="passenger_id_no_1_notice"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pos-rel">
+                                    <input onkeyup="javascript:elemOnkeyupNotice(this);" id="phone_no_1" class="inptxt w110" value="" size="11" maxlength="20" disabled="disabled" style="color:#999999" title="不允许修改乘车人信息">
+                                    <div class="w160-focus" id="phone_no_1_notice"></div>
+                                </div>
+                            </td>
+                            <td style="width:40;"><a href="javascript:" id="addchild_1" name="addchild_default_0"></a></td>
+                            <td title="删除常用联系人"><span class="i-del" onclick="javascript:delPassengerInfo(this);" id="del_1_default_0"></span></td>
+                        </tr>
+                        <tr id="tr_id_1_check" class="tips" style="display:none">
+                            <td colspan="1">&nbsp;</td>
+                            <td colspan="2"><span class="txt-wrong" style="display:none" id="seatType_1_check">请输入旅客姓名</span></td>
+                            <td colspan="2"><span class="txt-wrong" style="display:none" id="passenger_name_1_check">请输入旅客姓名</span></td>
+                            <td colspan="1"><span class="txt-wrong" style="display:none" id="passenger_id_no_1_check">请输入旅客姓名</span></td>
+                            <td colspan="3"><span class="txt-wrong" style="display:none" id="phone_no_1_check">请输入旅客姓名</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <div class="add-per"><span onclick="javascript:showAddPassengerWin();">新增乘客</span> </div>
+                </div>
+                <div class="yzm" style="padding: 0px; height: auto; zoom: 1; position: relative;">
+                    <form id="randCodeForm_id" onsubmit="javascript:return false;" method="get" enctype="application/x-www-form-urlencoded">
+                        <ul>
+                            <div id="mypasscode1" data-code_type="passenger" data-touclick-type="inside" data-sucess-callback="submitOrderClickEvent_common">
+                                <!--要引入的验证码标签 -->
+                                <script>var targettype = ['Z']; var targetdiv = ['mypasscode1']; var targetelement = [''];</script>
+                                <script src="/otn/resources/js/newpasscode/new.js" xml:space="preserve"></script>
+                                <script type="text/javascript" charset="utf-8" async src="/otn/resources/js/newpasscode/event.js"></script>
+                            </div>
+                            <input type="hidden" name="randCode" data-targetdiv="mypasscode1" id="randCode" value="">
+                            <li id="error_msgmypasscode1" class="error" style="display: none; position: absolute; left: 396px; top: 116px; padding-top: 8px;"></li>
+                            <a href="../gonggao/yzmsysm.html" target="_blank" style="display:inline-block;margin-left:0px;font-size:12px;height:20px;position:absolute;left:398px;top:149px;">验证码如何使用？</a>
+                        </ul>
+                    </form>
+                    <div class="lay-btn captchaButton passengerInfo-inside" data-touclick-name="" style="height: auto; padding: 0px; overflow: hidden; zoom: 1;">
+                        <span style="float:left;padding-top:12px;font-size:14px;color:#333;font-family:Tahoma," 宋体""="">验证码：</span>
+                        <div class="touclick" name="touclick-randCode" style="z-index: 100; float: left; display: block;">
+                            <div class="touclick-wrapper">
+                                <div class="touclick-bgimg touclick-reload touclick-reload-normal"></div>
+                                <div class="touclick-bgimg touclick-arrow"></div>
+                                <div class="touclick-img-par touclick-bgimg" style="width: 293px; height: 190px; background-position: 0px -583px;">
+                                    <img class="touclick-image" alt="" style="display: block; visibility: visible;">
+                                    @*刷新控件*@
+                                    <div class="touclick-wait" style="left: 121.5px; top: 84px; display: none;">
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 34.14px; top: 34.14px; font-size: 0px; background-position: 0px -123px;"></div>
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 20px; top: 40px; font-size: 0px; background-position: 0px -133px;"></div>
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 5.86px; top: 34.14px; font-size: 0px; background-position: 0px -143px;"></div>
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 0px; top: 20px; font-size: 0px; background-position: 0px -153px;"></div>
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 5.86px; top: 5.86px; font-size: 0px; background-position: 0px -163px;"></div>
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 20px; top: 0px; font-size: 0px; background-position: 0px -173px;"></div>
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 34.14px; top: 5.86px; font-size: 0px; background-position: 0px -183px;"></div>
+                                        <div class="touclick-bgimg" style="width: 10px; height: 10px; position: absolute; left: 40px; top: 20px; font-size: 0px; background-position: 0px -193px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a id="preStep_id" href="javascript:" class="btn92" shape="rect" style="float: left; margin-top: 172px;">上一步</a> <a id="submitOrder_id" href="javascript:" class="btn92s" shape="rect" style="float: left; margin-top: 172px;">提交订单</a>
+                        <div id="ins_ad" style="position: absolute; left: 670px;"><img src="/images/ins_ad.jpg" alt=""> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+              //inside: class="lay-btn captchaButton passengerInfo-inside"
+              //float: class="lay-btn captchaButton captchaFloatButton passengerInfo-float"
+               -->
+        <!--乘客信息 结束-->
+
+        <div class="tips-txt">
+            <h2>温馨提示：</h2>
+            <p>1. 一张有效身份证件同一乘车日期同一车次只能购买一张车票，。</p>
+            <p>2. 购票时可使用的有效身份证件包括：中华人民共和国居民身份证、港澳居民来往内地通行证、台湾居民来往大陆通行证和按规定可使用的有效护照。</p>
+            <p>3. 购买儿童票时，乘车儿童有有效身份证件的，请填写本人有效身份证件信息。乘车儿童没有有效身份证件的，应使用同行成年人的有效身份证件信息；购票时不受第一条限制，但购票后、开车前须办理换票手续方可进站乘车。</p>
+            <p> 4. 购买学生票时，须在<a href="../passengers/init" shape="rect">我的常用联系人</a> 中登记乘车人的学生详细信息。学生票乘车时间限为每年的暑假6月1日至9月30日、寒假12月1日至3月31日。购票后、开车前，须办理换票手续方可进站乘车。换票时，新生凭录取通知书，毕业生凭学校书面证明，其他凭学生优惠卡。 </p>
+            <p>
+                5.
+                购买残疾军人（伤残警察）优待票的，须在购票后、开车前办理换票手续方可进站乘车。换票时，不符合规定的减价优待条件，没有有效"中华人民共和国残疾军人证"或"中华人民共和国伤残人民警察证"的，不予换票，所购车票按规定办理退票手续。
+            </p>
+            <p><strong>6.购买铁路乘意险的注册用户年龄须在18周岁以上，使用非二代居民身份证注册的用户如购买铁路乘意险，须在<a href="../modifyUser/initQueryUserInfo" shape="rect">我的12306——个人信息</a> 如实填写“出生日期”。</strong> </p>
+            <p><strong>7.父母为未成年子女投保，须在<a href="../passengers/init" shape="rect">我的常用联系人</a> 登记未成年子女的有效身份证件信息。</strong> </p>
+        </div>
+    </div>
+    <!--页面主体  结束-->
+    <!--页面底部  开始-->
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    <!--页面底部  结束-->
+    <!-- 提交订单核对车票信息弹出层 start -->
+    <div id="checkticketinfo_id" style="display: none; margin-left: 30%; margin-top: 30%;">
+        <div class="mark"></div>
+        <div class="up-box w664" id="content_checkticketinfo_id">
+            <div class="up-box-hd">
+                <!-- <a id="close_checkticketdialog_id" href="javascript:">关闭</a> -->
+                请核对以下信息
+            </div>
+            <div class="up-box-bd ticket-check">
+                <h3>车次信息</h3>
+                <div class="info2" id="check_ticket_tit_id"><strong class="mr5">2013-03-02（周日）</strong> <strong class="mr5">D315</strong> 动车<strong class="ml5">北京南</strong> 站<strong>（08:22开）—上海虹桥</strong> 站（16:55到） </div>
+                <h3>
+                    乘车人信息 <span id="span_nvbbf" style="display: none;">
+                        <label for="nvbbf" style="margin-left: 10px;color: orange;">女宾包房</label>
+                        <input type="checkbox" id="nvbbf" name="bf">
+                    </span> <span id="span_jtbf" style="display: none;">
+                        <label for="jtbf" style="margin-left: 10px;color: orange;">家庭包房</label>
+                        <input type="checkbox" id="jtbf" name="bf">
+                    </span>
+                </h3>
+                <table class="table-a">
+                    <tbody>
+                        <tr>
+                            <th width="28" rowspan="1" colspan="1">序号</th>
+                            <th rowspan="1" colspan="1">席别</th>
+                            <th rowspan="1" colspan="1">票种</th>
+                            <th rowspan="1" colspan="1">姓名</th>
+                            <th rowspan="1" colspan="1">证件类型</th>
+                            <th rowspan="1" colspan="1">证件号码</th>
+                            <th rowspan="1" colspan="1">手机号码</th>
+                        </tr>
+                    </tbody>
+                    <tbody id="check_ticketInfo_id"></tbody>
+                </table>
+                <p style="color: #3177BF;" id="notice_1_id">
+                    <!--   注：1.系统将随机为您申请席位，暂不支持自选席位。-->
+                </p>
+                <p style="color: #FF0000;" id="notice_2_id">
+                    <!--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.根据现行规定，外国人在购买进西藏火车票时，须出示西藏自治区外事办公室或旅游局、商务厅的批准函（电），或者出示中国内地司局级接待单位出具的、已征得自治区上述部门同意的证明信函。台湾同胞赴藏从事旅游、商务活动，须事先向西藏自治区旅游局或商务厅提出申请，购买进藏火车票时须出示有关批准函。-->
+                </p>
+                <p style="color: #FF0000;" id="notice_3_id">
+                    <!--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.按现行规定，学生票购票区间必须与学生证上的乘车区间一致，否则车站将不予换票。-->
+                </p>
+                <p style="color:#3177BF;" id="notice_4_id">
+                    <!--  *购买铁路乘意险的注册用户年龄须在18周岁以上，使用非二代居民身份证注册的用户如购买铁路乘意险，须在<a th:href="{../modifyUser/initQueryUserInfo}" href="/otsweb/modifyUser/initQueryUserInfo">“我的Ticket—个人信息”</a>如实填写“出生日期”。<br />
+                    *父母为未成年子女投保，须在<a th:href="{../passengers/init}" href="/otsweb/passengers/init">我的常用联系人</a>登记未成年子女的有效身份证件信息。   -->
+                </p>
+                <p id="sy_ticket_num_id">
+                    <!--  尊敬的旅客，本次列车您选择的席别尚有余票<strong>1135</strong>张，无座<strong>840</strong>张。特此提醒。<br /> 请确认信息是否正确。如正确请点击“确定”，系统将为您随机分配席位。-->
+                </p>
+                <p id="checktrain" style="color: red; display: none;">
+                    <!--  尊敬的旅客，本次列车您选择的席别尚有余票<strong>1135</strong>张，无座<strong>840</strong>张。特此提醒。<br /> 请确认信息是否正确。如正确请点击“确定”，系统将为您随机分配席位。-->
+                </p>
+                <div class="lay-btn"><a id="back_edit_id" href="javascript:" class="btn92" shape="rect">返回修改</a> <a href="javascript:" class="btn92s" id="qr_submit_id" shape="rect">确认</a> </div>
+            </div>
+        </div>
+    </div>
+    <!-- 提交订单核对车票信息弹出层 end -->
+    <!-- 交易提示框 start  -->
+    <div id="transforNotice_id" style="display: none; margin-left: 30%; margin-top: 30%;">
+        <div class="mark"></div>
+        <div class="up-box" id="content_transforNotice_id">
+            <div class="up-box-hd" id="up-box-hd_id">
+                <!--  <a id="closeTranforDialog_id" style="display: none;" href="javascript:">关闭</a>-->
+                提示
+            </div>
+            <div class="up-box-bd">
+                <div class="up-con clearfix">
+                    <span class="icon i-work" id="iamge_status_id"></span>
+                    <div class="r-txt" id="orderResultInfo_id">
+                        <!--  信息提示 -->
+                    </div>
+                </div>
+                <div class="lay-btn" id="lay-btn_id">
+                    <!-- <a href="javascript:" id="qr_closeTranforDialog_id" style="display: none;" class="btn92s">确认</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--说明文字 start -->
+    <div class="srr-tips" style="top: 218px; left: 302px; display: none;">
+        <ul>
+            <li>请按乘车时所使用的有效身份证件准确、完整填写乘车填写乘车人姓名和证件号码。</li>
+            <li>
+                如姓名中包含生僻字，可输入汉语拼音代替。<br clear="none">
+                例如“李鵢”可输入“李shen”
+            </li>
+        </ul>
+    </div>
+    <!--说明文字 end -->
+    <!--积分支付 提示信息 start -->
+    <div class="srr-tips" style="display: none;">
+        <ul>
+            <li>请按乘车时所使用的有效身份证件准确、完整填写乘车人姓名和证件号码。</li>
+            <li>
+                如姓名中包含生僻字，可输入汉语拼音代替。<br clear="none">
+                例如“李燊”可输入“李shen”
+            </li>
+            <li>如您准备使用积分支付票款，请选择本人或受让人作为乘车人，同时票种请选择“成人票”。</li>
+            <li>不支持网银和积分混合支付</li>
+        </ul>
+    </div>
+    <!--积分支付 提示信息 end -->
+    <!-- 交易提示框 end  -->
+    <form id="_es_hiddenform" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="_json_att" value="">
+    </form>
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
+

@@ -1,0 +1,283 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>信息服务 | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/JQuery/slide-tab.js"></script>
+    <link href="~/css/Public.css" rel="stylesheet" />
+    <link href="~/css/Information.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/ico/favicon.png">@*图标*@
+    <script src="~/JQuery/JS/jquery_SuperSlide.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(".help-tab .hd li").mouseover(function () {
+                $(this).addClass("on");
+                $(this).siblings().removeClass("on");
+
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <!--header start-->
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">江苏客运客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list" style="display: none;">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
+                        您好，请
+                    </span>
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
+                    | <a id="regist_out" href="/Main/register">注册</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main" class="">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook" class="">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect" class="">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:" class="">出行向导</a>
+                        <div class="nav-list" style="display: none;">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/queryStationBus">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor" class="current">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <!--页面主体  开始-->
+    <div class="content">
+        <div class="search">
+
+        </div>
+
+        <div class="help-tab">
+            <div class="hd">
+                <ul>
+                    <li class="on"><span class="cjwt"></span>常见问题<b></b></li>
+                    <li><span class="syxz"></span>使用须知<b></b></li>
+                    <li><span class="xggz"></span>相关规章<b></b></li>
+                    <li><span class="tlbx"></span>铁路保险<b></b></li>
+                </ul>
+            </div>
+            <div class="bd">
+                <div class="down" style="display:block;">
+                    <ul class="question clearfix">
+                        <li>
+                            <dl>
+                                <dt>车票</dt>
+                                <dd><a id="ticketType" href="#">车票的种类</a></dd>
+                                <dd><a id="realNameTicket" href="#">实名制车票</a></dd>
+                                <dd><a id="reimburseVoucher" href="#">报销凭证</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>购票</dt>
+                                <dd><a id="ticketWindow" href="#">售票窗口购票</a></dd>
+                                <dd><a id="ticketVendor" href="#">自动售票机购票</a></dd>
+                                <dd><a id="phoneBooking" href="#">电话订票</a></dd>
+                                <dd><a id="onlineBooking" href="#">互联网购票、换票</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>改签、变更到站 </dt>
+                                <dd><a id="windowEndorse" href="#">售票窗口改签、变更到站</a></dd>
+                                <dd><a id="onlineEndorse" href="#">互联网改签、变更到站</a></dd>
+                                <dd><a id="changeOrDelay" href="#">列车变更或延迟</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>退票</dt>
+                                <dd><a id="windowRefund" href="#">售票窗口退票</a></dd>
+                                <dd><a id="onlineRefund" href="#">互联网退票</a></dd>
+                            </dl>
+                        </li>
+                        <li class="end">
+                            <dl>
+                                <dt>特殊旅客服务</dt>
+                                <dd><a id="children" href="#">儿童</a></dd>
+                                <dd><a id="student" href="#">学生</a></dd>
+                                <dd><a id="disabledSoldier" href="#">残疾军人</a></dd>
+                                <dd><a id="disabledPassenger" href="#">残疾旅客</a></dd>
+                                <dd><a id="groupPassengers" href="#">团体旅客</a></dd>
+                            </dl>
+                        </li>
+                        <li class="line20"></li>
+                        <li>
+                            <dl>
+                                <dt>携带品和行李</dt>
+                                <dd><a id="luggage" href="#">随身携带品</a></dd>
+                                <dd><a id="luggageTransportation" href="#">行李托运</a></dd>
+                                <dd><a id="insuredTransportation" href="#">保价运输</a></dd>
+                                <dd><a id="compensation" href="#">索赔</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>进站乘车</dt>
+                                <dd><a id="enterAndExit" href="#">进出站</a></dd>
+                                <dd><a id="riding" href="#">乘车</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt><a href="#">更多></a>特殊情况 </dt>
+                                <dd><a id="soldByMistake" href="#">误售误购</a></dd>
+                                <dd><a id="ticketLost" href="#">丢失车票</a></dd>
+                                <dd><a id="sickOnTheTrain" href="#">途中生病</a></dd>
+                                <dd><a id="personalInjury" href="#">人身伤害</a></dd>
+                                <dd><a id="lostItem" href="#">遗失物品</a></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>客运服务 </dt>
+                                <dd><a id="railwayService" href="#">站车服务</a></dd>
+                                <dd><a id="dining" href="#">餐饮</a></dd>
+                            </dl>
+                        </li>
+                        <li class="end">
+                            <dl>
+                                <dt><a href="#">更多></a>互联网售票</dt>
+                                <dd><a id="checkIdentity" href="#">身份核验</a></dd>
+                                <dd><a id="register" href="#">用户注册</a></dd>
+                                <dd><a id="buyTicket" href="#">购票</a></dd>
+                                <dd><a id="onlinePay" href="#">在线支付</a></dd>
+                                <dd><a id="endorseAndRefund" href="#">改签、变更到站、退票</a></dd>
+
+                                <!-- <dd><a id="changeToPaperTicket" href="#">换取纸质车票</a></dd> -->
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="down">
+                    <ul class="list">
+                        <li><a href="#">注册新用户</a></li>
+                        <li><a href="#">网上购票流程</a></li>
+                        <li><a href="#">身份核验</a></li>
+                    </ul>
+                </div>
+                @*<div class="down">
+                        <ul class="list">
+                            <li><a href="#">《公路互联网售票暂行办法》</a></li>
+                            <li><a href="#">《铁路旅客运输规程》</a></li>
+                            <li><a href="#">《铁路互联网购票须知》</a></li>
+                            <li><a href="#">《铁路旅客运输办理细则》</a></li>
+                            <li><a href="#">《铁路互联网购票身份核验须知》</a></li>
+
+                        </ul>
+
+                    </div>*@
+                @*<div class="down">
+                        <ul class="list list-lg">
+                            <li><a style="width: 400px" href="#">《铁路旅客人身意外伤害保险条款（A款）》</a></li>
+                        </ul>
+                        <ul class="list list-lg">
+                            <li><a style="width: 400px" href="#">《铁路旅客人身意外伤害保险（指定行程）投保须知》</a></li>
+                        </ul>
+                        <ul class="list list-lg">
+                            <li><a style="width: 400px" href="#">《铁路旅客人身意外伤害保险（指定行程）常见问题》</a></li>
+                        </ul>
+                    </div>*@
+            </div>
+        </div>
+        @*<script type="text/javascript">
+                 jQuery(".help-tab").slide();
+            </script>*@
+    </div>
+    <!--页面主体  结束-->
+    <!--页面底部  开始-->
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    <!--页面底部  结束-->
+</body>
+
+
+</html>
+
+

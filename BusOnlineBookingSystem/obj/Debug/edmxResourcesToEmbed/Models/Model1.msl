@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="火车票务管理系统ModelStoreContainer" CdmEntityContainer="火车票务管理系统Entities2">
+    <EntitySetMapping Name="Addset">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Addset">
+        <MappingFragment StoreEntitySet="Addset">
+          <ScalarProperty Name="systemsearch" ColumnName="systemsearch" />
+          <ScalarProperty Name="ticketpurchage" ColumnName="ticketpurchage" />
+          <ScalarProperty Name="ticketmanager" ColumnName="ticketmanager" />
+          <ScalarProperty Name="passengermanager" ColumnName="passengermanager" />
+          <ScalarProperty Name="systemset" ColumnName="systemset" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Car">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Car">
+        <MappingFragment StoreEntitySet="Car">
+          <ScalarProperty Name="carTypeID" ColumnName="carTypeID" />
+          <ScalarProperty Name="carNum" ColumnName="carNum" />
+          <ScalarProperty Name="carID" ColumnName="carID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Carseat">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Carseat">
+        <MappingFragment StoreEntitySet="Carseat">
+          <ScalarProperty Name="seat" ColumnName="seat" />
+          <ScalarProperty Name="carID" ColumnName="carID" />
+          <ScalarProperty Name="carSeatID" ColumnName="carSeatID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarType">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.CarType">
+        <MappingFragment StoreEntitySet="CarType">
+          <ScalarProperty Name="carTypeName" ColumnName="carTypeName" />
+          <ScalarProperty Name="cartypeID" ColumnName="cartypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="City">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="provinceID" ColumnName="provinceID" />
+          <ScalarProperty Name="cityName" ColumnName="cityName" />
+          <ScalarProperty Name="cityID" ColumnName="cityID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="passengertypeID" ColumnName="passengertypeID" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="paperworkNumber" ColumnName="paperworkNumber" />
+          <ScalarProperty Name="customerID" ColumnName="customerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Daily">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Daily">
+        <MappingFragment StoreEntitySet="Daily">
+          <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+          <ScalarProperty Name="operate" ColumnName="operate" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="dailyID" ColumnName="dailyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Linkman">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Linkman">
+        <MappingFragment StoreEntitySet="Linkman">
+          <ScalarProperty Name="ticketTypeID" ColumnName="ticketTypeID" />
+          <ScalarProperty Name="postcode" ColumnName="postcode" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="fixedphone" ColumnName="fixedphone" />
+          <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+          <ScalarProperty Name="chekestate" ColumnName="chekestate" />
+          <ScalarProperty Name="adddate" ColumnName="adddate" />
+          <ScalarProperty Name="paperworkNumber" ColumnName="paperworkNumber" />
+          <ScalarProperty Name="paperworkTypeID" ColumnName="paperworkTypeID" />
+          <ScalarProperty Name="countryID" ColumnName="countryID" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="linkmanName" ColumnName="linkmanName" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="linkmanID" ColumnName="linkmanID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Module">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Module">
+        <MappingFragment StoreEntitySet="Module">
+          <ScalarProperty Name="moduleName" ColumnName="moduleName" />
+          <ScalarProperty Name="moduleID" ColumnName="moduleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NonstopView">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.NonstopView">
+        <MappingFragment StoreEntitySet="NonstopView">
+          <ScalarProperty Name="A_Time" ColumnName="A_Time" />
+          <ScalarProperty Name="D_Time" ColumnName="D_Time" />
+          <ScalarProperty Name="KM" ColumnName="KM" />
+          <ScalarProperty Name="StopCount" ColumnName="StopCount" />
+          <ScalarProperty Name="RouteID" ColumnName="RouteID" />
+          <ScalarProperty Name="EndStation" ColumnName="EndStation" />
+          <ScalarProperty Name="StartStation" ColumnName="StartStation" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="nonstopViewID" ColumnName="nonstopViewID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="ifCancel" ColumnName="ifCancel" />
+          <ScalarProperty Name="ifPaid" ColumnName="ifPaid" />
+          <ScalarProperty Name="rideDate" ColumnName="rideDate" />
+          <ScalarProperty Name="orderTime" ColumnName="orderTime" />
+          <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+          <ScalarProperty Name="orderNum" ColumnName="orderNum" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetail">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="ifInsurance" ColumnName="ifInsurance" />
+          <ScalarProperty Name="orderstatus" ColumnName="orderstatus" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="intervalBit" ColumnName="intervalBit" />
+          <ScalarProperty Name="ifCancelTicket" ColumnName="ifCancelTicket" />
+          <ScalarProperty Name="ifChangeTicket" ColumnName="ifChangeTicket" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="paperworkNumber" ColumnName="paperworkNumber" />
+          <ScalarProperty Name="paperworkTypeID" ColumnName="paperworkTypeID" />
+          <ScalarProperty Name="passengerName" ColumnName="passengerName" />
+          <ScalarProperty Name="ticketTypeID" ColumnName="ticketTypeID" />
+          <ScalarProperty Name="trainSeatIntervalID" ColumnName="trainSeatIntervalID" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="orderDetailID" ColumnName="orderDetailID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Outlet">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Outlet">
+        <MappingFragment StoreEntitySet="Outlet">
+          <ScalarProperty Name="townID" ColumnName="townID" />
+          <ScalarProperty Name="cityID" ColumnName="cityID" />
+          <ScalarProperty Name="provinceID" ColumnName="provinceID" />
+          <ScalarProperty Name="windownumber" ColumnName="windownumber" />
+          <ScalarProperty Name="businessHours" ColumnName="businessHours" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="OutleName" ColumnName="OutleName" />
+          <ScalarProperty Name="OutletID" ColumnName="OutletID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PassworkType">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.PassworkType">
+        <MappingFragment StoreEntitySet="PassworkType">
+          <ScalarProperty Name="passworkType1" ColumnName="passworkType" />
+          <ScalarProperty Name="passworkTypeID" ColumnName="passworkTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pinyin">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Pinyin">
+        <MappingFragment StoreEntitySet="Pinyin">
+          <ScalarProperty Name="Call" ColumnName="Call" />
+          <ScalarProperty Name="ProPinyin" ColumnName="ProPinyin" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="FullCode" ColumnName="FullCode" />
+          <ScalarProperty Name="Shortcode" ColumnName="Shortcode" />
+          <ScalarProperty Name="Station" ColumnName="Station" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Power">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Power">
+        <MappingFragment StoreEntitySet="Power">
+          <ScalarProperty Name="powerName" ColumnName="powerName" />
+          <ScalarProperty Name="powerID" ColumnName="powerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Province">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Province">
+        <MappingFragment StoreEntitySet="Province">
+          <ScalarProperty Name="provinceName" ColumnName="provinceName" />
+          <ScalarProperty Name="provinceID" ColumnName="provinceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Returnticket">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Returnticket">
+        <MappingFragment StoreEntitySet="Returnticket">
+          <ScalarProperty Name="fee" ColumnName="fee" />
+          <ScalarProperty Name="returnMoney" ColumnName="returnMoney" />
+          <ScalarProperty Name="returnDate" ColumnName="returnDate" />
+          <ScalarProperty Name="trainID" ColumnName="trainID" />
+          <ScalarProperty Name="orderDetailID" ColumnName="orderDetailID" />
+          <ScalarProperty Name="returnNumber" ColumnName="returnNumber" />
+          <ScalarProperty Name="returnticketID" ColumnName="returnticketID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seat">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Seat">
+        <MappingFragment StoreEntitySet="Seat">
+          <ScalarProperty Name="seatNum" ColumnName="seatNum" />
+          <ScalarProperty Name="seatID" ColumnName="seatID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Student">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="interval" ColumnName="interval" />
+          <ScalarProperty Name="cardNumber" ColumnName="cardNumber" />
+          <ScalarProperty Name="yearIn" ColumnName="yearIn" />
+          <ScalarProperty Name="lengthOfschooling" ColumnName="lengthOfschooling" />
+          <ScalarProperty Name="studentNumber" ColumnName="studentNumber" />
+          <ScalarProperty Name="class" ColumnName="class" />
+          <ScalarProperty Name="department" ColumnName="department" />
+          <ScalarProperty Name="schoolName" ColumnName="schoolName" />
+          <ScalarProperty Name="provinceID" ColumnName="provinceID" />
+          <ScalarProperty Name="linkmanID" ColumnName="linkmanID" />
+          <ScalarProperty Name="studentID" ColumnName="studentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TicketType">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.TicketType">
+        <MappingFragment StoreEntitySet="TicketType">
+          <ScalarProperty Name="ticketTypename" ColumnName="ticketTypename" />
+          <ScalarProperty Name="ticketTypeID" ColumnName="ticketTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Town">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Town">
+        <MappingFragment StoreEntitySet="Town">
+          <ScalarProperty Name="cityID" ColumnName="cityID" />
+          <ScalarProperty Name="townName" ColumnName="townName" />
+          <ScalarProperty Name="townID" ColumnName="townID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Train">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Train">
+        <MappingFragment StoreEntitySet="Train">
+          <ScalarProperty Name="trainNum" ColumnName="trainNum" />
+          <ScalarProperty Name="trainID" ColumnName="trainID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrainList">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.TrainList">
+        <MappingFragment StoreEntitySet="TrainList">
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="R_Date" ColumnName="R_Date" />
+          <ScalarProperty Name="endStation" ColumnName="endStation" />
+          <ScalarProperty Name="startStation" ColumnName="startStation" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="trainID" ColumnName="trainID" />
+          <ScalarProperty Name="TrainListID" ColumnName="TrainListID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrainSeat">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.TrainSeat">
+        <MappingFragment StoreEntitySet="TrainSeat">
+          <ScalarProperty Name="carSeatID" ColumnName="carSeatID" />
+          <ScalarProperty Name="trainID" ColumnName="trainID" />
+          <ScalarProperty Name="trainSeatID" ColumnName="trainSeatID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TrainStation">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.TrainStation">
+        <MappingFragment StoreEntitySet="TrainStation">
+          <ScalarProperty Name="P4" ColumnName="P4" />
+          <ScalarProperty Name="P3" ColumnName="P3" />
+          <ScalarProperty Name="P2" ColumnName="P2" />
+          <ScalarProperty Name="P1" ColumnName="P1" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="R_Date" ColumnName="R_Date" />
+          <ScalarProperty Name="D_Time" ColumnName="D_Time" />
+          <ScalarProperty Name="A_Time" ColumnName="A_Time" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="S_No" ColumnName="S_No" />
+          <ScalarProperty Name="Station" ColumnName="Station" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="trainID" ColumnName="trainID" />
+          <ScalarProperty Name="TrainStationID" ColumnName="TrainStationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="cancelCount" ColumnName="cancelCount" />
+          <ScalarProperty Name="pwd" ColumnName="pwd" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="火车票务管理系统Model.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="shortcode" ColumnName="shortcode" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

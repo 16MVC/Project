@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>我的Ticket | 客运服务 | 公路客户服务中心</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/JQuery/slide-tab.js"></script>
+    <script src="~/JQuery/JS/myticket_js.js"></script>
+    <link rel="stylesheet" href="~/css/MyTicket.css" />
+    <link rel="shortcut icon" href="/ico/favicon.png">
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //我的车票
+            $("#link_4_myTicket").on("click", function () {
+                //window.location.href = "/MyTicket/queryOrder";
+            });
+            //未完成订单
+            $("#link_4_NonComOrder").on("click", function () {
+
+                $("#link_4_myTicket").parent().siblings().removeClass("prev");
+                $("#link_4_myTicket").parent().addClass("prev");
+                $("#dd_4_NonComOrder").addClass("cur");
+                $("#dd_4_NonComOrder").siblings().removeClass("cur");
+                $(".nav-label").css("top", "58.881px");
+                $(".nav-label").css("display", "block");
+                $("#ifMain").attr("src", "/MyTicket/initNoComplete");
+
+            });
+            //已完成订单
+            $("#link_4_comOrder").on("click", function () {
+                $("#dd_4_comOrder").siblings().removeClass("prev");
+                $("#dd_4_NonComOrder").addClass("prev");
+                $("#dd_4_comOrder").addClass("cur");
+                $("#dd_4_comOrder").siblings().removeClass("cur");
+                $(".nav-label").css("top", "98.881px");
+                $(".nav-label").css("display", "block");
+                $("#ifMain").attr("src", "/MyTicket/queryOrder");
+            });
+            //我的保险
+            $("#link_4_ticketInfo").on("click", function () {
+                $("#dd_4_comOrder").siblings().removeClass("prev");
+                $("#dd_4_comOrder").addClass("prev");
+                $("#link_4_ticketInfo").parent().addClass("cur");
+                $("#link_4_ticketInfo").parent().siblings().removeClass("cur");
+                $(".nav-label").css("top", "138.702px");
+                $(".nav-label").css("display", "block");
+                $("#ifMain").attr("src", "/MyTicket/insurance");
+            });
+            //个人信息
+            $("#link_4_myInfor").on("click", function () {
+                //window.location.href = "/MyTicket/insurance";
+            });
+            //查看个人信息
+            $("#link_4_showMyInfor").on("click", function () {
+                $("#link_4_myInfor").parent().siblings().removeClass("prev");
+                $("#link_4_myInfor").parent().addClass("prev");
+                $("#dd_4_showMyInfor").addClass("cur");
+                $("#dd_4_showMyInfor").siblings().removeClass("cur");
+                $(".nav-label").css("top", "218.702px");
+                $(".nav-label").css("display", "block");
+                $("#ifMain").attr("src", "/MyTicket/initQueryUserInfo");
+            });
+            //账号安全
+            $("#link_4_showSafe").on("click", function () {
+                $("#dd_4_showMyInfor").siblings().removeClass("prev");
+                $("#dd_4_showMyInfor").addClass("prev");
+                $("#dd_4_showSafe").addClass("cur");
+                $("#dd_4_showSafe").siblings().removeClass("cur");
+                $(".nav-label").css("top", "258.643px");
+                $(".nav-label").css("display", "block");
+                $("#ifMain").attr("src", "/MyTicket/userSecurity");
+            });
+            //手机核验
+            $("#link_4_sjhy").on("click", function () {
+                $("#dd_4_showSafe").siblings().removeClass("prev");
+                $("#dd_4_showSafe").addClass("prev");
+                $("#dd_4_sjhy").addClass("cur");
+                $("#dd_4_sjhy").siblings().removeClass("cur");
+                $(".nav-label").css("top", "298.583px");
+                $(".nav-label").css("display", "block");
+                $("#ifMain").attr("src", "/MyTicket/bindTel");
+            });
+            //常用信息管理
+            $("#link_4_passengerInfor").on("click", function () {
+                window.location.href = "/MyTicket/passengers";
+            });
+            //常用联系人
+            $("#link_4_passengerIns").on("click", function () {
+                window.location.href = "/MyTicket/passengers";
+            });
+            //贴心服务
+            $("#dd_4_qxyy").on("click", function () {
+                window.location.href = "/MyTicket/qxyyInfo";
+            });
+            //重点旅客预约
+            $("#dd_4_qxyy").on("click", function () {
+                window.location.href = "/MyTicket/qxyyInfo";
+            });
+            //遗失物品查找
+            $("#dd_4_lostitems").on("click", function () {
+                window.location.href = "/MyTicket/lostInfo";
+            });
+        });
+    </script>
+
+</head>
+<body class="dhtmlx_winviewport dhtmlx_skin_dhx_terrace">
+    <!--header start-->
+    <div class="header">
+        <div class="header-bd">
+            <a href="/Main/Main">
+                <h1 class="logo">江苏客运客户服务中心-客运中心</h1>
+            </a>
+            <div class="login-info">
+                <div class="phone-link">
+                    <a href="/appDownload/appDownload" target="true">手机版</a>
+                </div>
+                <div class="menu">
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
+                    </a>
+                    <div class="menu-list">
+                        <b></b>
+                        <ul>
+                            <li>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/insurance">我的保险</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/address">车票快递地址</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <span class="login-txt" style="color: #666666;">
+                    <span>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
+                        您好，
+                    </span>
+                    @*@if (@Session["User"].ToString() != "")
+                        {
+                            <a id="login_user" href="/MyTicket/MyTicket" class="colorA" style="margin-left:-0.5px;">
+                                <span style="width:50px;">@Session["User"].ToString().Trim()</span>
+                            </a>
+                            <span>|</span>
+                            <a id="regist_out" href="/Main/Login">退出</a>
+                        }
+                        else
+                        {
+                            <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">
+                                <span style="width:50px;">登录</span>
+                            </a>
+                              <a id="regist_out" href="/Main/register" onlick="Clear()">注册</a>
+                        }*@
+                    <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">
+                        <span style="width:50px;">sa</span>
+                    </a><span>|</span>
+                    <a id="regist_out" href="/Main/Login" onlick="Clear()">退出</a>
+                </span>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li>
+                        <a href="/Main/Main">客运首页</a>
+                    </li>
+                    <li id="selectYuding">
+                        <a href="/Buyticket/TicketBook">车票预订</a>
+                    </li>
+                    <li>
+                        <a href="/Buyticket/TicketSelect">余票查询</a>
+                    </li>
+                    <li style="width: 71px;" id="js-xd" class="nav-guide">
+                        <a href="javascript:">出行向导</a>
+                        <div class="nav-list">
+                            <ul style="font-weight:normal">
+                                <li>
+                                    <a href="/Travelguide/queryTrainInfo">车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/leftTicketPrice">票价查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/queryStationBus">车站车次查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/DrivingTime">车程时间查询</a>
+                                </li>
+                                <li>
+                                    <a href="/Travelguide/Travelguide">代售点查询</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li id="selectHelp">
+                        <a href="/Information/Infor">信息服务</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--header end-->
+    <!--页面主体  开始-->
+    <div class="content clearfix" style="min-height: 429px;">
+        <!--当前位置 开始-->
+        <div class="crumbs">
+            您现在的位置：<a href="/Main/Main" shape="rect">客运首页</a>
+            &nbsp;&gt;&nbsp;<strong>我的Ticket</strong>
+        </div>
+        <!--当前位置 结束-->
+        <!--左侧导航 开始-->
+        <div class="sidebar">
+            <div class="layout my">
+                <div class="lay-hd">我的Ticket</div>
+                <div class="lay-bd" id="js-myticket">
+                    <div class="nav-label" style="top: 19px; display: none;">
+                        <span></span>
+                    </div>
+                    <dl>
+                        <dt class="">
+                            <a href="javascript:void(0);" id="link_4_myTicket">我的火车票</a>
+                        </dt>
+                        <dd id="dd_4_NonComOrder" class="">
+                            <a href="javascript:void(0);" id="link_4_NonComOrder">未完成订单</a>
+                        </dd>
+                        <dd id="dd_4_comOrder" class="">
+                            <a href="javascript:void(0);" id="link_4_comOrder" class="">已完成订单</a>
+                        </dd>
+                        <dt>
+                            <a href="javascript:void(0);" id="link_4_ticketInfo">我的保险</a>
+                        </dt>
+                        <dt>
+                            <a href="javascript:void(0);" id="link_4_myInfor">个人信息</a>
+                        </dt>
+                        <dd id="dd_4_showMyInfor">
+                            <a href="javascript:void(0);" id="link_4_showMyInfor">查看个人信息</a>
+                        </dd>
+                        <dd id="dd_4_showSafe">
+                            <a href="javascript:void(0);" id="link_4_showSafe">账号安全</a>
+                        </dd>
+                        <dd id="dd_4_sjhy">
+                            <a href="javascript:void(0);" id="link_4_sjhy">手机核验</a>
+                        </dd>
+                        <dt>
+                            <a href="javascript:void(0);" id="link_4_passengerInfor">常用信息管理</a>
+                        </dt>
+                        <dd id="dd_4_passengerIns">
+                            <a href="javascript:void(0);" id="link_4_passengerIns">常用联系人</a>
+                        </dd>
+                        <dd id="dd_4_address">
+                            <a href="javascript:void(0);" id="dd_4_address">车票快递地址</a>
+                        </dd>
+                        <dt>
+                            <a href="javascript:void(0);">贴心服务</a>
+                        </dt>
+                        <dd id="dd_4_qxyy" class="last">
+                            <a href="javascript:void(0);">重点旅客预约</a>
+                        </dd>
+                        <dd id="dd_4_lostitems">
+                            <a href="javascript:void(0);">遗失物品查找</a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <!--左侧导航 结束-->
+        <!--右侧主体 开始-->
+        <div class="iframe_main">
+            <!--系统信息 开始-->
+            <iframe id="ifMain" style="width: 100%; height: 100%;" scrolling="no"></iframe>
+            <!--系统信息 结束-->
+        </div>
+        <!--右侧主体 结束-->
+    </div>
+    <!--页面主体  结束-->
+    <!--页面底部  开始-->
+    <div class="footer">
+        <p>
+            <a href="#" target="true">关于我们</a>
+            |<a href="#" target="true">网站声明</a>
+        </p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
+        <p>京ICP备10009636号</p>
+    </div>
+    <!--页面底部  结束-->
+
+    <iframe frameborder="0" class="dhx_modal_cover_ifr" src="javascript:false;" style="display: none; z-index: 0;"></iframe>
+    <div class="dhx_modal_cover_dv" style="display: none; z-index: 0;"></div>
+    <div class="dhx_content_vp_cover" style="display: none;"></div>
+    <div class="dhx_carcass_resmove" style="display: none;"></div>
+    <a href="#" id="_return_top" class="return-top" title="返回顶部" style="display: none; position: fixed; bottom: 30px; right: 30px;"></a>
+</body>
+</html>
