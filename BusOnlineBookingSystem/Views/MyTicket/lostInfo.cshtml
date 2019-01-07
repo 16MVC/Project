@@ -11,11 +11,11 @@
         $(document).ready(function () {
             //我的火车票
             $("#link_4_myTicket").on("click", function () {
-                //$('#f网页区').attr("src", "../My12306/My12306");
+                //$('#f网页区').attr("src", "../MyTicket/MyTicket");
             });
             //未完成订单
             $("#link_4_NonComOrder").on("click", function () {
-                //$('#f网页区').attr("src", "../My12306/initNoComplete");
+                //$('#f网页区').attr("src", "../MyTicket/initNoComplete");
                 window.location.href = "/MyTicket/initNoComplete";
             });
             //已完成订单
@@ -90,32 +90,32 @@
                         <b></b>
                         <ul>
                             <li>
-                                <a href="/My12306/initNoComplete">未完成订单</a>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
                             </li>
                             <li>
-                                <a href="/My12306/queryOrder">已完成订单(改/退)</a>
-                            </li>
-                            <li class="line"></li>
-                            <li>
-                                <a href="/My12306/insurance">我的保险</a>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
                             </li>
                             <li class="line"></li>
                             <li>
-                                <a href="/My12306/initQueryUserInfo">查看个人信息</a>
-                            </li>
-                            <li>
-                                <a href="/My12306/userSecurity">账户安全</a>
+                                <a href="/MyTicket/insurance">我的保险</a>
                             </li>
                             <li class="line"></li>
                             <li>
-                                <a href="/My12306/passengers">常用联系人</a>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
                             </li>
                             <li class="line"></li>
                             <li>
-                                <a href="/My12306/qxyyInfo">重点旅客预约</a>
+                                <a href="/MyTicket/passengers">常用联系人</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
                             </li>
                             <li>
-                                <a href="/My12306/lostInfo">遗失物品查找</a>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
                             </li>
                         </ul>
                     </div>
@@ -125,7 +125,7 @@
                         意见反馈:<a class="cursor colorA" href="#">zgbs@rails.com.cn</a>
                         您好，
                     </span>
-                    <a id="login_user" href="/My12306/My12306" class="colorA" style="margin-left:-0.5px;">
+                    <a id="login_user" href="/MyTicket/MyTicket" class="colorA" style="margin-left:-0.5px;">
                         <span style="width:50px;">sa</span>
                     </a>
                     | <a id="regist_out" href="/Main/Login">退出</a>
@@ -179,7 +179,7 @@
     <div class="content clearfix">
         <!--当前位置 开始-->
         <div class="crumbs">
-            您现在的位置：<a href="/My12306/My12306" shape="rect">我的12306</a>
+            您现在的位置：<a href="/MyTicket/MyTicket" shape="rect">我的Ticket</a>
             &nbsp;&gt;&nbsp;<a href="#" shape="rect">贴心服务</a>
             &nbsp;&gt;&nbsp;<strong>遗失物品查找</strong>
         </div>
@@ -188,7 +188,7 @@
         <div class="sidebar">
             <div class="layout my">
                 <div class="lay-hd">我的Ticket</div>
-                <div class="lay-bd" id="js-my12306">
+                <div class="lay-bd" id="js-myTicket">
                     <div class="nav-label" style="top: 537.274px; display: block;">
                         <span></span>
                     </div>
@@ -248,11 +248,11 @@
                         <h1>遗失物品查找服务说明</h1>
                         <h2>1．中国巴士客户服务中心网站注册用户可为本人及常用联系人办理网上遗失物品查找服务。非注册用户可先行注册后办理或通过巴士客服电话办理。</h2>
                         <h2>2．填写时，请按照服务单内容逐项填写完整，详细描述遗失地点及遗失物品具体信息。</h2>
-                        <h2>3．服务提交完成后6小时内（23:00—次日7:00顺延），铁路工作人员将与您联系，告知查找情况。对查找到的物品，确定返还事项。因特殊情况未接到工作人员电话时，请拨打12306铁路客服电话进行确认。</h2>
+                        <h2>3．服务提交完成后6小时内（23:00—次日7:00顺延），铁路工作人员将与您联系，告知查找情况。对查找到的物品，确定返还事项。因特殊情况未接到工作人员电话时，请拨打客服电话进行确认。</h2>
                         <h2>4．遗失物品的管理、转运应符合《巴士运输规程》的相关要求。</h2>
                     </div>
                     <div class="lay-btn">
-                        <a href="/otn/index/initMy12306" class="btn92" shape="rect">不同意</a>
+                        <a href="/otn/index/initMyTicket" class="btn92" shape="rect">不同意</a>
                         <a href="/otn/icentre/lostItems" class="btn92s" shape="rect">我已阅读并同意</a>
                     </div>
                 </div>
