@@ -873,8 +873,6 @@
     <Content Include="Views\Main\Login.cshtml" />
     <Content Include="Views\Main\register.cshtml" />
     <Content Include="Views\Order\Order.cshtml" />
-    <Content Include="Views\Order\OrderInsert.cshtml" />
-    <Content Include="Views\Order\OrderUpdate.cshtml" />
     <Content Include="Views\Buyticket\TicketBook.cshtml" />
     <Content Include="Views\Buyticket\TicketUpdae.cshtml" />
     <Content Include="Views\Buyticket\TicketDelete.cshtml" />
@@ -882,9 +880,7 @@
     <Content Include="Views\Buyticket\TicketSelect.cshtml" />
     <Content Include="Views\MyTicket\MyTicket.cshtml" />
     <Content Include="Views\Travelguide\Travelguide.cshtml" />
-    <Content Include="Views\Travelguide\zwdch.cshtml" />
-    <Content Include="Views\Travelguide\zzzcx.cshtml" />
-    <Content Include="Views\Travelguide\czxxcx.cshtml" />
+    <Content Include="Views\Travelguide\queryStationBus.cshtml" />
     <Content Include="Views\Travelguide\leftTicketPrice.cshtml" />
     <Content Include="Views\Travelguide\queryTrainInfo.cshtml" />
     <Content Include="Views\MyTicket\queryOrder.cshtml" />

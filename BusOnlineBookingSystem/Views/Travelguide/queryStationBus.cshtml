@@ -1,7 +1,8 @@
-﻿
+﻿<!DOCTYPE html>
+
 <html>
 <head>
-    <title>出行向导 | 客运服务 | 铁路客户服务中心</title>
+    <title>出行向导 | 客运服务 | 公路客户服务中心</title>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/JQuery/JS/Travelguide.js"></script>
     <link href="~/css/czxxcx.css" rel="stylesheet" />
@@ -33,7 +34,7 @@
         $(document).ready(function () {
 
             var i = 0;
-            //点击文本框，提示语消失 
+            //点击文本框，提示语消失
             $("#fromStationText").on("focus",
             function () {
                 if ($(this).val() == "简拼/全拼/汉字") {
@@ -61,8 +62,8 @@
                 }
             });
             //选择首字母
-            //$.stationFor12306.js(1)
-            $.stationFor12306 = {
+            //$.stationForTicket.js(1)
+            $.stationForTicket = {
                 js: function (N) {
                     var M;
                     for (M = 1; M <= 7; M++) {
@@ -103,24 +104,24 @@
             $._checkAll = {
                 function (name, id) {
                     alert("全部");
-                    switch (str) {
-                        case "station_train_code":
-                            $(id).css("checked", "checked");//"#_ul_station_train_code li input"
-                            break;
-                        case "station_name":
-                            $(id).css("checked", "checked");//"#_ul_station li input"
-                            break;
-                        case "cc_start_time":
-                            $(id).css("checked", "checked");//"#_ul_cc_start_time li input"
-                            break;
-                        case "cc_arrive_time":
-                            $(id).css("checked", "checked");//"#_ul_cc_arrive_time li input"
-                            break;
-                        default:
+            switch (str) {
+                case "station_train_code":
+                    $(id).css("checked", "checked");//"#_ul_station_train_code li input"
+                    break;
+                case "station_name":
+                    $(id).css("checked", "checked");//"#_ul_station li input"
+                    break;
+                case "cc_start_time":
+                    $(id).css("checked", "checked");//"#_ul_cc_start_time li input"
+                    break;
+                case "cc_arrive_time":
+                    $(id).css("checked", "checked");//"#_ul_cc_arrive_time li input"
+                    break;
+                default:
 
-                    }
-                }
             }
+        }
+        }
 
         });
 
@@ -145,7 +146,7 @@
                                     break;
                             }
                         })
-                        
+
                     },
                     error: function () {
 
@@ -173,49 +174,49 @@
                     <a href="/appDownload/appDownload" target="true">手机版</a>
                 </div>
                 <div class="menu">
-                    <a href="/My12306/My12306" class="menu-bd" id="js-my">
-                        我的12306<b></b>
+                    <a href="/MyTicket/MyTicket" class="menu-bd" id="js-my">
+                        我的Ticket<b></b>
                     </a>
                     <div class="menu-list" style="display: none;">
                         <b></b>
                         <ul>
                             <li>
-                                <a href="/My12306/initNoComplete">未完成订单</a>
+                                <a href="/MyTicket/initNoComplete">未完成订单</a>
                             </li>
                             <li>
-                                <a href="/My12306/queryOrder">已完成订单(改/退)</a>
-                            </li>
-                            <li class="line"></li>
-                            <li>
-                                <a href="/My12306/insurance">我的保险</a>
+                                <a href="/MyTicket/queryOrder">已完成订单(改/退)</a>
                             </li>
                             <li class="line"></li>
                             <li>
-                                <a href="/My12306/initQueryUserInfo">查看个人信息</a>
-                            </li>
-                            <li>
-                                <a href="/My12306/userSecurity">账户安全</a>
+                                <a href="/MyTicket/insurance">我的保险</a>
                             </li>
                             <li class="line"></li>
                             <li>
-                                <a href="/My12306/passengers">常用联系人</a>
+                                <a href="/MyTicket/initQueryUserInfo">查看个人信息</a>
                             </li>
                             <li>
-                                <a href="/My12306/address">车票快递地址</a>
+                                <a href="/MyTicket/userSecurity">账户安全</a>
                             </li>
                             <li class="line"></li>
                             <li>
-                                <a href="/My12306/qxyyInfo">重点旅客预约</a>
+                                <a href="/MyTicket/passengers">常用联系人</a>
                             </li>
                             <li>
-                                <a href="/My12306/lostInfo">遗失物品查找</a>
+                                <a href="/MyTicket/address">车票快递地址</a>
+                            </li>
+                            <li class="line"></li>
+                            <li>
+                                <a href="/MyTicket/qxyyInfo">重点旅客预约</a>
+                            </li>
+                            <li>
+                                <a href="/MyTicket/lostInfo">遗失物品查找</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <span class="login-txt" style="color: #666666">
                     <span>
-                        意见反馈:<a class="cursor colorA" href="#">12306yjfk@rails.com.cn</a>
+                        意见反馈:<a class="cursor colorA" href="#">Bus@rails.com.cn</a>
                         您好，请
                     </span>
                     <a id="login_user" href="/Main/Login" class="colorA" style="margin-left:-0.5px;">登录</a>
@@ -244,13 +245,7 @@
                                     <a href="/Travelguide/leftTicketPrice">票价查询</a>
                                 </li>
                                 <li>
-                                    <a href="/Travelguide/czxxcx" class="on">车站车次查询</a>
-                                </li>
-                                <li>
-                                    <a href="/Travelguide/zzzcx">中转查询</a>
-                                </li>
-                                <li>
-                                    <a href="/Travelguide/zwdch">正晚点查询</a>
+                                    <a href="/Travelguide/queryStationBus" class="on">车站车次查询</a>
                                 </li>
                                 <li>
                                     <a href="/Travelguide/Travelguide">代售点查询</a>
@@ -272,14 +267,14 @@
             <div id="panel_cities2">
                 <div class="com_hotresults" id="thetable" style="width:370px">
                     <div style="width:100%;">
-                        <div class="ac_title"><span>拼音支持首字母输入</span><a class="ac_close" style="cursor:pointer" title="关闭" onclick="$.stationFor12306.closeShowCity()"></a></div>
+                        <div class="ac_title"><span>拼音支持首字母输入</span><a class="ac_close" style="cursor:pointer" title="关闭" onclick="$.stationForTicket.closeShowCity()"></a></div>
                         <ul class="AbcSearch clx" id="abc">
-                            <li index="1" method="liHotTab" onclick="$.stationFor12306.js(1)" id="nav_list1" class="action">热门</li>
-                            <li index="2" method="liHotTab" onclick="$.stationFor12306.js(2)" id="nav_list2" class="">A－E</li>
-                            <li index="3" method="liHotTab" onclick="$.stationFor12306.js(3)" id="nav_list3" class="">F－J</li>
-                            <li index="4" method="liHotTab" onclick="$.stationFor12306.js(4)" id="nav_list4" class="">K－O</li>
-                            <li index="5" method="liHotTab" onclick="$.stationFor12306.js(5)" id="nav_list5" class="">P－T</li>
-                            <li index="6" method="liHotTab" onclick="$.stationFor12306.js(6)" id="nav_list6" class="">U－Z</li>
+                            <li index="1" method="liHotTab" onclick="$.stationForTicket.js(1)" id="nav_list1" class="action">热门</li>
+                            <li index="2" method="liHotTab" onclick="$.stationForTicket.js(2)" id="nav_list2" class="">A－E</li>
+                            <li index="3" method="liHotTab" onclick="$.stationForTicket.js(3)" id="nav_list3" class="">F－J</li>
+                            <li index="4" method="liHotTab" onclick="$.stationForTicket.js(4)" id="nav_list4" class="">K－O</li>
+                            <li index="5" method="liHotTab" onclick="$.stationForTicket.js(5)" id="nav_list5" class="">P－T</li>
+                            <li index="6" method="liHotTab" onclick="$.stationForTicket.js(6)" id="nav_list6" class="">U－Z</li>
                         </ul>
                         <ul class="popcitylist" style="overflow: auto;max-height: 280px;height: 191px;display:block;" method="hotData" id="ul_list1">
                             <li class="ac_even openLi" title="北京" data="BJP">北京</li>
@@ -476,7 +471,7 @@
                             <li class="ac_even openLi ac_odd" title="万州" data="WYW">万州</li>
                             <li class="ac_even openLi ac_odd" title="梧州" data="WZZ">梧州</li>
                         </ul>
-                        <div id="flip_cities2" style="display: block;">«&nbsp;上一页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" class="cityflip" onclick="$.stationFor12306.pageDesigh(15,1,2)">下一页&nbsp;»</a></div>
+                        <div id="flip_cities2" style="display: block;">«&nbsp;上一页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a style="cursor:pointer" class="cityflip" onclick="$.stationForTicket.pageDesigh(15,1,2)">下一页&nbsp;»</a></div>
                     </div>
                 </div>
             </div>
@@ -494,7 +489,7 @@
                     </span>
                     <div class="inp-w">
                         @*<input readonly="readonly" id="train_start_date" name="train_start_date" type="text" class="inptxt color333" value="" style="color: rgb(153, 153, 153);">
-                        <span id="_date_btn" class="i-date" style="cursor: pointer;"></span>*@
+                            <span id="_date_btn" class="i-date" style="cursor: pointer;"></span>*@
                         <input id="train_start_date" class="easyui-datebox" type="text" name="train_start_date" style="height:28px;" data-options="formatter:myformatter,parser:myparser" />
                     </div>
                 </li>
@@ -623,7 +618,7 @@
             <a href="#" target="true">关于我们</a>
             |<a href="#" target="true">网站声明</a>
         </p>
-        <p>版权所有©2008-2015启航工作室&nbsp;&nbsp;南粤新起点软件学院</p>
+        <p>版权所有©2008-2020启航工作室&nbsp;&nbsp;金陵科技学院软件工程学院</p>
         <p>京ICP备10009636号</p>
     </div>
     <!--页面底部  结束-->
@@ -639,10 +634,10 @@
                 <div class="cityline" id="citem_4" cturn="4"><span class="ralign">北京西</span></div>
                 <div class="cityline" id="citem_5" cturn="5"><span class="ralign">广州南</span></div>
             </div>
-            <div id="flip_cities" style="display: block;"><span style="float:left;">«&nbsp;向前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="float:right;cursor:pointer" href="" class="cityflip" onclick="$.stationFor12306.city_showlist(1);return false;">向后&nbsp;»</a></div>
+            <div id="flip_cities" style="display: block;"><span style="float:left;">«&nbsp;向前</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="float:right;cursor:pointer" href="" class="cityflip" onclick="$.stationForTicket.city_showlist(1);return false;">向后&nbsp;»</a></div>
         </div>
     </div>
-    
+
     <!-- 纯table（无数据） -->
     <div class="t-list" id="floatTable" style="display: none;width: 978px;">
         <table class="" id="queryTable">
