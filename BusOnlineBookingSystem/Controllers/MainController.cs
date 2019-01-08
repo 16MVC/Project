@@ -9,7 +9,7 @@ namespace BuyTicket.Controllers
 {
     public class MainController : Controller
     {
-        Models.火车票务管理系统Entities2 ef = new Models.火车票务管理系统Entities2();
+        Controllers.Entities2 ef = new Controllers.Entities2();
 
         // GET: Main 
         //动作：杂凑    盐（Salt）
@@ -140,7 +140,7 @@ namespace BuyTicket.Controllers
                             tb.postcode,
                             tb.ticketTypeID
                         }).ToList();
-            Models.Linkman passenger = new Models.Linkman();
+            Controllers.Linkman passenger = new Controllers.Linkman();
             passenger.userID = userID;
             passenger.linkmanName = linkmanName;
             passenger.sex = sex;

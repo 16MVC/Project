@@ -12,7 +12,7 @@ namespace BuyTicket.Controllers
 {
     public class TravelguideController : Controller
     {
-        Models.火车票务管理系统Entities2 ef = new Models.火车票务管理系统Entities2();
+        Controllers.Entities2 ef = new Controllers.Entities2();
         // GET: Travelguide
         //代售点查询
         public ActionResult Travelguide()

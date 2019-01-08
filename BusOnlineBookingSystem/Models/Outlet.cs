@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BuyTicket.Models
+namespace BuyTicket.Controllers
 {
     using System;
     using System.Collections.Generic;

@@ -8,7 +8,7 @@ namespace BuyTicket.Controllers
 {
     public class userSecurityController : Controller
     {
-        Models.火车票务管理系统Entities2 ef = new Models.火车票务管理系统Entities2();
+        Controllers.Entities2 ef = new Controllers.Entities2();
         // GET: userSecurity  
         //密码修改
         public ActionResult loginPwd()
@@ -52,7 +52,7 @@ namespace BuyTicket.Controllers
         {
             return View();
         }
-        public ActionResult updateloginPwd(Models.User models, string old_pwd, string pwd, string checkcode)
+        public ActionResult updateloginPwd(Controllers.User models, string old_pwd, string pwd, string checkcode)
         {
             string check_code = Session["CheckCode"].ToString().Trim();
             string password = Session["Password"].ToString().Trim();
@@ -60,7 +60,7 @@ namespace BuyTicket.Controllers
             {
                 var query = (from tb in ef.User
                              where tb.pwd == old_pwd
-                             select tb).Single<Models.User>();
+                             select tb).Single<Controllers.User>();
                 query.pwd = models.pwd;
                 int Count = ef.SaveChanges();
                 if (Count > 0)
@@ -101,7 +101,7 @@ namespace BuyTicket.Controllers
                         };
             return Json(query.ToList(), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult updatesafeEmail(Models.Linkman models,string Email, string pwd, string checkcode)
+        public ActionResult updatesafeEmail(Controllers.Linkman models,string Email, string pwd, string checkcode)
         {
             string check_code = Session["CheckCode"].ToString().Trim();
             string password = Session["Password"].ToString().Trim();
@@ -112,7 +112,7 @@ namespace BuyTicket.Controllers
                 {
                     var query = (from tb in ef.Linkman
                                  where tb.userID == UserID
-                                 select tb).Single<Models.Linkman>();
+                                 select tb).Single<Controllers.Linkman>();
                     query.email = models.email;
                     int Count = ef.SaveChanges();
                     if (Count > 0)

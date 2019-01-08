@@ -5,34 +5,34 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a186f16218fb491b804e68f4d3257905" Name="Diagram1" >
-        <EntityTypeShape EntityType="火车票务管理系统Model.Addset" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Car" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Carseat" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.CarType" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.City" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Customer" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Daily" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Linkman" Width="1.5" PointX="2.75" PointY="6.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Module" Width="1.5" PointX="6.75" PointY="3.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.NonstopView" Width="1.5" PointX="4.75" PointY="6.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Order" Width="1.5" PointX="6.75" PointY="6.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.OrderDetail" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Outlet" Width="1.5" PointX="8.75" PointY="5.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.PassworkType" Width="1.5" PointX="8.75" PointY="9.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Pinyin" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Power" Width="1.5" PointX="10.75" PointY="4.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Province" Width="1.5" PointX="4.75" PointY="10.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Returnticket" Width="1.5" PointX="10.75" PointY="7.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Seat" Width="1.5" PointX="0.75" PointY="11.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Student" Width="1.5" PointX="10.75" PointY="11.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.TicketType" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Town" Width="1.5" PointX="12.75" PointY="3.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Train" Width="1.5" PointX="12.75" PointY="6.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.TrainList" Width="1.5" PointX="6.75" PointY="12.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.TrainSeat" Width="1.5" PointX="12.75" PointY="9.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.TrainStation" Width="1.5" PointX="12.75" PointY="12.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.User" Width="1.5" PointX="2.75" PointY="13.75" />
-        <EntityTypeShape EntityType="火车票务管理系统Model.Country" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Addset" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Car" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Carseat" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.CarType" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.City" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Customer" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Daily" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Linkman" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Module" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.NonstopView" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Order" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.OrderDetail" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Outlet" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.PassworkType" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Pinyin" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Power" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Province" Width="1.5" PointX="4.75" PointY="10.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Returnticket" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Seat" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Student" Width="1.5" PointX="10.75" PointY="11.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.TicketType" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Town" Width="1.5" PointX="12.75" PointY="3.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Train" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.TrainList" Width="1.5" PointX="6.75" PointY="12.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.TrainSeat" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.TrainStation" Width="1.5" PointX="12.75" PointY="12.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.User" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="票务管理系统Model.Country" Width="1.5" PointX="14.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

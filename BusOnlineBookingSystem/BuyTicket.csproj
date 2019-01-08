@@ -749,13 +749,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\appDownloadController.cs" />
     <Compile Include="Controllers\BuyticketController.cs" />
+    <Compile Include="Controllers\Entities2.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\MyTicketController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\TravelguideController.cs" />
     <Compile Include="Controllers\userSecurityController.cs" />
-    <Compile Include="Controllers\火车票务管理系统Entities2.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

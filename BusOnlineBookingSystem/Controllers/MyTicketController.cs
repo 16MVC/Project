@@ -9,7 +9,7 @@ namespace BuyTicket.Controllers
     public class MyTicketController : Controller
     {
         
-        Models.火车票务管理系统Entities2 ef = new Models.火车票务管理系统Entities2();
+        Controllers.Entities2 ef = new Controllers.Entities2();
         // GET: My12306 insurance 
         public ActionResult MyTicket()
         {
@@ -88,7 +88,7 @@ namespace BuyTicket.Controllers
                         };
             return Json(query.ToList(),JsonRequestBehavior.AllowGet);
         }
-        public ActionResult updatebindTel(Models.Linkman models,string phonenumber, string pwd)
+        public ActionResult updatebindTel(Controllers.Linkman models,string phonenumber, string pwd)
         {
             string password = Session["Password"].ToString().Trim();
             int id = (int)Session["UserID"];
@@ -96,7 +96,7 @@ namespace BuyTicket.Controllers
             {
                 var query = (from tb in ef.Linkman
                              where tb.userID == id
-                             select tb).Single<Models.Linkman>();
+                             select tb).Single<Controllers.Linkman>();
                 query.phonenumber = models.phonenumber.Trim();
                 int intCount = ef.SaveChanges();
                 if (intCount > 0)
